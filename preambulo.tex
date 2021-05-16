@@ -1,0 +1,57 @@
+\usepackage[left=15mm, inner=3cm, outer=3cm, top=3cm,bottom=3cm ]{geometry}
+\usepackage{mathpazo}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics,graphicx}
+\usepackage{wallpaper}
+\usepackage{multicol}
+\usepackage{multirow}
+\nonzeroparskip
+\setlength{\parindent}{0pt}
+%\usepackage{parskip}
+%\setcounter{secnumdepth}{1}
+\renewcommand\thesection{\arabic{section}}
+
+\copypagestyle{headerwchap}{myheadings}
+\chapterstyle{bianchi}
+ \makeevenhead{headerwchap}{\thepage}{}{}
+ \makeoddhead{headerwchap}{}{}{\thepage}
+ \makeoddfoot{headerwchap}{}{}{}
+ \makeevenfoot{headerwchap}{}{}{}
+\makeheadrule{headerwchap}{\textwidth}{0.5pt}
+
+\usepackage[ %
+style=authoryear, % 
+natbib = true, %
+dashed = false, %
+firstinits = true, 
+url =false, %
+isbn = false, %
+backend = bibtex]{biblatex}
+\addbibresource{referencias_proyecto.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% EDITAR SOLO EL SEGUNDO %%%%%%%
+%%%% CONJUNTO DE PARENTESIS %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Titulo del proyecto
+\newcommand{\TituloProy}{Colocar el título aquí.}
+ 
+% Nombre de Estudiantes y Carnet
+\newcommand{\EstudianteUno}{Nombre y apellido 1}
+\newcommand{\EstudianteDos}{Nombre y apellido 2}
+
+\newcommand{\ds}[1]{\ensuremath{\displaystyle{#1}}}
+
+\makeindex
+
+\def\bitcoinB{\leavevmode
+  {\setbox0=\hbox{\textsf{C}}%
+    \dimen0\ht0 \advance\dimen0 0.2ex
+    \ooalign{\hfil \box0\hfil\cr
+      \hfil\vrule height \dimen0 depth.2ex\hfil\cr
+    }%
+  }%
+}
