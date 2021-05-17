@@ -108,6 +108,19 @@ rendimientos<-function(precio,pago){
 NS<-function(theta,T){
   tetha[0]+(tetha[1]+theta[2]/tethat[3])*(1-exp(-tetha[3])*T)/(tehta[3]*T)-tetha[2]/tetha[3]*exp(-theta[3])*T
 }
+
+## Se debe ajustar la curva entonces esto se hace
+fitNS<-function(theta,T){
+  fn<-function(theta){
+    sum((rendimientos-NS(theta,T))^2)
+  }
+  optim(theta,
+        fn,
+        method=,
+        lower= rep(0,3),
+        upper=rep(1,3)
+        )
+}
 ```
 
 
