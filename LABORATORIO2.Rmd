@@ -96,3 +96,18 @@ En formato apa.
 \chapter{Anexos}
 
 
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+
+###Función para calcular los tasas de rendimiento que tenemos
+###Se le ingresa el precio del bono y lo que se recibe
+rendimientos<-function(precio,pago){
+  pago/precio-precio
+}
+### Modelo Nelson Siegel para rendimientos
+
+NS<-function(theta,T){
+  tetha[0]+(tetha[1]+theta[2]/tethat[3])*(1-exp(-tetha[3])*T)/(tehta[3]*T)-tetha[2]/tetha[3]*exp(-theta[3])*T
+}
+```
+
+
