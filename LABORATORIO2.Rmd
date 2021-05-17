@@ -32,8 +32,9 @@ library(gridExtra)
 require(xts)
 require(YieldCurve)
 data(YieldCurve)
-datos<-read.csv('C:/Users/saac9/Desktop/bond-yields-us-10y_zip/data/monthly_csv.csv')
-datos<-cbind(datos,seq(1:length(datos[,1])))
+datos<-read.csv('quarterly_csv.csv')
+datos<-cbind(datos,seq(3,3*length(datos[,2]),by=3))
+datos<-datos[c(1:16),]
 ```
 \chapter*{Instrucciones}
 A continuación se le indica la estructura de este laboratorio, desglosado por capítulos que debe incluir en el documento pdf de RMarkdown. Este laboratorio es una simulación en cuanto a la estructura del proyecto de investigación que se desarrollará en el curso. 
@@ -119,19 +120,20 @@ fitNS<-function(theta,tiempo,rendimientos){
   optim(theta,
         fn,
         method = "L-BFGS-B",
-        lower= rep(0,4),
+        lower= rep(-1,4),
         upper=rep(1,4)
         )
 }
 
 ##
 
-t<-c(0,0,0,0.03)
+t<-c(0,0,0,0.05)
 fit<-fitNS(t,datos[c(2:6),3],datos[c(2:6),2]/100)
 parametros<-as.numeric(unlist(fit[1]))
-time<-seq(1,6,length=100)
+time<-seq(3,16*3,1)
 
-ggplot()+geom_line(aes(x=time,3],y=NS(parametros,time)))
+ggplot()+geom_line(aes(x=time,y=NS(parametros,time)))+geom_point(aes(
+  x=seq(3,3*length(datos[,2]),by=3),y=datos[,2]))
 ```
 
 
