@@ -31,9 +31,9 @@ library(xtable)
 library(gridExtra)
 require(xts)
 require(YieldCurve)
-datos<-read.csv('quarterly_csv.csv')
-datos<-cbind(datos,seq(3,3*length(datos[,2]),by=3))
-datos<-datos[c(1:20),]
+library(Quandl)
+datos<-read.csv("Apple semanal.csv")
+datos<-datos[order(as.Date(datos$ï..Date),format="%B %d, %Y"),]
 ```
 \chapter*{Instrucciones}
 A continuación se le indica la estructura de este laboratorio, desglosado por capítulos que debe incluir en el documento pdf de RMarkdown. Este laboratorio es una simulación en cuanto a la estructura del proyecto de investigación que se desarrollará en el curso. 
@@ -127,12 +127,17 @@ fitNS<-function(theta,tiempo,rendimientos){
 ##
 
 t<-c(0,0,0,0.05)
-fit<-fitNS(t,datos[c(2:6),3],datos[c(2:6),2]/100)
+fit2<-fitNS(t,datos1[,3],datos1[,2]/100)
+fit<-fitNS(t,datos[,3],datos[,2]/100)
 parametros<-as.numeric(unlist(fit[1]))
-time<-seq(3,3*20,by=3)
+parametros2<-as.numeric(unlist(fit2[1]))
 
-ggplot()+geom_line(aes(x=time,y=NS(parametros,time)))+geom_point(aes(
-  x=seq(3,3*length(datos[,2]),by=3),y=datos[,2]/100))
+time<-seq(1,432,length=432)
+ggplot()+geom_line(aes(x=datos[,3],y=NS(parametros,datos[,3])))+geom_point(aes(
+  x=datos[,3],y=datos[,2]/100))
+
+ggplot()+geom_line(aes(x=time,y=NS(parametros2,time)))+geom_point(aes(
+  x=datos1[,3],y=datos1[,2]/100))
 
 ```
 
