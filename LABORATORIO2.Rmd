@@ -33,7 +33,8 @@ require(xts)
 require(YieldCurve)
 library(Quandl)
 datos<-read.csv("Apple semanal.csv")
-datos<-datos[order(as.Date(datos$ï..Date),format="%B %d, %Y"),]
+datos$ï..Date<-gsub(",","",datos$ï..Date)
+datos<-datos[order(as.Date(datos$ï..Date),format="%B-%d-%Y"),]
 ```
 \chapter*{Instrucciones}
 A continuación se le indica la estructura de este laboratorio, desglosado por capítulos que debe incluir en el documento pdf de RMarkdown. Este laboratorio es una simulación en cuanto a la estructura del proyecto de investigación que se desarrollará en el curso. 
