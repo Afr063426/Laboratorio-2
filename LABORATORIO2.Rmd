@@ -30,20 +30,17 @@ library(Quandl)
 require(xts)
 require(YieldCurve)
 library(Quandl)
-#<<<<<<< HEAD
+
 datos<-read.csv("USDdata.csv")
 #datos<-Quandl("USTREASURY/YIELD")
-datos$Date<-(as.Date(datos$Date,format="%Y %m %d"))
-datos<-datos[order(datos$Date),]
-datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
-#=======
+datos$Date<-(as.Date(datos$Date,format="%m/%d/%Y"))
+#datos<-datos[order(datos$Date),]
+#datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
 
 #datos<-Quandl("USTREASURY/YIELD")
 #datos$Date<-(as.Date(datos$Date,format="%Y %m %d"))
 #datos<-datos[order(datos$Date),]
 #datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
-
-#>>>>>>> 851a82c642139295737b745a0b2fc9edee2a1b3c
 
 ### Se procede a calcular la media de las tasas de rendimiento
 promedios<-datos%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
