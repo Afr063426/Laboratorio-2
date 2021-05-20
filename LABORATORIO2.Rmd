@@ -37,7 +37,7 @@ datos<-read.csv("USDdata.csv")
 ### Se procede a calcular la media de las tasas de rendimiento
 promedios<-datos%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
 ### Se pasan los rendimientos a meses
-promedios$Maduration<-as.numeric(str_remove_all(promedios$Maduration,"[YRMO ]"))*(str_detect(promedios$Maduration,"YR")*12+str_detect(promedios$Maduration,"MO"))
+promedios$Maduration<-as.numeric(str_remove_all(promedios$Maduration,"[YRMOX.]"))*(str_detect(promedios$Maduration,"YR")*12+str_detect(promedios$Maduration,"MO"))
 promedios<-promedios[order(promedios$Maduration),]
 ```
 
