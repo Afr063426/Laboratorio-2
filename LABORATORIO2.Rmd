@@ -79,8 +79,44 @@ De acuerdo con el modelo elegido, datos encontrados, indique qué quiere consegu
 
 
 \chapter{Marco teórico}
-La curva de rendimiento es una herramienta útil a la hora de quererse invertir o negociar un instrumento financiero y al momento de aplicar políticas monetarias.
+\par La curva de rendimiento es una herramienta útil a la hora de quererse invertir o negociar un instrumento financiero y al momento de aplicar políticas monetarias.
 
+\par \textbf{rendimientos spot definir}
+\par Se procede a explicar qué es la curva de rendimiento, según Boudreault y Reanud (2019) la curva de rendimiento también llamada curva de rendimientos spot. Esta curva muestra la relación que hay entre las tasa de rendimiento spot y el tiempo de maduración. Así esta curva muestra los rendimientos que se obtienen de mantener una cierta cantidad de dinero durante un tiempo determinado. Se puede determinar el rendimiento mediante
+\[
+y=\left(\frac{F}{B_0}\right)^{\frac{1}{T}}-1
+\]
+Donde 
+\begin{table}[H]
+\begin{tabular}{c|c}
+$y$ & Tasa de rendimiento\\
+$T$ & Tiempo para la maduraci\'on\\
+$B_0$ & Costo de la inversi\'on o precio del bono\\
+$F$ & Monto a recibir al final del periodo
+\end{tabular}
+\end{table}
+\par Sin embargo a pesar de que esta herramienta es ampliamente utilizada, tiene una limitante intertemporal. Como lo expone Camilo (2008) esta se construye a través de una serie de tasas (precios) de instrumentos financieros discontinuos en el tiempo. Esto implica que entonces lo se ubica a partir de las tasas de rendimiemto es una serie de puntos que no reflejan de forma continua las tasas de rendimiento en el mercado financiero de acuerdo a su tiempo de maduraci\'on.
+\par Sin embargo hay agentes los cuales no están dispuestos a invertir o prestar los montos al tiempo establecido por agentes como los gobiernos nacionales u otras empresas. Es por esta razón que sería de utilidad encontrar una curva suave la cual sea capaz de proyectar las tasas de rendimiento en distintos momentos del tiempo, pero basado en lo que anteriormente han establecido agentes como los gobiernos nacionales.
+\par Para lograr obtener una curva suave la cual se aproxime a las tasas de rendimiento de agentes como los gobiernos, se emplean distintos m\'etodos entre ellos los m\'etodos param\'etricos que est\'an basados en la construcci\'on de curvas a partir de modelos param\'etricos. (Choudhry, 2010)
+\par Entre los modelos param\'etricos se encuentra el de Nelson-Siegel. El cual seg\'un Matteson (2015) describe las tasas forward con la siguiente curva
+\[
+r(t,\theta)=\theta_0+(\theta_1+\theta_2t)\exp(-\theta_3 t)
+\]
+A partir de esta se puede obtener que la curva de rendimiento continua se puede obtener haciendo
+\[
+\begin{split}
+y(t,\theta)&=t^{-1}\int_{0}^{t}r(x,\theta)dx\\
+&=\theta_0+\left(\theta_1+\frac{\theta_2}{\theta_3}\right)\frac{1-\exp(-\theta_3 t)}{\theta_3 t}-\frac{\theta_2}{\theta_3}\exp(-\theta t)
+\end{split}
+\]
+Tal y como lo citan Hladíková y Radová (2012) este modelo tiene una interpretación económica interesante para los parámetros. Tomando la curva que describe las tasas forward 
+Primero
+\[
+\lim_{t\to\infty}r(t,\theta)=\theta_{0}\qquad \lim_{t\to 0}r(t,\theta)=\theta_0+\theta_1
+\]
+\begin{itemize}
+\item Entonces $\beta_0>0$ representa la asintota horizontal de la curva de 
+\end{itemize}
 \chapter{Descripción de los datos}
 Debe ser una descripción breve e incluir algún gráfico que permita tener una buena comprensión de sus datos.
 
