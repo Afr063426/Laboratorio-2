@@ -29,11 +29,15 @@ library(gridExtra)
 library(Quandl)
 require(xts)
 require(YieldCurve)
+library(Quandl)
 
-datos<-Quandl("USTREASURY/YIELD")
+datos<-read.csv("USDdata.csv")
+#datos<-Quandl("USTREASURY/YIELD")
 datos$Date<-(as.Date(datos$Date,format="%Y %m %d"))
 datos<-datos[order(datos$Date),]
 datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
+
+
 ### Se procede a calcular la media de las tasas de rendimiento
 promedios<-datos%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
 ### Se pasan los rendimientos a meses
@@ -116,7 +120,7 @@ Primero
 \lim_{t\to\infty}r(t,\theta)=\theta_{0}\qquad \lim_{t\to 0}r(t,\theta)=\theta_0+\theta_1
 \]
 \begin{itemize}
-\item Entonces $\beta_0>0$ representa la asintota horizontal de la curva de 
+\item Entonces $\beta_0>0$ representa la asintota horizontal de la curva 
 \end{itemize}
 \chapter{Descripción de los datos}
 Debe ser una descripción breve e incluir algún gráfico que permita tener una buena comprensión de sus datos.
