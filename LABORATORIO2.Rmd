@@ -17,14 +17,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r echo=FALSE, include=FALSE, warning=FALSE}
-library(readxl)
-library(readr)
-library(dplyr)
-library(plyr)
+
+
+###Se cargan los paquetes y se cargan y limpian los datos
 library(tidyverse)
-library(tidyr)
 library(ggplot2)
-library(readxl)
 library(kableExtra)
 library(knitr)
 library(xtable)
@@ -32,29 +29,40 @@ library(gridExtra)
 require(xts)
 require(YieldCurve)
 library(Quandl)
-datos<-read.csv("Apple semanal.csv")
-datos$ï..Date<-gsub(",","",datos$ï..Date)
-datos<-datos[order(as.Date(datos$ï..Date),format="%B-%d-%Y"),]
+datos<-Quandl("USTREASURY/YIELD")
+datos$Date<-(as.Date(datos$Date,format="%Y %m %d"))
+datos<-datos[order(datos$Date),]
+datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
+### Se procede a calcular la media de las tasas de rendimiento
+promedios<-datos%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
+### Se pasan los rendimientos a meses
+promedios$Maduration<-as.numeric(str_remove_all(promedios$Maduration,"[YRMO ]"))*(str_detect(promedios$Maduration,"YR")*12+str_detect(promedios$Maduration,"MO"))
+promedios<-promedios[order(promedios$Maduration),]
 ```
-\chapter*{Instrucciones}
-A continuación se le indica la estructura de este laboratorio, desglosado por capítulos que debe incluir en el documento pdf de RMarkdown. Este laboratorio es una simulación en cuanto a la estructura del proyecto de investigación que se desarrollará en el curso. 
-
-Tome en cuenta, que al ser este un reporte de laboratorio, no debe ser muy extenso, debe contener un máximo de `r 1+1+1+3+5+1+1 ` páginas, del conteo se excluye la portada, el índice y los anexos.
-
-Este laboratorio se realizará en parejas nuevamente. 
-
-La idea es implementar prácticamente los conceptos aprendido en el capítulos de instrumentos de renta fija y de ser posible ampliar detalles, para ello se le dará la libertad de elegir una de las siguientes opciones generales para llevar a cabo este laboratorio:
-
-\begin{itemize}
-\item Calcular una curva de rendimiento con Splines.
-\item Calcular una curva de rendimiento con SpliNelson-Siegel (o Svensson). 
-\item Calcular una curva de rendimiento en 3D.
-\end{itemize}
-
-Dado que tiene libertad para escoger el modelo, también cuenta con libertad para elegir datos que le permitan hacer la respectiva modelación, puede investigar datos con los que cuenta R.
 
 
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+### Se program las funciones que se van emplear
+##Modelo de Nelson-Siegel para curvas de rendimiento
+NS<-function(theta,tiempo){
+  yield<-(theta[1]+(theta[2]+theta[3]/theta[4])*(1-exp(-theta[4]*tiempo))/(theta[4]*tiempo)-theta[3]/theta[4]*exp(-theta[4]*tiempo))
+  yield
+}
 
+## Se debe ajustar la curva entonces esto se busca reducir la suma de cuadrados, con la siguiente funci'on
+fitNS<-function(theta,tiempo,rendimientos){
+  fn<-function(theta){
+    sum((rendimientos-NS(theta,tiempo))^2)
+  }
+  optim(theta,
+        fn,
+        method = "L-BFGS-B",
+        lower= rep(-1,4),
+        upper=rep(1,4)
+        )
+}
+
+```
 
 
 \chapter{Resumen Ejecutivo}
@@ -71,7 +79,7 @@ De acuerdo con el modelo elegido, datos encontrados, indique qué quiere consegu
 
 
 \chapter{Marco teórico}
-Detallado pero conciso.
+La curva de rendimiento es una herramienta útil a la hora de quererse invertir o negociar un instrumento financiero y al momento de aplicar políticas monetarias.
 
 \chapter{Descripción de los datos}
 Debe ser una descripción breve e incluir algún gráfico que permita tener una buena comprensión de sus datos.
@@ -91,55 +99,23 @@ Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocar
 
 
 \chapter{Conclusiones y recomendaciones}
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+### Se procede a calcular a los parametros
 
+## Se guaradan los datos importantes
+t<-c(0,0,0,0.0003)
+fitting<-fitNS(t,promedios$Maduration,promedios$Rendimiento)
+paramters<-unlist(fitting[1])
+### Ploteamos
+time<-seq(from=0,to=360,by=1)
+ggplot()+geom_line(aes(x=time,y=NS(paramters,time)))+geom_point(aes(x=promedios$Maduration,y=promedios$Rendimiento))
+```
 \chapter{Referencias bibliográficas}
 En formato apa.
 
 \chapter{Anexos}
 
 
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
 
-###Función para calcular los tasas de rendimiento que tenemos
-###Se le ingresa el precio del bono y lo que se recibe
-rendimientos<-function(precio,pago){
-  pago/precio-precio
-}
-### Modelo Nelson Siegel para rendimientos
-
-NS<-function(theta,tiempo){
-  yield<-(theta[1]+(theta[2]+theta[3]/theta[4])*(1-exp(-theta[4]*tiempo))/(theta[4]*tiempo)-theta[3]/theta[4]*exp(-theta[4]*tiempo))
-  yield
-}
-
-## Se debe ajustar la curva entonces esto se hace
-fitNS<-function(theta,tiempo,rendimientos){
-  fn<-function(theta){
-    sum((rendimientos-NS(theta,tiempo))^2)
-  }
-  optim(theta,
-        fn,
-        method = "L-BFGS-B",
-        lower= rep(-1,4),
-        upper=rep(1,4)
-        )
-}
-
-##
-
-t<-c(0,0,0,0.05)
-fit2<-fitNS(t,datos1[,3],datos1[,2]/100)
-fit<-fitNS(t,datos[,3],datos[,2]/100)
-parametros<-as.numeric(unlist(fit[1]))
-parametros2<-as.numeric(unlist(fit2[1]))
-
-time<-seq(1,432,length=432)
-ggplot()+geom_line(aes(x=datos[,3],y=NS(parametros,datos[,3])))+geom_point(aes(
-  x=datos[,3],y=datos[,2]/100))
-
-ggplot()+geom_line(aes(x=time,y=NS(parametros2,time)))+geom_point(aes(
-  x=datos1[,3],y=datos1[,2]/100))
-
-```
 
 
