@@ -30,6 +30,7 @@ require(xts)
 require(YieldCurve)
 library(Quandl)
 datos<-Quandl("USTREASURY/YIELD")
+write.csv(datos, "C:/Users/saac9/Dropbox/UCR/Análisis de instrumentos de inversión/Variaty of code/Laboratorio-2/USDdata.csv")
 datos$Date<-(as.Date(datos$Date,format="%Y %m %d"))
 datos<-datos[order(datos$Date),]
 datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
@@ -115,7 +116,7 @@ Primero
 \lim_{t\to\infty}r(t,\theta)=\theta_{0}\qquad \lim_{t\to 0}r(t,\theta)=\theta_0+\theta_1
 \]
 \begin{itemize}
-\item Entonces $\beta_0>0$ representa la asintota horizontal de la curva de 
+\item Entonces $\beta_0>0$ representa la asintota horizontal de la curva 
 \end{itemize}
 \chapter{Descripción de los datos}
 Debe ser una descripción breve e incluir algún gráfico que permita tener una buena comprensión de sus datos.
