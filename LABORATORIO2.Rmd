@@ -35,7 +35,9 @@ datos<-read.csv("USDdata.csv")
 #datos<-Quandl("USTREASURY/YIELD")
 datos$Date<-(as.Date(datos$Date,format="%m/%d/%Y"))
 #datos<-datos[order(datos$Date),]
-#datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
+datos1Mo<-datos[datos$Date>=as.Date("2021-04-19"),-3]
+datos10Y<-datos[datos$Date>=as.Date("2010-01-01"),-3]
+datos1Y<-datos[datos$Date>=as.Date("2020-01-01"),-3]
 
 #datos<-Quandl("USTREASURY/YIELD")
 #datos$Date<-(as.Date(datos$Date,format="%Y %m %d"))
@@ -43,10 +45,14 @@ datos$Date<-(as.Date(datos$Date,format="%m/%d/%Y"))
 #datos<-datos[datos$Date>=as.Date("2010-01-01"),-3]
 
 ### Se procede a calcular la media de las tasas de rendimiento
-promedios<-datos%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
+promedios1Mo<-datos1Mo%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
+promedios10Y<-datos10Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
+promedios1Y<-datos1Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
 ### Se pasan los rendimientos a meses
-promedios$Maduration<-as.numeric(str_remove_all(promedios$Maduration,"[YRMOX.]"))*(str_detect(promedios$Maduration,"YR")*12+str_detect(promedios$Maduration,"MO"))
-promedios<-promedios[order(promedios$Maduration),]
+promedios1Mo$Maduration<-as.numeric(str_remove_all(promedios1Mo$Maduration,"[YRMOX.]"))*(str_detect(promedios1Mo$Maduration,"YR")*12+str_detect(promedios1Mo$Maduration,"MO"))
+promedios1Mo<-promedios1Mo[order(promedios1Mo$Maduration),]
+promedios10Y$Maduration<-as.numeric(str_remove_all(promedios10Y$Maduration,"[YRMOX.]"))*(str_detect(promedios10Y$Maduration,"YR")*12+str_detect(promedios10Y$Maduration,"MO"))
+promedios10Y<-promedios1Y[order(promedios10Y$Maduration),]
 ```
 
 
@@ -149,11 +155,17 @@ Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocar
 
 ## Se guaradan los datos importantes
 t<-c(0,0,0,0.0003)
-fitting<-fitNS(t,promedios$Maduration,promedios$Rendimiento)
-paramters<-unlist(fitting[1])
+fitting1Mo<-fitNS(t,promedios1Mo$Maduration,promedios1Mo$Rendimiento)
+paramters1Mo<-unlist(fitting1Mo[1])
+fitting1Y<-fitNS(t,promedios1Y$Maduration,promedios1Y$Rendimiento)
+paramters1Y<-unlist(fitting1Y[1])
+fitting10Y<-fitNS(t,promedios10Y$Maduration,promedios10Y$Rendimiento)
+paramters10Y<-unlist(fitting10Y[1])
 ### Ploteamos
 time<-seq(from=0,to=360,by=1)
-ggplot()+geom_line(aes(x=time,y=NS(paramters,time)))+geom_point(aes(x=promedios$Maduration,y=promedios$Rendimiento))
+ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))
+ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))
+ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))
 ```
 \chapter{Referencias bibliográficas}
 En formato apa.
