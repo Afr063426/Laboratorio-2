@@ -12,79 +12,12 @@ classoption: oneside
 
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r echo=FALSE, include=FALSE, warning=FALSE}
 
 
-###Se cargan los paquetes y se cargan y limpian los datos
-library(tidyverse)
-library(ggplot2)
-library(kableExtra)
-library(knitr)
-library(xtable)
-library(gridExtra)
-library(Quandl)
-require(xts)
-require(YieldCurve)
-library(Quandl)
-
-datos<-read.csv("USDdata.csv")
-#datos<-Quandl("USTREASURY/YIELD")
-datos$Date<-(as.Date(datos$Date,format="%m/%d/%Y"))
-#datos<-datos[order(datos$Date),]
-datos1Mo<-datos[datos$Date>=as.Date("2021-04-19"),-3]
-datos10Y<-datos[datos$Date>=as.Date("2010-01-01"),-3]
-datos1Y<-datos[datos$Date>=as.Date("2020-01-01"),-3]
-
-### Se procede a calcular la media de las tasas de rendimiento
-promedios1Mo<-datos1Mo%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
-promedios10Y<-datos10Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
-promedios1Y<-datos1Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
-
-### Se pasan los rendimientos a meses
-
-promedios1Mo$Maduration<-as.numeric(str_remove_all(promedios1Mo$Maduration,"[YRMOX.]"))*(str_detect(promedios1Mo$Maduration,"YR")*12+str_detect(promedios1Mo$Maduration,"MO"))
-promedios1Mo<-promedios1Mo[order(promedios1Mo$Maduration),]
-promedios1Mo<-cbind(promedios1Mo, "Varianza"=apply(datos1Mo[,-1],2,sd))
 
 
-promedios1Y$Maduration<-as.numeric(str_remove_all(promedios1Y$Maduration,"[YRMOX.]"))*(str_detect(promedios1Y$Maduration,"YR")*12+str_detect(promedios1Y$Maduration,"MO"))
-promedios1Y<-promedios1Y[order(promedios1Y$Maduration),]
-promedios1Y<-cbind(promedios1Y, "Varianza"=apply(datos1Y[,-1],2,sd))
-
-promedios10Y$Maduration<-as.numeric(str_remove_all(promedios10Y$Maduration,"[YRMOX.]"))*(str_detect(promedios10Y$Maduration,"YR")*12+str_detect(promedios10Y$Maduration,"MO"))
-promedios10Y<-promedios10Y[order(promedios10Y$Maduration),]
-promedios10Y<-cbind(promedios10Y, "Varianza"=apply(datos10Y[,-1],2,sd))
 
 
-```
-
-
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
-### Se program las funciones que se van emplear
-##Modelo de Nelson-Siegel para curvas de rendimiento
-NS<-function(theta,tiempo){
-  yield<-(theta[1]+(theta[2]+theta[3]/theta[4])*(1-exp(-theta[4]*tiempo))/(theta[4]*tiempo)-theta[3]/theta[4]*exp(-theta[4]*tiempo))
-  yield
-}
-
-## Se debe ajustar la curva entonces esto se busca reducir la suma de cuadrados, con la siguiente funci'on
-fitNS<-function(theta,tiempo,rendimientos){
-  fn<-function(theta){
-    sum((rendimientos-NS(theta,tiempo))^2)
-  }
-  optim(theta,
-        fn,
-        method = "L-BFGS-B",
-        lower= rep(-1,4),
-        upper=rep(1,4)
-        )
-}
-
-```
 
 
 \chapter{Resumen Ejecutivo 1}
@@ -176,8 +109,8 @@ Primero
 \section{Opción 2}
 Grafico de todos los datos:
 
-```{r}
 
+```r
 Datosgra10Y<-gather(datos10Y, "Fecha de maduración", Obtenido, names(datos10Y[2]):names(datos10Y[length(datos10Y)]))
 
 ggplot( data =Datosgra10Y, mapping = aes(x = Date, y = Obtenido, group=`Fecha de maduración`, color=`Fecha de maduración`)) + 
@@ -192,11 +125,13 @@ ggplot( data =Datosgra10Y, mapping = aes(x = Date, y = Obtenido, group=`Fecha de
     theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
 ```
 
+![](LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
+
 
 Promedio y Desviación de los 3 
 
-```{r}
 
+```r
 # ggplot( data= promedios10Y , mapping = aes(x = Maduration, y = Rendimiento)) + 
 #     geom_point()+
 #     geom_point(data= promedios10Y, mapping = aes(x = Maduration, y =Varianza))+
@@ -208,8 +143,8 @@ Promedio y Desviación de los 3
 ```
 
 
-```{r}
 
+```r
 # ggplot(Datosgra10Y) +
 #   geom_density(aes(x = Obtenido, fill = `Fecha de maduración`), position = 'stack') +
 # 
@@ -221,7 +156,8 @@ Promedio y Desviación de los 3
 ```
 
 
-```{r}
+
+```r
 ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
   geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.02)+
   #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
@@ -232,11 +168,14 @@ ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`
   theme_minimal()
 ```
 
+![](LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
+
 Desviación estanda
 
 
 
-```{r}
+
+```r
 Datosgra1Y<-gather(datos1Y, "Fecha de maduración", Obtenido, names(datos1Y[2]):names(datos1Y[length(datos1Y)]))
 
 ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
@@ -249,8 +188,11 @@ ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`F
   theme_minimal()
 ```
 
+![](LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf)<!-- --> 
 
-```{r}
+
+
+```r
 Datosgra1Mo<-gather(datos1Mo, "Fecha de maduración", Obtenido, names(datos1Mo[2]):names(datos1Mo[length(datos1Mo)]))
 
 ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
@@ -261,6 +203,8 @@ ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`
   ggtitle('Distribución de las tasa spot') + 
   theme_minimal()
 ```
+
+![](LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
 
 
 
@@ -273,36 +217,30 @@ Descripcion de lo de la pandemia
 
 
 
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
-dat<- c(1:6)
-kable(dat  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Ejemplo de formato para tabla",)%>%
-  kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
-```
+\begin{table}[H]
+
+\caption{\label{tab:unnamed-chunk-9}Ejemplo de formato para tabla}
+\centering
+\begin{tabular}[t]{c}
+\toprule
+x\\
+\midrule
+1\\
+2\\
+3\\
+4\\
+5\\
+\addlinespace
+6\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \chapter{Metodología 1}
 Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocaremos aquí los resultados que se vayan obteniendo, incluir al menos un gráfico.
 
 
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
-### Se procede a calcular a los parametros
-
-## Se guaradan los datos importantes
-t<-c(0,0,0,0.0003)
-fitting1Mo<-fitNS(t,promedios1Mo$Maduration,promedios1Mo$Rendimiento)
-paramters1Mo<-unlist(fitting1Mo[1])
-
-fitting1Y<-fitNS(c(0,0,0,0.01),promedios1Y$Maduration,promedios1Y$Rendimiento)
-paramters1Y<-unlist(fitting1Y[1])
-
-fitting10Y<-fitNS(t,promedios10Y$Maduration,promedios10Y$Rendimiento)
-paramters10Y<-unlist(fitting10Y[1])
-### Ploteamos
-time<-seq(from=0,to=360,by=1)
-
-ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))
-ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))
-ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))
-```
+![](LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf)<!-- --> ![](LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf)<!-- --> ![](LABORATORIO2_files/figure-latex/unnamed-chunk-10-3.pdf)<!-- --> 
 
 
 

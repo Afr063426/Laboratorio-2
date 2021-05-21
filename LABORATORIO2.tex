@@ -1,0 +1,585 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  oneside]{memoir}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage[left=15mm, inner=3cm, outer=3cm, top=3cm,bottom=3cm ]{geometry}
+\usepackage{mathpazo}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics,graphicx}
+\usepackage{wallpaper}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{float}
+\nonzeroparskip
+\setlength{\parindent}{0pt}
+%\usepackage{parskip}
+%\setcounter{secnumdepth}{1}
+\renewcommand\thesection{\arabic{section}}
+
+\copypagestyle{headerwchap}{myheadings}
+\chapterstyle{bianchi}
+ \makeevenhead{headerwchap}{\thepage}{}{}
+ \makeoddhead{headerwchap}{}{}{\thepage}
+ \makeoddfoot{headerwchap}{}{}{}
+ \makeevenfoot{headerwchap}{}{}{}
+\makeheadrule{headerwchap}{\textwidth}{0.5pt}
+
+\usepackage[ %
+style=authoryear, % 
+natbib = true, %
+dashed = false, %
+firstinits = true, 
+url =false, %
+isbn = false, %
+backend = bibtex]{biblatex}
+\addbibresource{referencias_proyecto.bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% EDITAR SOLO EL SEGUNDO %%%%%%%
+%%%% CONJUNTO DE PARENTESIS %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Titulo del proyecto
+\newcommand{\TituloProy}{Segundo laboratorio}
+ 
+% Nombre de Estudiantes y Carnet
+\newcommand{\EstudianteUno}{Cervantes Artavia Joshua}
+\newcommand{\EstudianteDos}{Sabater Guzmán Daniel}
+
+\newcommand{\ds}[1]{\ensuremath{\displaystyle{#1}}}
+
+\makeindex
+
+\def\bitcoinB{\leavevmode
+  {\setbox0=\hbox{\textsf{C}}%
+    \dimen0\ht0 \advance\dimen0 0.2ex
+    \ooalign{\hfil \box0\hfil\cr
+      \hfil\vrule height \dimen0 depth.2ex\hfil\cr
+    }%
+  }%
+}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\frontmatter
+
+\begin{titlingpage}
+  \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+  \begin{center}
+
+    {\Huge \textbf{UNIVERSIDAD DE COSTA RICA}}\\[0.2cm] 
+    {\Large ESCUELA DE MATEM\'ATICA\\[0.2cm]
+DEPARTAMENTO DE MATEMÁTICA PURA Y CIENCIAS ACTUARIALES\\
+AN\'ALISIS DE INSTRUMENTOS DE INVERSI\'ON\\[0cm]
+} %
+
+   
+
+    \HRule \\[0.4cm]
+    \Large \textbf{\TituloProy}
+    \HRule \\[0.4cm]
+
+    \vfill
+      
+    {\Large{\textbf{Modelo de Nelson y Siegel}}}
+   
+    \vfill
+    \begin{center}
+      Realizado por %
+      \linebreak %
+      \linebreak %
+      \begin{tabular}{c}
+        \hline  \\
+        Cervantes Artavia Joshua  \\ \\
+        Sabater Guzmán Daniel  \\ \\
+        \hline 
+      \end{tabular}
+    \end{center}
+
+    \vfill
+    
+
+    
+
+    % Bottom of the page
+    \begin{center}
+    \begin{tabular}{l @{\hskip 2in} r}
+    \includegraphics[height=2cm]{./images/ucr_marca_de_agua}
+  & \includegraphics[height=4cm]{./images/EMat_escuela_matematica_horizontal_1} 
+    \end{tabular}
+    \end{center}
+
+ %\\[0.1in]
+%     \Large{Escuela de Matemática}\\
+%     \Large{\textsc{Universidad de Costa Rica}}\\
+
+
+    \ThisURCornerWallPaper{0.5}{./images/granosgirasol.png}
+ 
+  \end{center}
+
+\end{titlingpage}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "plantilla_proyecto"
+%%% End:
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\mainmatter
+\chapter{Resumen Ejecutivo 1}
+
+Aquí debe dar resultados generales de lo que obtuvo del análisis.
+
+\chapter{Introducción 1}
+
+\chapter{Objetivos 1}
+
+\section{Objetivo general}
+
+Analizar la curva de rendimiento de los bonos del tesoro de Estados
+Unidos de Norte América por medio del modelo de Nelson y Siegel en el
+periodo de años comprendido entre el 1° de enero del 2010 y el 20 de
+mayo del 2021.
+
+\section{Objetivos específicos}
+\begin{enumerate} 
+
+\item Explicar el modelo de Nelson y Siegel.
+
+\item Describir las características de la base de datos de los bonos del tesoro de Estados Unidos de Norte América.
+
+\item Implementar el modelo de Nelson y Siegel en lenguaje de programación R, para la base de datos de los bonos del tesoro de Estados Unidos de Norte América.
+
+\item Evaluar los resultados obtenidos apartir del modelo de Nelson y Siegel.
+
+\end{enumerate}
+
+\chapter{Marco teórico 3}
+\par
+
+La curva de rendimiento es una herramienta útil a la hora de quererse
+invertir o negociar un instrumento financiero y al momento de aplicar
+políticas monetarias.
+
+\par
+
+\textbf{rendimientos spot definir}
+
+\par
+
+Se procede a explicar qué es la curva de rendimiento, según Boudreault y
+Reanud (2019) la curva de rendimiento también llamada curva de
+rendimientos spot. Esta curva muestra la relación que hay entre las tasa
+de rendimiento spot y el tiempo de maduración. Así esta curva muestra
+los rendimientos que se obtienen de mantener una cierta cantidad de
+dinero durante un tiempo determinado. Se puede determinar el rendimiento
+mediante \[
+y=\left(\frac{F}{B_0}\right)^{\frac{1}{T}}-1
+\] Donde
+
+\begin{table}[H]
+\begin{tabular}{c|c}
+$y$ & Tasa de rendimiento\\
+$T$ & Tiempo para la maduración\\
+$B_0$ & Costo de la inversión o precio del bono\\
+$F$ & Monto a recibir al final del periodo
+\end{tabular}
+\end{table}
+\par
+
+Sin embargo a pesar de que esta herramienta es ampliamente utilizada,
+tiene una limitante intertemporal. Como lo expone Camilo (2008) esta se
+construye a través de una serie de tasas (precios) de instrumentos
+financieros discontinuos en el tiempo. Esto implica que entonces lo se
+ubica a partir de las tasas de rendimiemto es una serie de puntos que no
+reflejan de forma continua las tasas de rendimiento en el mercado
+financiero de acuerdo a su tiempo de maduración.
+
+\par
+
+Sin embargo hay agentes los cuales no están dispuestos a invertir o
+prestar los montos al tiempo establecido por agentes como los gobiernos
+nacionales u otras empresas. Es por esta razón que sería de utilidad
+encontrar una curva suave la cual sea capaz de proyectar las tasas de
+rendimiento en distintos momentos del tiempo, pero basado en lo que
+anteriormente han establecido agentes como los gobiernos nacionales.
+
+\par
+
+Para lograr obtener una curva suave la cual se aproxime a las tasas de
+rendimiento de agentes como los gobiernos, se emplean distintos métodos
+entre ellos los métodos paramétricos que están basados en la
+construcción de curvas a partir de modelos paramétricos. (Choudhry,
+2010)
+
+\par
+
+Entre los modelos paramétricos se encuentra el de Nelson-Siegel. El cual
+según Matteson (2015) describe las tasas forward con la siguiente curva
+\[
+r(t,\theta)=\theta_0+(\theta_1+\theta_2t)\exp(-\theta_3 t)
+\] A partir de esta se puede obtener que la curva de rendimiento
+continua se puede obtener haciendo \[
+\begin{split}
+y(t,\theta)&=t^{-1}\int_{0}^{t}r(x,\theta)dx\\
+&=\theta_0+\left(\theta_1+\frac{\theta_2}{\theta_3}\right)\frac{1-\exp(-\theta_3 t)}{\theta_3 t}-\frac{\theta_2}{\theta_3}\exp(-\theta t)
+\end{split}
+\] Tal y como lo citan Hladíková y Radová (2012) este modelo tiene una
+interpretación económica interesante para los parámetros. Tomando la
+curva que describe las tasas forward Primero \[
+\lim_{t\to\infty}r(t,\theta)=\theta_{0}\qquad \lim_{t\to 0}r(t,\theta)=\theta_0+\theta_1
+\]
+
+\begin{itemize}
+\item Entonces $\beta_0>0$ representa la asintota horizontal de la curva 
+\end{itemize}
+
+\chapter{Descripción de los datos 5}
+
+\par
+
+Profesora, estuvimos investigado bases de datos donde nos dieran como
+insumo el precio de los bonos, nos encontramos con varios inconvenientes
+de las misma:
+
+\par
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  El registro de datos es muy corto, aproximadamente 1 mes como mucho,
+  más que todo datos eran de un día especifico y no guardan registro de
+  los anteriores.
+
+  \par
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \setcounter{enumii}{1}
+  \tightlist
+  \item
+    En Bonos cero cupones, para calcular las tasas, el plazo de
+    maduración máximo fue a 10 años, posterior a 10 años tienen cupón y
+    no se puede hacer bootstrapping.
+
+    \par
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \setcounter{enumiii}{2}
+    \tightlist
+    \item
+      No se tiene presente la tasa de descuento para estos bonos de más
+      de 10 años, por lo que no se puede traer a valor presente, para
+      calcular su respectiva tasa de pendiente
+
+      \par
+
+      \begin{enumerate}
+      \def\labelenumiv{\arabic{enumiv}.}
+      \setcounter{enumiv}{3}
+      \tightlist
+      \item
+        Estos inconvenientes se mantenían en todas las bases de datos
+        que hemos encontrado, las cuales han sido muy pocas por el
+        siguiente punto.
+
+        \par
+
+        \begin{enumerate}
+        \def\labelenumv{\arabic{enumv}.}
+        \tightlist
+        \item
+          En sus mayorías las bases de datos con una cantidad aceptable
+          de observaciones se encuentran las tasas de rendimiento (spot)
+
+          \par
+
+          Tal vez nos podría dar alguna indicación con respecto a estas
+          bases de datos o sugerir una en específico, para así poder
+          avanzar en el desarrollo del proyecto o en su defecto
+          trabajarlo solo con las bases de datos que contienen a las
+          tasas de rendimientos, como la que se está trabajando en este
+          momento.
+
+          \par
+
+          Por lo anterior le presentamos dos ideas para desarrollar el
+          trabajo, la primera partiendo de los precios de los bonos con
+          una base de datos que a nuestro parecer no es la mejor, pues
+          no cuenta con amplitud de observaciones ni rendimientos a
+          largo plazo y la segunda con una base de datos que cuenta con
+          las tasas de rendimiento únicamente, pero con grandes
+          cantidades de observaciones y amplitud de fechas de
+          maduración.
+        \end{enumerate}
+      \end{enumerate}
+    \end{enumerate}
+  \end{enumerate}
+\end{enumerate}
+
+\section{Opción 1}
+
+\section{Opción 2}
+
+Grafico de todos los datos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Datosgra10Y}\OtherTok{\textless{}{-}}\FunctionTok{gather}\NormalTok{(datos10Y, }\StringTok{"Fecha de maduración"}\NormalTok{, Obtenido, }\FunctionTok{names}\NormalTok{(datos10Y[}\DecValTok{2}\NormalTok{])}\SpecialCharTok{:}\FunctionTok{names}\NormalTok{(datos10Y[}\FunctionTok{length}\NormalTok{(datos10Y)]))}
+
+\FunctionTok{ggplot}\NormalTok{( }\AttributeTok{data =}\NormalTok{Datosgra10Y, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Date, }\AttributeTok{y =}\NormalTok{ Obtenido, }\AttributeTok{group=}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{color=}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+} 
+    \FunctionTok{geom\_line}\NormalTok{()}\SpecialCharTok{+}
+    \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"1 mes"}\NormalTok{, }\StringTok{"6 meses"}\NormalTok{, }\StringTok{"1 año"}\NormalTok{, }\StringTok{"2 años"}\NormalTok{, }\StringTok{"3 años"}\NormalTok{,}\StringTok{"5 años"}\NormalTok{,}\StringTok{"7 años"}\NormalTok{, }\StringTok{"10 años"}\NormalTok{,}\StringTok{"20 años"}\NormalTok{,}\StringTok{"30 años"}\NormalTok{))}\SpecialCharTok{+}
+      \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{y =} \StringTok{"Tasa de rendimiento en \%"}\NormalTok{,}
+      \AttributeTok{x =} \StringTok{"Tiempo"}\NormalTok{,}
+      \AttributeTok{title =} \StringTok{"Comportamiento de las tasas spot"}
+\NormalTok{      ) }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"bottom"}\NormalTok{)}\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =}\NormalTok{ .}\DecValTok{5}\NormalTok{))}\CommentTok{\# colocamos el titulo en el centro}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+Promedio y Desviación de los 3
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ggplot( data= promedios10Y , mapping = aes(x = Maduration, y = Rendimiento)) + }
+\CommentTok{\#     geom\_point()+}
+\CommentTok{\#     geom\_point(data= promedios10Y, mapping = aes(x = Maduration, y =Varianza))+}
+\CommentTok{\#   xlab(\textquotesingle{}Fecha de maduración\textquotesingle{}) + }
+\CommentTok{\#   ylab(\textquotesingle{}Tasas spot\textquotesingle{}) +}
+\CommentTok{\#   ggtitle(\textquotesingle{}Distribución de las tasa spot\textquotesingle{}) + }
+\CommentTok{\#     theme(legend.position="bottom")+}
+\CommentTok{\#     theme(plot.title = element\_text(hjust = .5))\# colocamos el titulo en el centro}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ggplot(Datosgra10Y) +}
+\CommentTok{\#   geom\_density(aes(x = Obtenido, fill = \textasciigrave{}Fecha de maduración\textasciigrave{}), position = \textquotesingle{}stack\textquotesingle{}) +}
+\CommentTok{\# }
+\CommentTok{\#   xlab(\textquotesingle{}Fecha de maduración\textquotesingle{}) +}
+\CommentTok{\#   ylab(\textquotesingle{}Tasas spot\textquotesingle{}) +}
+\CommentTok{\#   ggtitle(\textquotesingle{}Distribución de las tasa spot\textquotesingle{}) +}
+\CommentTok{\#   theme\_minimal() +}
+\CommentTok{\#   theme(legend.position="none")}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Datosgra10Y, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{ , }\AttributeTok{y =}\NormalTok{ Obtenido, }\AttributeTok{group=}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_jitter}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.02}\NormalTok{)}\SpecialCharTok{+}
+  \CommentTok{\#geom\_violin(aes(fill = \textasciigrave{}Fecha de maduración\textasciigrave{}), color = \textquotesingle{}black\textquotesingle{}, alpha = 0.8)+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"1 mes"}\NormalTok{, }\StringTok{"6 meses"}\NormalTok{, }\StringTok{"1 año"}\NormalTok{, }\StringTok{"2 años"}\NormalTok{, }\StringTok{"3 años"}\NormalTok{,}\StringTok{"5 años"}\NormalTok{,}\StringTok{"7 años"}\NormalTok{, }\StringTok{"10 años"}\NormalTok{,}\StringTok{"20 años"}\NormalTok{,}\StringTok{"30 años"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Fecha de maduración\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Tasas spot en \%\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Distribución de las tasa spot\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+Desviación estanda
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Datosgra1Y}\OtherTok{\textless{}{-}}\FunctionTok{gather}\NormalTok{(datos1Y, }\StringTok{"Fecha de maduración"}\NormalTok{, Obtenido, }\FunctionTok{names}\NormalTok{(datos1Y[}\DecValTok{2}\NormalTok{])}\SpecialCharTok{:}\FunctionTok{names}\NormalTok{(datos1Y[}\FunctionTok{length}\NormalTok{(datos1Y)]))}
+
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Datosgra1Y, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{ , }\AttributeTok{y =}\NormalTok{ Obtenido, }\AttributeTok{group=}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_jitter}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.04}\NormalTok{)}\SpecialCharTok{+}
+  \CommentTok{\#geom\_violin(aes(fill = \textasciigrave{}Fecha de maduración\textasciigrave{}), color = \textquotesingle{}black\textquotesingle{}, alpha = 0.8)+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"1 mes"}\NormalTok{, }\StringTok{"6 meses"}\NormalTok{, }\StringTok{"1 año"}\NormalTok{, }\StringTok{"2 años"}\NormalTok{, }\StringTok{"3 años"}\NormalTok{,}\StringTok{"5 años"}\NormalTok{,}\StringTok{"7 años"}\NormalTok{, }\StringTok{"10 años"}\NormalTok{,}\StringTok{"20 años"}\NormalTok{,}\StringTok{"30 años"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Fecha de maduración\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Tasas spot en \%\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Distribución de las tasa spot\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Datosgra1Mo}\OtherTok{\textless{}{-}}\FunctionTok{gather}\NormalTok{(datos1Mo, }\StringTok{"Fecha de maduración"}\NormalTok{, Obtenido, }\FunctionTok{names}\NormalTok{(datos1Mo[}\DecValTok{2}\NormalTok{])}\SpecialCharTok{:}\FunctionTok{names}\NormalTok{(datos1Mo[}\FunctionTok{length}\NormalTok{(datos1Mo)]))}
+
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Datosgra1Mo, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{ , }\AttributeTok{y =}\NormalTok{ Obtenido, }\AttributeTok{group=}\StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_jitter}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Fecha de maduración}\StringTok{\textasciigrave{}}\NormalTok{), }\AttributeTok{size =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.02}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{labels=}\FunctionTok{c}\NormalTok{(}\StringTok{"1 mes"}\NormalTok{, }\StringTok{"6 meses"}\NormalTok{, }\StringTok{"1 año"}\NormalTok{, }\StringTok{"2 año"}\NormalTok{, }\StringTok{"3 año"}\NormalTok{,}\StringTok{"5 año"}\NormalTok{,}\StringTok{"7 año"}\NormalTok{, }\StringTok{"10 año"}\NormalTok{,}\StringTok{"20 año"}\NormalTok{,}\StringTok{"30 año"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{\textquotesingle{}Fecha de maduración\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{\textquotesingle{}Tasas spot en \%\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{\textquotesingle{}Distribución de las tasa spot\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+Descripcion de lo de la pandemia
+
+\begin{table}[H]
+
+\caption{\label{tab:unnamed-chunk-9}Ejemplo de formato para tabla}
+\centering
+\begin{tabular}[t]{c}
+\toprule
+x\\
+\midrule
+1\\
+2\\
+3\\
+4\\
+5\\
+\addlinespace
+6\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\chapter{Metodología 1}
+
+Cómo implementa la teoría expuesta en el marco teórico con sus datos,
+colocaremos aquí los resultados que se vayan obteniendo, incluir al
+menos un gráfico.
+
+\includegraphics{LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf}
+\includegraphics{LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf}
+\includegraphics{LABORATORIO2_files/figure-latex/unnamed-chunk-10-3.pdf}
+
+\chapter{Conclusiones y recomendaciones 1}
+
+\chapter{Referencias bibliográficas}
+
+\nocite{*} \printbibliography
+
+\chapter{Anexos}
+
+\backmatter
+\end{document}

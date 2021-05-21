@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.5.19)  21 MAY 2021 16:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.5.19)  21 MAY 2021 17:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1379,8 +1379,8 @@ Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
 \openout5 = `LABORATORIO2-blx.bib'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'LABORATORIO2.bbl' found.
-(./LABORATORIO2.bbl)
+Package biblatex Info: ... file 'LABORATORIO2.bbl' not found.
+No file LABORATORIO2.bbl.
 Package biblatex Info: Reference section=0 on input line 178.
 Package biblatex Info: Reference segment=0 on input line 178.
 LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 2
@@ -1420,13 +1420,13 @@ LaTeX Font Info:    Trying to load font information for OT1+zplm on input line
 (c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
-<./images/ucr_marca_de_agua.png, id=56, 180.675pt x 68.255pt>
+<./images/ucr_marca_de_agua.png, id=32, 180.675pt x 68.255pt>
 File: ./images/ucr_marca_de_agua.png Graphic file (type png)
 <use ./images/ucr_marca_de_agua.png>
 Package pdftex.def Info: ./images/ucr_marca_de_agua.png  used on input line 223
 .
 (pdftex.def)             Requested size: 150.63287pt x 56.90575pt.
-<./images/EMat_escuela_matematica_horizontal_1.png, id=58, 128.8815pt x 23.1264
+<./images/EMat_escuela_matematica_horizontal_1.png, id=34, 128.8815pt x 23.1264
 pt>
 File: ./images/EMat_escuela_matematica_horizontal_1.png Graphic file (type png)
 
@@ -1434,7 +1434,7 @@ File: ./images/EMat_escuela_matematica_horizontal_1.png Graphic file (type png)
 Package pdftex.def Info: ./images/EMat_escuela_matematica_horizontal_1.png  use
 d on input line 224.
 (pdftex.def)             Requested size: 128.88707pt x 23.1274pt.
-<./images/granosgirasol.png, id=59, 623.32875pt x 620.3175pt>
+<./images/granosgirasol.png, id=35, 623.32875pt x 620.3175pt>
 File: ./images/granosgirasol.png Graphic file (type png)
 <use ./images/granosgirasol.png>
 Package pdftex.def Info: ./images/granosgirasol.png  used on input line 237.
@@ -1449,24 +1449,10 @@ LaTeX Font Info:    Trying to load font information for T1+lmss on input line 2
 47.
 (c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) (./LABORATORIO2.toc
-LaTeX Info: Redefining \sptext on input line 2.
-LaTeX Info: Redefining \. on input line 2.
-LaTeX Info: Redefining \% on input line 2.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 4.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 4.
-LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 4.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 4.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 4.
-LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 4.
-)pdfTeX warning (ext4): destination with the same identifier (name{page.I}) has
- been already used, duplicate ignored
+)
+No file LABORATORIO2.toc.
+pdfTeX warning (ext4): destination with the same identifier (name{page.I}) has 
+been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.249 \chapter
@@ -1487,7 +1473,20 @@ LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 2
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 ) [3
 
-] [4
+]
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 296.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 296.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 296.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 296.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 296.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 296.
+[4
 
 ]
 LaTeX Info: Redefining \. on input line 357.
@@ -1502,184 +1501,22 @@ either increase the head height or redesign the header
 Overfull \vbox (0.77002pt too high) has occurred while \output is active []
 
 [5]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-87.
-(c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-390.
-(c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
-File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-<LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf, id=121, 469.755pt x 325
-.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type 
-pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf 
- used on input line 403.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-[6
 
-]
-LaTeX Info: Redefining \. on input line 444.
-LaTeX Info: Redefining \% on input line 444.
+! LaTeX Error: Too deeply nested.
 
-Overfull \vbox (0.77002pt too high) has occurred while \output is active []
-
-[7 <./LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf>]
-<LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf, id=139, 469.755pt x 325
-.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type 
-pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf 
- used on input line 446.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-<LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf, id=140, 469.755pt x 325
-.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type 
-pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf 
- used on input line 463.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-LaTeX Info: Redefining \. on input line 465.
-LaTeX Info: Redefining \% on input line 465.
-
-Overfull \vbox (0.77002pt too high) has occurred while \output is active []
-
-[8 <./LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf>]
-<LABORATORIO2_files/figure-latex/unnamed-chunk-9-1.pdf, id=156, 469.755pt x 325
-.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type 
-pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-9-1.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-9-1.pdf 
- used on input line 479.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-LaTeX Info: Redefining \. on input line 481.
-LaTeX Info: Redefining \% on input line 481.
-
-Overfull \vbox (0.77002pt too high) has occurred while \output is active []
-
-[9 <./LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf>]
-LaTeX Info: Redefining \. on input line 499.
-LaTeX Info: Redefining \% on input line 499.
-
-Overfull \vbox (0.77002pt too high) has occurred while \output is active []
-
-[10pdfTeX warning (ext4): destination with the same identifier (name{table.5.1}
-) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
                                                   
-l.499 \chapter
-              {Metodología 1} <./LABORATORIO2_files/figure-latex/unnamed-chunk
--9-1.pdf>]
-<LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf, id=189, 469.755pt x 32
-5.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type
- pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf
-  used on input line 505.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-<LABORATORIO2_files/figure-latex/unnamed-chunk-11-2.pdf, id=190, 469.755pt x 32
-5.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-11-2.pdf Graphic file (type
- pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-11-2.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-11-2.pdf
-  used on input line 506.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-<LABORATORIO2_files/figure-latex/unnamed-chunk-11-3.pdf, id=191, 469.755pt x 32
-5.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-11-3.pdf Graphic file (type
- pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-11-3.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-11-3.pdf
-  used on input line 507.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 505--508
-[][]
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 505--508
-[]
- []
-
-[11
-
- <./LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf>]
-LaTeX Info: Redefining \. on input line 509.
-LaTeX Info: Redefining \% on input line 509.
-
-Overfull \vbox (0.77002pt too high) has occurred while \output is active []
-
-[12 <./LABORATORIO2_files/figure-latex/unnamed-chunk-11-2.pdf> <./LABORATORIO2_
-files/figure-latex/unnamed-chunk-11-3.pdf>] [13
-
-] [14
-
-] [15
-
-] [16
-
-]
-
-Class memoir Warning: The material used in the headers is too large
-(12.77002pt) for the given head height (12.0pt), it is recommended to
-either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 518.
-
-\tf@toc=\write8
-\openout8 = `LABORATORIO2.toc'.
-
-(./LABORATORIO2.aux
-LaTeX Info: Redefining \sptext on input line 33.
-LaTeX Info: Redefining \. on input line 33.
-LaTeX Info: Redefining \% on input line 33.
-)
-Package rerunfilecheck Info: File `LABORATORIO2.out' has not changed.
-(rerunfilecheck)             Checksum: 05B6E70A44FC29EC2DCCEB6D5302B9E9;1790.
-Package logreq Info: Writing requests to 'LABORATORIO2.run.xml'.
-\openout1 = `LABORATORIO2.run.xml'.
-
- ) 
+l.410         \begin{enumerate}
+                                
 Here is how much of TeX's memory you used:
- 24464 strings out of 480778
- 397584 string characters out of 5902320
- 963676 words of memory out of 5000000
- 41417 multiletter control sequences out of 15000+600000
- 458646 words of font info for 122 fonts, out of 8000000 for 9000
+ 24072 strings out of 480778
+ 388395 string characters out of 5902320
+ 962418 words of memory out of 5000000
+ 41075 multiletter control sequences out of 15000+600000
+ 454471 words of font info for 115 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 62i,16n,67p,1867b,1940s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.
-enc}{c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec
-.enc}{c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r
-.enc}<c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmex10.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmmi10.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/sabat/AppData/Roaming/T
-inyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/sabat/App
-Data/Roaming/TinyTeX/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb><c:/Users
-/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/mathpazo/fplmri.pf
-b><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss
-bx10.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/
-lm/lmsso12.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/p
-ublic/lm/lmtt10.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/ty
-pe1/public/lm/lmtti10.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fo
-nts/type1/urw/palatino/uplb8a.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf
--dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/Users/sabat/AppData/Roaming/TinyT
-eX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/Users/sabat/AppData/Roami
-ng/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on LABORATORIO2.pdf (18 pages, 2255303 bytes).
-PDF statistics:
- 300 PDF objects out of 1000 (max. 8388607)
- 243 compressed objects within 3 object streams
- 41 named destinations out of 1000 (max. 500000)
- 155 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 62i,16n,67p,1867b,765s stack positions out of 5000i,500n,10000p,200000b,80000s
 
+!  ==> Fatal error occurred, no output PDF file produced!
