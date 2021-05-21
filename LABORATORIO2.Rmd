@@ -51,8 +51,17 @@ promedios1Y<-datos1Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_b
 ### Se pasan los rendimientos a meses
 promedios1Mo$Maduration<-as.numeric(str_remove_all(promedios1Mo$Maduration,"[YRMOX.]"))*(str_detect(promedios1Mo$Maduration,"YR")*12+str_detect(promedios1Mo$Maduration,"MO"))
 promedios1Mo<-promedios1Mo[order(promedios1Mo$Maduration),]
+
+promedios1Y$Maduration<-as.numeric(str_remove_all(promedios1Y$Maduration,"[YRMOX.]"))*(str_detect(promedios1Y$Maduration,"YR")*12+str_detect(promedios1Y$Maduration,"MO"))
+promedios1Y<-promedios1Y[order(promedios1Y$Maduration),]
+
+
 promedios10Y$Maduration<-as.numeric(str_remove_all(promedios10Y$Maduration,"[YRMOX.]"))*(str_detect(promedios10Y$Maduration,"YR")*12+str_detect(promedios10Y$Maduration,"MO"))
-promedios10Y<-promedios1Y[order(promedios10Y$Maduration),]
+promedios10Y<-promedios10Y[order(promedios10Y$Maduration),]
+
+
+
+
 ```
 
 
