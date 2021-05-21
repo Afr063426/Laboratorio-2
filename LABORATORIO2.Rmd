@@ -308,7 +308,8 @@ ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+geom_point(aes(x=promedi
 
 
 \chapter{Referencias bibliográficas}
-En formato apa.
+\nocite{*}
+\printbibliography
 
 \chapter{Anexos}
 
