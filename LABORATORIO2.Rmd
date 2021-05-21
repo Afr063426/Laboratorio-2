@@ -86,12 +86,12 @@ fitNS<-function(theta,tiempo,rendimientos){
 ```
 
 
-\chapter{Resumen Ejecutivo_1}
+\chapter{Resumen Ejecutivo 1}
 Aquí debe dar resultados generales de lo que obtuvo del análisis.
 
-\chapter{Introducción_1}
+\chapter{Introducción 1}
 
-\chapter{Objetivos_1}
+\chapter{Objetivos 1}
 
 \section{Objetivo general}
 
@@ -114,7 +114,7 @@ Analizar la curva de rendimiento de los bonos del tesoro de Estados Unidos de No
 
 
 
-\chapter{Marco teórico_3}
+\chapter{Marco teórico 3}
 \par La curva de rendimiento es una herramienta útil a la hora de quererse invertir o negociar un instrumento financiero y al momento de aplicar políticas monetarias.
 
 \par \textbf{rendimientos spot definir}
@@ -158,7 +158,7 @@ Primero
 
 
 
-\chapter{Descripción de los datos_5}
+\chapter{Descripción de los datos 5}
 Debe ser una descripción breve e incluir algún gráfico que permita tener una buena comprensión de sus datos.
 
 Entre las descripciones de las variables sería bueno el detalle de la que considera la más importante de su modelo, puede que tenga que calcular la media, por ejemplo, si mis datos son 
@@ -170,12 +170,13 @@ kable(dat  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Ejem
   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 
-\chapter{Metodología_1}
+\chapter{Metodología 1}
 Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocaremos aquí los resultados que se vayan obteniendo, incluir al menos un gráfico.
 
 
 
-\chapter{Conclusiones y recomendaciones_1}
+\chapter{Conclusiones y recomendaciones 1}
+
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 ### Se procede a calcular a los parametros
 
