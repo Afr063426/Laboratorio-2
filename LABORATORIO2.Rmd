@@ -326,17 +326,7 @@ optimizacion<-function(price,theta,maduracion,cupon){
         )
 }
 t<-c(0,0,0,0.05)
-f<-function(t){
-  tryCatch(
-    expr={optimizacion(100.117,t,30,t)
-  },{
-      error=function(e){
-        f(runif(1,0,1)/10)
-      }
-    }
-  )
-}
-f(t)
+
 
 ```
 
