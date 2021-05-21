@@ -48,15 +48,16 @@ promedios1Y<-datos1Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_b
 
 promedios1Mo$Maduration<-as.numeric(str_remove_all(promedios1Mo$Maduration,"[YRMOX.]"))*(str_detect(promedios1Mo$Maduration,"YR")*12+str_detect(promedios1Mo$Maduration,"MO"))
 promedios1Mo<-promedios1Mo[order(promedios1Mo$Maduration),]
+promedios1Mo<-cbind(promedios1Mo, "Varianza"=apply(datos1Mo[,-1],2,sd))
+
 
 promedios1Y$Maduration<-as.numeric(str_remove_all(promedios1Y$Maduration,"[YRMOX.]"))*(str_detect(promedios1Y$Maduration,"YR")*12+str_detect(promedios1Y$Maduration,"MO"))
 promedios1Y<-promedios1Y[order(promedios1Y$Maduration),]
-
+promedios1Y<-cbind(promedios1Y, "Varianza"=apply(datos1Y[,-1],2,sd))
 
 promedios10Y$Maduration<-as.numeric(str_remove_all(promedios10Y$Maduration,"[YRMOX.]"))*(str_detect(promedios10Y$Maduration,"YR")*12+str_detect(promedios10Y$Maduration,"MO"))
 promedios10Y<-promedios10Y[order(promedios10Y$Maduration),]
-
-
+promedios10Y<-cbind(promedios10Y, "Varianza"=apply(datos10Y[,-1],2,sd))
 
 
 ```
@@ -95,7 +96,7 @@ Aquí debe dar resultados generales de lo que obtuvo del análisis.
 
 \section{Objetivo general}
 
-Analizar la curva de rendimiento de los bonos del tesoro de Estados Unidos de Norte América por medio del modelo de Nelson y Siegel en el periodo de años comprendido entre 2010 y 2020.
+Analizar la curva de rendimiento de los bonos del tesoro de Estados Unidos de Norte América por medio del modelo de Nelson y Siegel en el periodo de años comprendido entre el 1° de enero del 2010 y el  20 de mayo del 2021.
 
 \section{Objetivos específicos}
 \begin{enumerate} 
@@ -163,6 +164,100 @@ Debe ser una descripción breve e incluir algún gráfico que permita tener una 
 
 Entre las descripciones de las variables sería bueno el detalle de la que considera la más importante de su modelo, puede que tenga que calcular la media, por ejemplo, si mis datos son 
 
+Grafico de todos los datos:
+
+```{r}
+
+Datosgra10Y<-gather(datos10Y, "Fecha de maduración", Obtenido, names(datos10Y[2]):names(datos10Y[length(datos10Y)]))
+
+ggplot( data =Datosgra10Y, mapping = aes(x = Date, y = Obtenido, group=`Fecha de maduración`, color=`Fecha de maduración`)) + 
+    geom_line()+
+    scale_color_discrete(labels=c("1 mes", "6 meses", "1 año", "2 año", "3 año","5 año","7 año", "10 año","20 año","30 año"))+
+      labs(
+      y = "Monto",
+      x = "Tiempo",
+      title = "Comportamiento del bono"
+      ) +
+    theme(legend.position="bottom")+
+    theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
+```
+
+
+Promedio y Desviación de los 3 
+
+```{r}
+
+# ggplot( data= promedios10Y , mapping = aes(x = Maduration, y = Rendimiento)) + 
+#     geom_point()+
+#     geom_point(data= promedios10Y, mapping = aes(x = Maduration, y =Varianza))+
+#   xlab('Fecha de maduración') + 
+#   ylab('Tasas spot') +
+#   ggtitle('Distribución de las tasa spot') + 
+#     theme(legend.position="bottom")+
+#     theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
+```
+
+
+```{r}
+# 
+# ggplot(Datosgra10Y) + 
+#   geom_density(aes(x = Obtenido, fill = `Fecha de maduración`), position = 'stack') + 
+#   
+#   xlab('Fecha de maduración') + 
+#   ylab('Tasas spot') +
+#   ggtitle('Distribución de las tasa spot') + 
+#   theme_minimal() +
+#   theme(legend.position="none")
+```
+
+
+
+
+
+
+```{r}
+ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
+  xlab('Fecha de maduración') + 
+  ylab('Tasas spot') +
+  ggtitle('Distribución de las tasa spot') + 
+  theme_minimal()
+```
+
+
+
+
+
+```{r}
+Datosgra1Y<-gather(datos1Y, "Fecha de maduración", Obtenido, names(datos1Y[2]):names(datos1Y[length(datos1Y)]))
+
+ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
+  xlab('Fecha de maduración') + 
+  ylab('Tasas spot') +
+  ggtitle('Distribución de las tasa spot') + 
+  theme_minimal()
+```
+
+
+```{r}
+Datosgra1Mo<-gather(datos1Mo, "Fecha de maduración", Obtenido, names(datos1Mo[2]):names(datos1Mo[length(datos1Mo)]))
+
+ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
+  xlab('Fecha de maduración') + 
+  ylab('Tasas spot') +
+  ggtitle('Distribución de las tasa spot') + 
+  theme_minimal()
+```
+
+
+
+
+Descripcion de lo de la pandemia
+
+
+
+
+
+
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 dat<- c(1:4)
@@ -173,9 +268,6 @@ kable(dat  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Ejem
 \chapter{Metodología 1}
 Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocaremos aquí los resultados que se vayan obteniendo, incluir al menos un gráfico.
 
-
-
-\chapter{Conclusiones y recomendaciones 1}
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 ### Se procede a calcular a los parametros
@@ -192,10 +284,18 @@ fitting10Y<-fitNS(t,promedios10Y$Maduration,promedios10Y$Rendimiento)
 paramters10Y<-unlist(fitting10Y[1])
 ### Ploteamos
 time<-seq(from=0,to=360,by=1)
+
 ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))
 ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))
 ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))
 ```
+
+
+
+\chapter{Conclusiones y recomendaciones 1}
+
+
+
 \chapter{Referencias bibliográficas}
 En formato apa.
 
