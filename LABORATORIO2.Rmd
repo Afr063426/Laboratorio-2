@@ -160,9 +160,16 @@ Primero
 
 
 \chapter{Descripción de los datos 5}
-Debe ser una descripción breve e incluir algún gráfico que permita tener una buena comprensión de sus datos.
 
-Entre las descripciones de las variables sería bueno el detalle de la que considera la más importante de su modelo, puede que tenga que calcular la media, por ejemplo, si mis datos son 
+Profesora, estuvimos investigado bases de datos donde nos dieran como insumo el precio de los bonos, nos encontramos con varios inconvenientes de las misma:
+1.	El registro de datos es muy corto, aproximadamente 1 mes como mucho, más que todo datos eran de un día especifico y no guardan registro de los anteriores.
+2.	En Bonos cero cupones, para calcular las tasas, el plazo de maduración máximo fue a 10 años, posterior a 10 años tienen cupón y no se puede hacer bootstrapping.
+3.	No se tiene presente la tasa de descuento para estos bonos de más de 10 años, por lo que no se puede traer a valor presente, para calcular su respectiva tasa de pendiente 
+4.	Estos inconvenientes se mantenían en todas las bases de datos que hemos encontrado, las cuales han sido muy pocas por el siguiente punto.
+5.	En sus mayorías las bases de datos con una cantidad aceptable de observaciones se encuentran las tasas de rendimiento (spot) 
+Tal vez nos podría dar alguna indicación con respecto a estas bases de datos o sugerir una en específico, para así poder avanzar en el desarrollo del proyecto o en su defecto trabajarlo solo con las bases de datos que contienen a las tasas de rendimientos, como la que se está trabajando en este momento.
+Por lo anterior le presentamos dos ideas para desarrollar el trabajo, la primera partiendo de los precios de los bonos con una base de datos que a nuestro parecer no es la mejor, pues no cuenta con amplitud de observaciones ni rendimientos a largo plazo y la segunda con una base de datos que cuenta con las tasas de rendimiento únicamente, pero con grandes cantidades de observaciones y amplitud de fechas de maduración.
+
 
 Grafico de todos los datos:
 
