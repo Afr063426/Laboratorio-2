@@ -31,6 +31,8 @@ require(xts)
 require(YieldCurve)
 library(Quandl)
 
+
+datosAs<-read.csv('asia.csv')
 datos<-read.csv("USDdata.csv")
 #datos<-Quandl("USTREASURY/YIELD")
 datos$Date<-(as.Date(datos$Date,format="%m/%d/%Y"))
@@ -302,6 +304,26 @@ time<-seq(from=0,to=360,by=1)
 ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))
 ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))
 ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))
+```
+
+
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+### Prueba
+
+optimizacion<-function(price,theta,maduracion,cupon){
+  fn<-function(theta){
+    price-sum(100*cupon/(1+NS(t,c(1:maduracion)))^(c(1:maduracion))+100/NS(theta,maduracion))
+  }
+  optim(theta,
+        fn,
+        method = "L-BFGS-B",
+        lower= rep(-1,4),
+        upper=rep(1,4)
+        )
+}
+t<-c(0,0,0,0.05)
+
+
 ```
 
 
