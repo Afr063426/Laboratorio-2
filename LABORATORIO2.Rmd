@@ -162,9 +162,16 @@ Primero
 
 
 \chapter{Descripción de los datos 5}
-Debe ser una descripción breve e incluir algún gráfico que permita tener una buena comprensión de sus datos.
 
-Entre las descripciones de las variables sería bueno el detalle de la que considera la más importante de su modelo, puede que tenga que calcular la media, por ejemplo, si mis datos son 
+Profesora, estuvimos investigado bases de datos donde nos dieran como insumo el precio de los bonos, nos encontramos con varios inconvenientes de las misma:
+1.	El registro de datos es muy corto, aproximadamente 1 mes como mucho, más que todo datos eran de un día especifico y no guardan registro de los anteriores.
+2.	En Bonos cero cupones, para calcular las tasas, el plazo de maduración máximo fue a 10 años, posterior a 10 años tienen cupón y no se puede hacer bootstrapping.
+3.	No se tiene presente la tasa de descuento para estos bonos de más de 10 años, por lo que no se puede traer a valor presente, para calcular su respectiva tasa de pendiente 
+4.	Estos inconvenientes se mantenían en todas las bases de datos que hemos encontrado, las cuales han sido muy pocas por el siguiente punto.
+5.	En sus mayorías las bases de datos con una cantidad aceptable de observaciones se encuentran las tasas de rendimiento (spot) 
+Tal vez nos podría dar alguna indicación con respecto a estas bases de datos o sugerir una en específico, para así poder avanzar en el desarrollo del proyecto o en su defecto trabajarlo solo con las bases de datos que contienen a las tasas de rendimientos, como la que se está trabajando en este momento.
+Por lo anterior le presentamos dos ideas para desarrollar el trabajo, la primera partiendo de los precios de los bonos con una base de datos que a nuestro parecer no es la mejor, pues no cuenta con amplitud de observaciones ni rendimientos a largo plazo y la segunda con una base de datos que cuenta con las tasas de rendimiento únicamente, pero con grandes cantidades de observaciones y amplitud de fechas de maduración.
+
 
 Grafico de todos los datos:
 
@@ -174,11 +181,11 @@ Datosgra10Y<-gather(datos10Y, "Fecha de maduración", Obtenido, names(datos10Y[2
 
 ggplot( data =Datosgra10Y, mapping = aes(x = Date, y = Obtenido, group=`Fecha de maduración`, color=`Fecha de maduración`)) + 
     geom_line()+
-    scale_color_discrete(labels=c("1 mes", "6 meses", "1 año", "2 año", "3 año","5 año","7 año", "10 año","20 año","30 año"))+
+    scale_color_discrete(labels=c("1 mes", "6 meses", "1 año", "2 años", "3 años","5 años","7 años", "10 años","20 años","30 años"))+
       labs(
-      y = "Monto",
+      y = "Tasa de rendimiento",
       x = "Tiempo",
-      title = "Comportamiento del bono"
+      title = "Comportamiento de las tasas spot"
       ) +
     theme(legend.position="bottom")+
     theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
@@ -201,17 +208,20 @@ Promedio y Desviación de los 3
 
 
 ```{r}
+
+# ggplot(Datosgra10Y) +
+#   geom_density(aes(x = Obtenido, fill = `Fecha de maduración`), position = 'stack') +
 # 
-# ggplot(Datosgra10Y) + 
-#   geom_density(aes(x = Obtenido, fill = `Fecha de maduración`), position = 'stack') + 
-#   
-#   xlab('Fecha de maduración') + 
+#   xlab('Fecha de maduración') +
 #   ylab('Tasas spot') +
-#   ggtitle('Distribución de las tasa spot') + 
+#   ggtitle('Distribución de las tasa spot') +
 #   theme_minimal() +
 #   theme(legend.position="none")
 ```
 
+```{r}
+
+```
 
 
 
@@ -219,8 +229,11 @@ Promedio y Desviación de los 3
 
 ```{r}
 ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
+  geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.02)+
+  #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
+  scale_color_discrete(labels=c("1 mes", "6 meses", "1 año", "2 años", "3 años","5 años","7 años", "10 años","20 años","30 años"))+
   xlab('Fecha de maduración') + 
-  ylab('Tasas spot') +
+  ylab('Tasas spot en %') +
   ggtitle('Distribución de las tasa spot') + 
   theme_minimal()
 ```
@@ -233,8 +246,11 @@ ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`
 Datosgra1Y<-gather(datos1Y, "Fecha de maduración", Obtenido, names(datos1Y[2]):names(datos1Y[length(datos1Y)]))
 
 ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
+  geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.04)+
+  #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
+  scale_color_discrete(labels=c("1 mes", "6 meses", "1 año", "2 años", "3 años","5 años","7 años", "10 años","20 años","30 años"))+
   xlab('Fecha de maduración') + 
-  ylab('Tasas spot') +
+  ylab('Tasas spot en %') +
   ggtitle('Distribución de las tasa spot') + 
   theme_minimal()
 ```
@@ -244,8 +260,10 @@ ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`F
 Datosgra1Mo<-gather(datos1Mo, "Fecha de maduración", Obtenido, names(datos1Mo[2]):names(datos1Mo[length(datos1Mo)]))
 
 ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
+  geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.02)+
+  scale_color_discrete(labels=c("1 mes", "6 meses", "1 año", "2 año", "3 año","5 año","7 año", "10 año","20 año","30 año"))+
   xlab('Fecha de maduración') + 
-  ylab('Tasas spot') +
+  ylab('Tasas spot en %') +
   ggtitle('Distribución de las tasa spot') + 
   theme_minimal()
 ```
