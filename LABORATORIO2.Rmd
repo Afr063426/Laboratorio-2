@@ -246,6 +246,8 @@ Se realiza una descripción de los datos observando los efectos de la pandemia.
 Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datos10Y$Date)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+Datosgra10Y$`Fecha de maduración`<-factor(Datosgra10Y$`Fecha de maduración`, levels = c("1_mes","3_meses", "6_meses", "1_año", "2_años", "3_años","5_años","7_años", "10_años","20_años","30_años"))
+
 ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + 
   geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
   geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.04)+
@@ -257,11 +259,10 @@ ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`
   theme_minimal()+theme(axis.text.x=element_blank())
 ```
 
-(Profe, si sabe de alguna función para organizar el eje x nos podría ayudar, no entramos una que acodomara los datos según la fecha de maduración y no el orden alfabetico)
+
 Al analizar estos datos cabe tener presente la siguiente tabla:
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
-
 kable(promedios10Y,col.names = c("Maduración en meses", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (10 años)",)%>%
   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
@@ -271,8 +272,11 @@ Caso para 1 año
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 Datosgra1Y<-gather(datos1Y, "Fecha de maduración", Obtenido, names(datos1Y[2]):names(datos1Y[length(datos1Y)]))
+Datosgra1Y$`Fecha de maduración`<-factor(Datosgra1Y$`Fecha de maduración`, levels = c("1_mes","3_meses", "6_meses", "1_año", "2_años", "3_años","5_años","7_años", "10_años","20_años","30_años"))
 
-ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
+
+ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) +
+  geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
   geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.04)+
   #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
   scale_color_discrete()+
@@ -281,6 +285,8 @@ ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`F
   ggtitle('Distribución de las tasa spot (1 año)') + 
   theme_minimal()+theme(axis.text.x=element_blank())
 ```
+
+
 
 Al analizar estos datos cabe tener presente la siguiente tabla:
 
@@ -294,6 +300,9 @@ Caso para un mes
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 Datosgra1Mo<-gather(datos1Mo, "Fecha de maduración", Obtenido, names(datos1Mo[2]):names(datos1Mo[length(datos1Mo)]))
+
+Datosgra1Mo$`Fecha de maduración`<-factor(Datosgra1Mo$`Fecha de maduración`, levels = c("1_mes","3_meses", "6_meses", "1_año", "2_años", "3_años","5_años","7_años", "10_años","20_años","30_años"))
+
 
 ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
   geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.02)+
