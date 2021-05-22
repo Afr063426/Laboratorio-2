@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.5.19)  21 MAY 2021 18:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.5.19)  21 MAY 2021 19:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1420,13 +1420,13 @@ LaTeX Font Info:    Trying to load font information for OT1+zplm on input line
 (c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
-<./images/ucr_marca_de_agua.png, id=52, 180.675pt x 68.255pt>
+<./images/ucr_marca_de_agua.png, id=64, 180.675pt x 68.255pt>
 File: ./images/ucr_marca_de_agua.png Graphic file (type png)
 <use ./images/ucr_marca_de_agua.png>
 Package pdftex.def Info: ./images/ucr_marca_de_agua.png  used on input line 223
 .
 (pdftex.def)             Requested size: 150.63287pt x 56.90575pt.
-<./images/EMat_escuela_matematica_horizontal_1.png, id=54, 128.8815pt x 23.1264
+<./images/EMat_escuela_matematica_horizontal_1.png, id=66, 128.8815pt x 23.1264
 pt>
 File: ./images/EMat_escuela_matematica_horizontal_1.png Graphic file (type png)
 
@@ -1434,7 +1434,7 @@ File: ./images/EMat_escuela_matematica_horizontal_1.png Graphic file (type png)
 Package pdftex.def Info: ./images/EMat_escuela_matematica_horizontal_1.png  use
 d on input line 224.
 (pdftex.def)             Requested size: 128.88707pt x 23.1274pt.
-<./images/granosgirasol.png, id=55, 623.32875pt x 620.3175pt>
+<./images/granosgirasol.png, id=67, 623.32875pt x 620.3175pt>
 File: ./images/granosgirasol.png Graphic file (type png)
 <use ./images/granosgirasol.png>
 Package pdftex.def Info: ./images/granosgirasol.png  used on input line 237.
@@ -1503,70 +1503,69 @@ Overfull \vbox (0.77002pt too high) has occurred while \output is active []
 
 [5]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
-69.
+98.
 (c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for TS1+lmtt on input line 
-372.
+401.
 (c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-<LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf, id=116, 469.755pt x 325
+) [6
+
+]
+<LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf, id=142, 469.755pt x 325
 .215pt>
 File: LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type 
 pdf)
 <use LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf 
- used on input line 385.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-[6
-
-]
-LaTeX Info: Redefining \. on input line 424.
-LaTeX Info: Redefining \% on input line 424.
-
-Overfull \vbox (0.77002pt too high) has occurred while \output is active []
-
-[7 <./LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf>]
-<LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf, id=134, 469.755pt x 325
-.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type 
-pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf 
- used on input line 426.
-(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-<LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf, id=135, 469.755pt x 325
-.215pt>
-File: LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type 
-pdf)
-<use LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf>
-Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf 
- used on input line 440.
+ used on input line 414.
 (pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
 LaTeX Info: Redefining \. on input line 442.
 LaTeX Info: Redefining \% on input line 442.
 
 Overfull \vbox (0.77002pt too high) has occurred while \output is active []
 
+[7 <./LABORATORIO2_files/figure-latex/unnamed-chunk-3-1.pdf>]
+<LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf, id=154, 469.755pt x 325
+.215pt>
+File: LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf Graphic file (type 
+pdf)
+<use LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf>
+Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf 
+ used on input line 457.
+(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
+LaTeX Info: Redefining \. on input line 474.
+LaTeX Info: Redefining \% on input line 474.
+
+Overfull \vbox (0.77002pt too high) has occurred while \output is active []
+
 [8 <./LABORATORIO2_files/figure-latex/unnamed-chunk-6-1.pdf>]
-<LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf, id=149, 469.755pt x 325
+<LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf, id=171, 469.755pt x 325
+.215pt>
+File: LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type 
+pdf)
+<use LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf 
+ used on input line 476.
+(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
+<LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf, id=172, 469.755pt x 325
 .215pt>
 File: LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf Graphic file (type 
 pdf)
 <use LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-8-1.pdf 
- used on input line 454.
+ used on input line 492.
 (pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-LaTeX Info: Redefining \. on input line 456.
-LaTeX Info: Redefining \% on input line 456.
+LaTeX Info: Redefining \. on input line 494.
+LaTeX Info: Redefining \% on input line 494.
 
 Overfull \vbox (0.77002pt too high) has occurred while \output is active []
 
 [9 <./LABORATORIO2_files/figure-latex/unnamed-chunk-7-1.pdf>]
-LaTeX Info: Redefining \. on input line 474.
-LaTeX Info: Redefining \% on input line 474.
+LaTeX Info: Redefining \. on input line 515.
+LaTeX Info: Redefining \% on input line 515.
 
 Overfull \vbox (0.77002pt too high) has occurred while \output is active []
 
@@ -1574,64 +1573,80 @@ Overfull \vbox (0.77002pt too high) has occurred while \output is active []
 ) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   
-l.474 \chapter
+l.515 \chapter
               {Metodología 1} <./LABORATORIO2_files/figure-latex/unnamed-chunk
 -8-1.pdf>]
-<LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf, id=178, 469.755pt x 32
+<LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf, id=204, 469.755pt x 32
 5.215pt>
 File: LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf Graphic file (type
  pdf)
 <use LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf>
 Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf
-  used on input line 480.
+  used on input line 521.
 (pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-<LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf, id=179, 469.755pt x 32
+<LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf, id=205, 469.755pt x 32
 5.215pt>
 File: LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf Graphic file (type
  pdf)
 <use LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf>
 Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf
-  used on input line 481.
+  used on input line 522.
 (pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
-<LABORATORIO2_files/figure-latex/unnamed-chunk-10-3.pdf, id=180, 469.755pt x 32
+<LABORATORIO2_files/figure-latex/unnamed-chunk-10-3.pdf, id=206, 469.755pt x 32
 5.215pt>
 File: LABORATORIO2_files/figure-latex/unnamed-chunk-10-3.pdf Graphic file (type
  pdf)
 <use LABORATORIO2_files/figure-latex/unnamed-chunk-10-3.pdf>
 Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-10-3.pdf
-  used on input line 482.
+  used on input line 523.
 (pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 480--483
+Underfull \hbox (badness 10000) in paragraph at lines 521--524
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 480--483
+Underfull \hbox (badness 10000) in paragraph at lines 521--524
 []
  []
 
 [11
 
  <./LABORATORIO2_files/figure-latex/unnamed-chunk-10-1.pdf>]
-LaTeX Info: Redefining \. on input line 484.
-LaTeX Info: Redefining \% on input line 484.
+<LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf, id=217, 469.755pt x 32
+5.215pt>
+File: LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type
+ pdf)
+<use LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf>
+Package pdftex.def Info: LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf
+  used on input line 525.
+(pdftex.def)             Requested size: 443.57677pt x 307.0916pt.
+LaTeX Info: Redefining \. on input line 527.
+LaTeX Info: Redefining \% on input line 527.
 
 Overfull \vbox (0.77002pt too high) has occurred while \output is active []
 
 [12 <./LABORATORIO2_files/figure-latex/unnamed-chunk-10-2.pdf> <./LABORATORIO2_
-files/figure-latex/unnamed-chunk-10-3.pdf>] [13
+files/figure-latex/unnamed-chunk-10-3.pdf>]
+LaTeX Info: Redefining \. on input line 527.
+LaTeX Info: Redefining \% on input line 527.
 
-] [14
+Overfull \vbox (0.77002pt too high) has occurred while \output is active []
+
+[13 <./LABORATORIO2_files/figure-latex/unnamed-chunk-11-1.pdf>] [14
 
 ] [15
+
+] [16
+
+] [17
 
 ]
 
 Class memoir Warning: The material used in the headers is too large
 (12.77002pt) for the given head height (12.0pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 493.
+(in both cases you will find help in the memoir manual). on input line 536.
 
 \tf@toc=\write8
 \openout8 = `LABORATORIO2.toc'.
@@ -1642,17 +1657,17 @@ LaTeX Info: Redefining \. on input line 33.
 LaTeX Info: Redefining \% on input line 33.
 )
 Package rerunfilecheck Info: File `LABORATORIO2.out' has not changed.
-(rerunfilecheck)             Checksum: 2D20DA71AF7DF7E15BB6256B021C765F;1682.
+(rerunfilecheck)             Checksum: 0B010C3E8B7F411FE94B29DAF8D1E971;1992.
 Package logreq Info: Writing requests to 'LABORATORIO2.run.xml'.
 \openout1 = `LABORATORIO2.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 24247 strings out of 480778
- 392978 string characters out of 5902320
- 963508 words of memory out of 5000000
- 41207 multiletter control sequences out of 15000+600000
- 457749 words of font info for 121 fonts, out of 8000000 for 9000
+ 24481 strings out of 480778
+ 398069 string characters out of 5902320
+ 962661 words of memory out of 5000000
+ 41425 multiletter control sequences out of 15000+600000
+ 458646 words of font info for 122 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  62i,16n,67p,1867b,1940s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/Users/sabat/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.
@@ -1674,10 +1689,10 @@ nts/type1/urw/palatino/uplb8a.pfb><c:/Users/sabat/AppData/Roaming/TinyTeX/texmf
 -dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/Users/sabat/AppData/Roaming/TinyT
 eX/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/Users/sabat/AppData/Roami
 ng/TinyTeX/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on LABORATORIO2.pdf (17 pages, 475216 bytes).
+Output written on LABORATORIO2.pdf (19 pages, 2258686 bytes).
 PDF statistics:
- 277 PDF objects out of 1000 (max. 8388607)
- 221 compressed objects within 3 object streams
- 34 named destinations out of 1000 (max. 500000)
- 147 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 328 PDF objects out of 1000 (max. 8388607)
+ 268 compressed objects within 3 object streams
+ 49 named destinations out of 1000 (max. 500000)
+ 176 words of extra memory for PDF output out of 10000 (max. 10000000)
 
