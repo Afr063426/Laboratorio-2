@@ -30,9 +30,13 @@ library(Quandl)
 require(xts)
 require(YieldCurve)
 library(Quandl)
+<<<<<<< HEAD
 
 
 datosAs<-read.csv('asia.csv')
+=======
+datosAsia<-read.csv('asia.csv')
+>>>>>>> 70bc8a8a19716cf0aae367874576157af8c09218
 datos<-read.csv("USDdata.csv")
 #datos<-Quandl("USTREASURY/YIELD")
 datos$Date<-(as.Date(datos$Date,format="%m/%d/%Y"))
@@ -285,6 +289,21 @@ kable(dat  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Ejem
   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 
+
+\par Profe en vista de que los anteriores datos no sirve porque corresponden a las tasas de rendimiento (spot) entonces encontramos los datos de la región de Asia descargados el día 21 de mayo del 2021 de la página https://es.tradingview.com/markets/bonds/prices-asia/ el asunto con estos es que cuentan con cupones y no contamos con las tasas para traer los flujos a valor presente. 
+
+\par Lo que pensamos es que se podría intentar calcaular las tasas spot de una forma similar a la que se presenta en el código de la metodología el último gráfico donde basado en los cupones y precio del bono así como su tiempo de maduración se usa el modelo de Nelson y Siegel. Y se planteaba la idea de sacar las tasas para los países de la región y sacar un promedio de estas para visualizar cuáles podrían ser las tasas de los bonos en esta región. La idea de implementar lo quese hizo a la metodología surgió del hecho de no poder hacer bootstraping cuando habían saltos de más de un año entre periodos y teniendo en cuenta que se tenían cupones.
+\par Se muestra un análisis de los datos unificados por tiempo de maduración del bono ignorando el país.
+
+
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+datosAsia<-datosAsia%>%group_by(Maduration)
+ggplot(data = datosAsia, aes(x =Maduration , y = Precio, group=Maduration,color=Maduration)) + geom_boxplot( alpha = 0.7) + 
+  xlab('Fecha de maduración') + 
+  ylab('Precio') +
+  ggtitle('Distribución de los precios Asia') + 
+  theme_minimal()
+```
 \chapter{Metodología 1}
 Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocaremos aquí los resultados que se vayan obteniendo, incluir al menos un gráfico.
 
@@ -332,6 +351,28 @@ ggplot()+geom_line(aes(x=c(1:30),y=NS(parametros,c(1:30))))
 ```
 
 
+
+
+
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+### Prueba
+### Profe en vista de que no podiamos hacer boostraping hasta los 30 años entonces lo que hicimos ###tratar de generar los parámetros trayendo a valor presenta los flujos y restar los flujos ###traídos a valor presente al precio presente. Eso es lo que se muestra acontinuación. Solo se está aplicando  para el caso de Japón a 30 años sin embargo se pensó en hacerse para todos los demás paises y así sacar un promedio de lo podrían ser las tasas de rendimiento en el área de Asia. Comprendiendido Japón, India, Corea, China, Hong Kong, Taiwan, Indonesia, Malasia y Tailandia. Estos datos corresponden al dia 21 de mayo del 2021
+### También se pensó en calcular las tasas de forma directa a partir de los precio sin embargo los únicos periodos para los que se encontraron cero cupón eran de 1 mes a 10 años y de ahí en adelante todos los demás tenían cupones
+optimizacion<-function(price,theta,maduracion,cupon){
+  fn<-function(theta){
+    price-sum(100*cupon/(1+NS(t,c(1:maduracion)))^(c(1:maduracion))+100/NS(theta,maduracion))
+  }
+  optim(theta,
+        fn,
+        method = "L-BFGS-B",
+        lower= rep(-1,4),
+        upper=rep(1,4)
+        )
+}
+t<-c(0.05,0.05,0.05,0.05)
+parametros<-unlist(optimizacion(100.117,t,30,0.0263)[1])
+ggplot()+geom_line(aes(x=c(1:30),y=NS(parametros,c(1:30))))
+```
 
 \chapter{Conclusiones y recomendaciones 1}
 
