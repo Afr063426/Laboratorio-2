@@ -188,15 +188,48 @@ Primero
 \par Por lo anterior le presentamos dos ideas para desarrollar el trabajo, la primera partiendo de los precios de los bonos con una base de datos que a nuestro parecer no es la mejor, pues no cuenta con amplitud de observaciones ni rendimientos a largo plazo y la segunda con una base de datos que cuenta con las tasas de rendimiento únicamente, pero con grandes cantidades de observaciones y amplitud de fechas de maduración.
 
 
+\clearpage
+
 \section{Opción 1}
+
+
+
+\par Encontramos los datos de la región de Asia descargados el día 21 de mayo del 2021 de la página https://es.tradingview.com/markets/bonds/prices-asia/ . Lo que sucede con estos datos es que algunos bonos cuentan con cupones y no se cuenta con las tasas para traer los flujos a valor presente. 
+
+\par Lo que pensamos es que se podría hacer es intentar calcular las tasas spot de una forma similar a la que se presenta en el código de la metodología el último gráfico donde basado en los cupones y precio del bono, así como su tiempo de maduración se usa el modelo de Nelson y Siegel. Se planteaba la idea de sacar las tasas para los países de la región y sacar un promedio de estas para visualizar cuáles podrían ser las tasas de los bonos en esta región (pues no se cuenta con el resgistro historico). La idea de implementar lo que se hizo a la metodología surgió del hecho de no poder hacer bootstraping cuando habían saltos de más de un año entre periodos y teniendo en cuenta que se tenían cupones.
+\par Se muestra un análisis de los datos unificados por tiempo de maduración del bono ignorando el país.
+
+
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+datosAsia<-datosAsia%>%group_by(Maduration)
+ggplot(data = datosAsia, aes(x =Maduration , y = Precio, group=Maduration,color=Maduration)) + 
+  geom_boxplot( alpha = 0.1) + 
+   geom_jitter(aes(color = Maduration), size = 1, alpha = 0.2)+
+  xlab('Fecha de maduración') + 
+  ylab('Precio') +
+  ggtitle('Distribución de los precios Asia') + 
+  theme_minimal()
+```
+Al analizar estos datos cabe tener presente la siguiente tabla:
+
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+promediosAsia<-datosAsia%>%group_by(Maduration)%>%summarise_all(mean)
+
+promediosAsia<-promediosAsia[,c(-2:-4)]
+
+promediosAsia<-cbind(promediosAsia, "Varianza"=datosAsia[,c(4,5)]%>%group_by(Maduration)%>%summarise_all(sd))
+promediosAsia<-promediosAsia[,c(-3)]
+
+kable(promediosAsia,col.names = c("Maduración", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos precios de Asia",)%>%
+  kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
+```
+
 
 \section{Opción 2}
 Se parte de la base de datos que contiene las tasas de rendimiento, seleccionan sus ultimos 10 años, que van desde `r datos10Y$Date[1]` hasta `r datos10Y$Date[length(datos10Y$Date)]` y cuenta con las tasas de rendimientos diarias de bonos con fecha de maduración a: 1 mes, 6 meses, 1 año, 2 años, 3 años, 5 años, 7 años, 10 años, 20 años y 30 años. En el siguiente grafico se aprecia como varia la tasa de rendimiento atreves del tiempo.
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 Datosgra10Y<-gather(datos10Y, "Fecha de maduración", Obtenido, names(datos10Y[2]):names(datos10Y[length(datos10Y)]))
-
-Datosgra10Y<-Datosgra10Y[order(Datosgra10Y$Obtenido),]
 
 ggplot( data =Datosgra10Y, mapping = aes(x = Date, y = Obtenido, group=`Fecha de maduración`, color=`Fecha de maduración`)) + 
     geom_line()+
@@ -209,33 +242,34 @@ ggplot( data =Datosgra10Y, mapping = aes(x = Date, y = Obtenido, group=`Fecha de
     theme(legend.position="bottom")+
     theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
 ```
-
+Se realiza una descripción de los datos observando los efectos de la pandemia.
 Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datos10Y$Date)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + 
-  geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.2) + 
+  geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
   geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.04)+
   #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
   scale_color_discrete()+
   xlab('Fecha de maduración') + 
   ylab('Tasas spot en %') +
-  ggtitle('Distribución de las tasa spot') + 
-  theme_minimal()
+  ggtitle('Distribución de las tasa spot (10 años)') + 
+  theme_minimal()+theme(axis.text.x=element_blank())
 ```
 
-Al analizar estos datos cabe tener presentar la siguiente tabla:
+(Profe, si sabe de alguna función para organizar el eje x nos podría ayudar, no entramos una que acodomara los datos según la fecha de maduración y no el orden alfabetico)
+Al analizar estos datos cabe tener presente la siguiente tabla:
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 
-kable(promedios10Y  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (10 años)",)%>%
+kable(promedios10Y,col.names = c("Maduración en meses", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (10 años)",)%>%
   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 
-
+\clearpage
 Caso para 1 año
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 Datosgra1Y<-gather(datos1Y, "Fecha de maduración", Obtenido, names(datos1Y[2]):names(datos1Y[length(datos1Y)]))
 
 ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
@@ -244,21 +278,21 @@ ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`F
   scale_color_discrete()+
   xlab('Fecha de maduración') + 
   ylab('Tasas spot en %') +
-  ggtitle('Distribución de las tasa spot') + 
-  theme_minimal()
+  ggtitle('Distribución de las tasa spot (1 año)') + 
+  theme_minimal()+theme(axis.text.x=element_blank())
 ```
 
-Al analizar estos datos cabe tener presentar la siguiente tabla:
+Al analizar estos datos cabe tener presente la siguiente tabla:
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 
-kable(promedios1Y  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (1 año)",)%>%
+kable(promedios1Y, col.names = c("Maduración en meses", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (1 año)",)%>%
   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
-
+\clearpage
 Caso para un mes
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 Datosgra1Mo<-gather(datos1Mo, "Fecha de maduración", Obtenido, names(datos1Mo[2]):names(datos1Mo[length(datos1Mo)]))
 
 ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
@@ -266,46 +300,58 @@ ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`
   scale_color_discrete()+
   xlab('Fecha de maduración') + 
   ylab('Tasas spot en %') +
-  ggtitle('Distribución de las tasa spot') + 
-  theme_minimal()
+  ggtitle('Distribución de las tasa spot (1 mes)') + 
+  theme_minimal()+theme(axis.text.x=element_blank())
 ```
 
-Al analizar estos datos cabe tener presentar la siguiente tabla:
+Al analizar estos datos cabe tener presente la siguiente tabla:
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 
-kable(promedios1Mo  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (1 mes)",)%>%
+kable(promedios1Mo,col.names = c("Maduración en meses", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (1 mes)",)%>%
   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 
 
-Descripcion de lo de la pandemia
 
 
 
 
 
+\chapter{Metodología 1}
+Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocaremos aquí los resultados que se vayan obteniendo, incluir al menos un gráfico.
 
 
+\section{Opción 1}
+
+En vista de que no podiamos hacer boostraping hasta los 30 años, lo que hicimos es tratar de generar los parámetros trayendo a valor presente los flujos y restar los al precio presente. Eso es lo que se muestra acontinuación. Solo se está aplicando  para el caso de Japón a 30 años sin embargo se pensó en hacerse para todos los demás paises y así sacar un promedio de lo podrían ser las tasas de rendimiento en el área de Asia. Comprendiendido Japón, India, Corea, China, Hong Kong, Taiwan, Indonesia, Malasia y Tailandia. Estos datos corresponden al dia 21 de mayo del 2021.
+\par También se pensó en calcular las tasas de forma directa a partir de los precio sin embargo los únicos periodos para los que se encontraron cero cupón eran de 1 mes a 10 años y de ahí en adelante todos los demás tenían cupones
 
 
-
-\par Profe en vista de que los anteriores datos no sirve porque corresponden a las tasas de rendimiento (spot) entonces encontramos los datos de la región de Asia descargados el día 21 de mayo del 2021 de la página https://es.tradingview.com/markets/bonds/prices-asia/ el asunto con estos es que cuentan con cupones y no contamos con las tasas para traer los flujos a valor presente. 
-
-\par Lo que pensamos es que se podría intentar calcaular las tasas spot de una forma similar a la que se presenta en el código de la metodología el último gráfico donde basado en los cupones y precio del bono así como su tiempo de maduración se usa el modelo de Nelson y Siegel. Y se planteaba la idea de sacar las tasas para los países de la región y sacar un promedio de estas para visualizar cuáles podrían ser las tasas de los bonos en esta región. La idea de implementar lo quese hizo a la metodología surgió del hecho de no poder hacer bootstraping cuando habían saltos de más de un año entre periodos y teniendo en cuenta que se tenían cupones.
-\par Se muestra un análisis de los datos unificados por tiempo de maduración del bono ignorando el país.
 
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
-datosAsia<-datosAsia%>%group_by(Maduration)
-ggplot(data = datosAsia, aes(x =Maduration , y = Precio, group=Maduration,color=Maduration)) + geom_boxplot( alpha = 0.7) + 
-  xlab('Fecha de maduración') + 
-  ylab('Precio') +
-  ggtitle('Distribución de los precios Asia') + 
-  theme_minimal()
+
+### Profe en vista de que no podiamos hacer boostraping hasta los 30 años entonces lo que hicimos ###tratar de generar los parámetros trayendo a valor presenta los flujos y restar los flujos ###traídos a valor presente al precio presente. Eso es lo que se muestra acontinuación. Solo se está aplicando  para el caso de Japón a 30 años sin embargo se pensó en hacerse para todos los demás paises y así sacar un promedio de lo podrían ser las tasas de rendimiento en el área de Asia. Comprendiendido Japón, India, Corea, China, Hong Kong, Taiwan, Indonesia, Malasia y Tailandia. Estos datos corresponden al dia 21 de mayo del 2021
+### 
+optimizacion<-function(price,theta,maduracion,cupon){
+  fn<-function(theta){
+    price-sum(100*cupon/(1+NS(t,c(1:maduracion)))^(c(1:maduracion))+100/NS(theta,maduracion))
+  }
+  optim(theta,
+        fn,
+        method = "L-BFGS-B",
+        lower= rep(-1,4),
+        upper=rep(1,4)
+        )
+}
+t<-c(0.05,0.05,0.05,0.05)
+parametros<-unlist(optimizacion(100.117,t,30,0.0263)[1])
+ggplot()+geom_line(aes(x=c(1:30),y=NS(parametros,c(1:30))))
 ```
-\chapter{Metodología 1}
-Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocaremos aquí los resultados que se vayan obteniendo, incluir al menos un gráfico.
+\clearpage
+\section{Opción 2}
+
 
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
@@ -324,54 +370,14 @@ paramters10Y<-unlist(fitting10Y[1])
 ### Ploteamos
 time<-seq(from=0,to=360,by=1)
 
-ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))
-ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))
-ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))
-```
+ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+
+  geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio del ultimo mes")
 
+ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+
+  geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio del ultimo año")
 
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
-### Prueba
-### Profe en vista de que no podiamos hacer boostraping hasta los 30 años entonces lo que hicimos ###tratar de generar los parámetros trayendo a valor presenta los flujos y restar los flujos ###traídos a valor presente al precio presente. Eso es lo que se muestra acontinuación. Solo se está aplicando  para el caso de Japón a 30 años sin embargo se pensó en hacerse para todos los demás paises y así sacar un promedio de lo podrían ser las tasas de rendimiento en el área de Asia. Comprendiendido Japón, India, Corea, China, Hong Kong, Taiwan, Indonesia, Malasia y Tailandia. Estos datos corresponden al dia 21 de mayo del 2021
-
-optimizacion<-function(price,theta,maduracion,cupon){
-  fn<-function(theta){
-    price-sum(100*cupon/(1+NS(t,c(1:maduracion)))^(c(1:maduracion))+100/NS(theta,maduracion))
-  }
-  optim(theta,
-        fn,
-        method = "L-BFGS-B",
-        lower= rep(-1,4),
-        upper=rep(1,4)
-        )
-}
-t<-c(0.05,0.05,0.05,0.05)
-parametros<-unlist(optimizacion(100.117,t,30,0.0263)[1])
-ggplot()+geom_line(aes(x=c(1:30),y=NS(parametros,c(1:30))))
-```
-
-
-
-
-
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
-### Prueba
-### Profe en vista de que no podiamos hacer boostraping hasta los 30 años entonces lo que hicimos ###tratar de generar los parámetros trayendo a valor presenta los flujos y restar los flujos ###traídos a valor presente al precio presente. Eso es lo que se muestra acontinuación. Solo se está aplicando  para el caso de Japón a 30 años sin embargo se pensó en hacerse para todos los demás paises y así sacar un promedio de lo podrían ser las tasas de rendimiento en el área de Asia. Comprendiendido Japón, India, Corea, China, Hong Kong, Taiwan, Indonesia, Malasia y Tailandia. Estos datos corresponden al dia 21 de mayo del 2021
-### También se pensó en calcular las tasas de forma directa a partir de los precio sin embargo los únicos periodos para los que se encontraron cero cupón eran de 1 mes a 10 años y de ahí en adelante todos los demás tenían cupones
-optimizacion<-function(price,theta,maduracion,cupon){
-  fn<-function(theta){
-    price-sum(100*cupon/(1+NS(t,c(1:maduracion)))^(c(1:maduracion))+100/NS(theta,maduracion))
-  }
-  optim(theta,
-        fn,
-        method = "L-BFGS-B",
-        lower= rep(-1,4),
-        upper=rep(1,4)
-        )
-}
-t<-c(0.05,0.05,0.05,0.05)
-parametros<-unlist(optimizacion(100.117,t,30,0.0263)[1])
-ggplot()+geom_line(aes(x=c(1:30),y=NS(parametros,c(1:30))))
+ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+
+  geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio de los ultimos 10 años")
 ```
 
 \chapter{Conclusiones y recomendaciones 1}
