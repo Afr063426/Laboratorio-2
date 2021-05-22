@@ -274,10 +274,10 @@ kable(dat  , format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Ejem
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 datosAsia<-datosAsia%>%group_by(Maduration)
-ggplot(data = datosAsia, aes(x =Maduration , y = Precio)) + geom_boxplot(aes(color = Maduration), alpha = 0.7) + 
+ggplot(data = datosAsia, aes(x =Maduration , y = Precio, group=Maduration,color=Maduration)) + geom_boxplot( alpha = 0.7) + 
   xlab('Fecha de maduración') + 
   ylab('Precio') +
-  ggtitle('Distribución de las tasa spot') + 
+  ggtitle('Distribución de los precios Asia') + 
   theme_minimal()
 ```
 \chapter{Metodología 1}
