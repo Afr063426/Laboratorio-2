@@ -14,11 +14,6 @@ classoption: oneside
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r echo=FALSE, include=FALSE, warning=FALSE}
-
-
 ###Se cargan los paquetes y se cargan y limpian los datos
 library(tidyverse)
 library(ggplot2)
@@ -26,10 +21,10 @@ library(kableExtra)
 library(knitr)
 library(xtable)
 library(gridExtra)
-library(Quandl)
-require(xts)
-require(YieldCurve)
-library(Quandl)
+library(latex2exp)
+```
+
+```{r echo=FALSE, include=FALSE, warning=FALSE}
 
 datosAsia<-read.csv('asia.csv')
 
@@ -123,34 +118,39 @@ Analizar la curva de rendimiento de los bonos del tesoro de Estados Unidos de No
 
 
 \chapter{Marco teórico 3}
-\par La curva de rendimiento es una herramienta útil a la hora de quererse invertir o negociar un instrumento financiero y al momento de aplicar políticas monetarias.
+\par La curva de rendimiento es una herramienta útil a la hora de quererse invertir o negociar un instrumento financiero y al momento de aplicar políticas monetarias. Primero se presenta una tabla con fórmulas y qué representan cada una
 
-\par \textbf{rendimientos spot definir}
-\par Se procede a explicar qué es la curva de rendimiento, según Boudreault y Reanud (2019) la curva de rendimiento también llamada curva de rendimientos spot. Esta curva muestra la relación que hay entre las tasa de rendimiento spot y el tiempo de maduración. Así esta curva muestra los rendimientos que se obtienen de mantener una cierta cantidad de dinero durante un tiempo determinado. Se puede determinar el rendimiento mediante
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+\hline
+Notación & Información\\
+\hline 
+$y_T$   & Tasa de rendimiento\\
+$y_k$ & Tasa Spot, es la tasa pagada. Ligada al tiempo de maduración.\\
+$f_k$ & La tasa forward es la tasa efectiva en un año o periodo dadas las spot $\frac{(1+y_k)^{k}}{(1+y_{k-1})^{k-1}}-1$\\
+$T$   & Tiempo para la maduración.               \\
+$B_0$ & Costo de la inversión o precio del bono. \\
+$F$   & Facial, también puede ser igual al valor de redención pero no siempre es así.\\  
+$R$ & Valor de redención, es el monto pagado a parte de los cupones\\
+$C$ & Tasa de cupón que se paga de forma periodica que se hace sobre el valor del facial.\\
+\hline
+\end{tabular}
+\end{table}
+\par Se procede a explicar qué es la curva de rendimiento, según Boudreault y Reanud (2019) la curva de rendimiento también llamada curva de rendimientos spot, esta curva muestra la relación que hay entre las tasa de rendimiento spot y el tiempo de maduración. Así esta curva muestra los rendimientos que se obtienen de mantener una cierta cantidad de dinero durante un tiempo determinado. Para el caso de bonos cero cupón se puede calcular usando
 \[
 y=\left(\frac{F}{B_0}\right)^{\frac{1}{T}}-1
 \]
-Donde 
-
-
-
-\begin{table}[H]
-\begin{tabular}{l|l}
-$y$   & Tasa de rendimiento                     \\
-$T$   & Tiempo para la maduración               \\
-$B_0$ & Costo de la inversión o precio del bono \\
-$F$   & Monto a recibir al final del periodo   
-\end{tabular}%
-\end{table}
-
-
-
+\par Cabe destacar que si ya se tiene la tasa spot de los anterior se puede determinar el precio del bono. Para el caso de los bonos cuponados el precio se calcularía usando
+\[
+B_0=\sum_{i=1}^{T}\frac{CF}{(1+y_i)^{i}}+\frac{R}{(1+y_T)^T}
+\]
 \par Sin embargo a pesar de que esta herramienta es ampliamente utilizada, tiene una limitante intertemporal. Como lo expone Camilo (2008) esta se construye a través de una serie de tasas (precios) de instrumentos financieros discontinuos en el tiempo. Esto implica que entonces lo se ubica a partir de las tasas de rendimiemto es una serie de puntos que no reflejan de forma continua las tasas de rendimiento en el mercado financiero de acuerdo a su tiempo de maduración.
 \par Sin embargo hay agentes los cuales no están dispuestos a invertir o prestar los montos al tiempo establecido por agentes como los gobiernos nacionales u otras empresas. Es por esta razón que sería de utilidad encontrar una curva suave la cual sea capaz de proyectar las tasas de rendimiento en distintos momentos del tiempo, pero basado en lo que anteriormente han establecido agentes como los gobiernos nacionales.
 \par Para lograr obtener una curva suave la cual se aproxime a las tasas de rendimiento de agentes como los gobiernos, se emplean distintos métodos entre ellos los métodos paramétricos que están basados en la construcción de curvas a partir de modelos paramétricos. (Choudhry, 2010)
 \par Entre los modelos paramétricos se encuentra el de Nelson-Siegel. El cual según Matteson (2015) describe las tasas forward con la siguiente curva
 \[
-r(t,\theta)=\theta_0+(\theta_1+\theta_2t)\exp(-\theta_3 t)
+f(t,\theta)=\theta_0+(\theta_1+\theta_2t)\exp(-\theta_3 t)
 \]
 A partir de esta se puede obtener que la curva de rendimiento continua se puede obtener haciendo
 \[
@@ -162,18 +162,22 @@ y(t,\theta)&=t^{-1}\int_{0}^{t}r(x,\theta)dx\\
 Tal y como lo citan Hladíková y Radová (2012) este modelo tiene una interpretación económica interesante para los parámetros. Tomando la curva que describe las tasas forward 
 Primero
 \[
-\lim_{t\to\infty}r(t,\theta)=\theta_{0}\qquad \lim_{t\to 0}r(t,\theta)=\theta_0+\theta_1
+\lim_{t\to\infty}f(t,\theta)=\theta_{0}\qquad \lim_{t\to 0}f(t,\theta)=\theta_0+\theta_1
 \]
 \begin{itemize}
-\item Entonces $\beta_0>0$ representa la asintota horizontal de la curva 
+\item Entonces $\theta_0>0$ representa la asintota de la curva zero cupón
+\item La suma de los parámetros $\theta_0+\theta_1$ representa el valor inicial de la curva de tasas forward por lo que $\theta_0+\theta_1>0$
+\item También $\theta_1$ puede es explicada como la curvatura de la función o la diferencia entre las tasas de forward de termino largo y termino corto.
 \end{itemize}
 
-
-
-
+\par Se procede a explicar los gráficos de caja y bigotes. Estos gráficos muestran 5 datos relevantes de los datos, así como la disperción. En estos se muestran el dato con el valor más bajo (mínimo), la mediana de la primera mitad de los datos (cuartil 1, $Q_1$), la mediana de todos los datos (cuartil 2, $Q_2$), la mediana de la segunda mitad de los datos (cuartil 3 $Q_3$) y la observación de mayor valor (máximo), así como los posibles outliers. De los gráficos de caja y bigotes existen variaciones. Al momento de hacerse un gráfico de este estilo hay que tener presente varias desventajas como lo, es el visualizar como están distribuidos los datos, con respecto a los distintos cuartiles. (Marmolejo, 2011) 
+\par\centering
+``` {r echo=FALSE, message=FALSE, warning=FALSE,fig.width=5, fig.height=2}
+caja<-data.frame(X=c(""),Y=c(1:5))
+caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(geom='errorbar')+geom_boxplot()+geom_text(vjust=6)+theme_minimal()+theme(axis.text.x=element_blank(),axis.text.y=element_blank())+coord_flip()
+```
 
 \chapter{Descripción de los datos 5}
-
 \par Profesora, estuvimos investigado bases de datos donde nos dieran como insumo el precio de los bonos, nos encontramos con varios inconvenientes de las misma:
 \begin{enumerate} 
 
@@ -186,6 +190,7 @@ Primero
 \end{enumerate}
 \par Tal vez nos podría dar alguna indicación con respecto a estas bases de datos o sugerir una en específico, para así poder avanzar en el desarrollo del proyecto o en su defecto trabajarlo solo con las bases de datos que contienen a las tasas de rendimientos, como la que se está trabajando en este momento.
 \par Por lo anterior le presentamos dos ideas para desarrollar el trabajo, la primera partiendo de los precios de los bonos con una base de datos que a nuestro parecer no es la mejor, pues no cuenta con amplitud de observaciones ni rendimientos a largo plazo y la segunda con una base de datos que cuenta con las tasas de rendimiento únicamente, pero con grandes cantidades de observaciones y amplitud de fechas de maduración.
+
 
 
 \clearpage
