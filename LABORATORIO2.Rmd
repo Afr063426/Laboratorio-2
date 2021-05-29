@@ -22,70 +22,47 @@ library(knitr)
 library(xtable)
 library(gridExtra)
 library(latex2exp)
+
+
+### Se cargan los datos
+datosBrasil<-read.csv('datosSinCuponBrasil.csv')
+datosBrasil$Data.Vencimento<-as.Date(datosBrasil$Data.Vencimento)
+datosBrasil$Data.Base<-as.Date(datosBrasil$Data.Base)
 ```
 
-```{r echo=FALSE, include=FALSE, warning=FALSE}
-
-datosAsia<-read.csv('asia.csv')
-
-datos<-read.csv("USDdata.csv")
-#datos<-Quandl("USTREASURY/YIELD")
-datos$Date<-(as.Date(datos$Date,format="%m/%d/%Y"))
-
-colnames(datos)=c("Date","1_mes","3_meses", "6_meses", "1_año", "2_años", "3_años","5_años","7_años", "10_años","20_años","30_años")
-
-
-#datos<-datos[order(datos$Date),]
-datos1Mo<-datos[datos$Date>=as.Date("2021-04-19"),-3]
-datos10Y<-datos[datos$Date>=as.Date("2010-01-01"),-3]
-datos1Y<-datos[datos$Date>=as.Date("2020-01-01"),-3]
-
-### Se procede a calcular la media de las tasas de rendimiento
-promedios1Mo<-datos1Mo%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
-promedios10Y<-datos10Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
-promedios1Y<-datos1Y%>%select(-1)%>%gather("Maduration","Rendimiento")%>%group_by(Maduration)%>%summarise_all(mean)
-
-### Se pasan los rendimientos a meses
-
-promedios1Mo$Maduration<-as.numeric(str_remove_all(promedios1Mo$Maduration,"[meses_años]"))*(str_detect(promedios1Mo$Maduration,"año")*12+str_detect(promedios1Mo$Maduration,"mes"))
-promedios1Mo<-promedios1Mo[order(promedios1Mo$Maduration),]
-promedios1Mo<-cbind(promedios1Mo, "Varianza"=apply(datos1Mo[,-1],2,sd))
-
-
-promedios1Y$Maduration<-as.numeric(str_remove_all(promedios1Y$Maduration,"[meses_años]"))*(str_detect(promedios1Y$Maduration,"año")*12+str_detect(promedios1Y$Maduration,"mes"))
-promedios1Y<-promedios1Y[order(promedios1Y$Maduration),]
-promedios1Y<-cbind(promedios1Y, "Varianza"=apply(datos1Y[,-1],2,sd))
-
-promedios10Y$Maduration<-as.numeric(str_remove_all(promedios10Y$Maduration,"[meses_años]"))*(str_detect(promedios10Y$Maduration,"año")*12+str_detect(promedios10Y$Maduration,"mes"))
-promedios10Y<-promedios10Y[order(promedios10Y$Maduration),]
-promedios10Y<-cbind(promedios10Y, "Varianza"=apply(datos10Y[,-1],2,sd))
-
-
-```
 
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
-### Se program las funciones que se van emplear
+### Se programa las funciones que se van emplear
 ##Modelo de Nelson-Siegel para curvas de rendimiento
 NS<-function(theta,tiempo){
   yield<-(theta[1]+(theta[2]+theta[3]/theta[4])*(1-exp(-theta[4]*tiempo))/(theta[4]*tiempo)-theta[3]/theta[4]*exp(-theta[4]*tiempo))
   yield
 }
 
-## Se debe ajustar la curva entonces esto se busca reducir la suma de cuadrados, con la siguiente funci'on
-fitNS<-function(theta,tiempo,rendimientos){
+## Se debe ajustar la curva con los precios entonces esto se busca reducir la suma de cuadrados, con la siguiente funci'on
+fitNS<-function(theta,tiempo,price,R){
   fn<-function(theta){
-    sum((rendimientos-NS(theta,tiempo))^2)
+    sum((price-R*exp(-tiempo*NS(theta,tiempo)))^2)
   }
   optim(theta,
         fn,
         method = "L-BFGS-B",
-        lower= rep(-1,4),
-        upper=rep(1,4)
+        lower= rep(-6,4),
+        upper=rep(6,4)
         )
 }
 
+###Prueba
+datosBrasil<-datosBrasil%>%group_by(Data.Vencimento)
+datosBrasil%>%ggplot(aes(x=Data.Base,y=PU.Base.Manha,group=Data.Vencimento,color=Data.Vencimento))+geom_line()
 
+datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021", format="%d/%m/%Y"))
+t<-c(0,0,0,0.05)
+valores<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000)
+parametros<-unlist(valores[1])
+yields<-NS(parametros,seq(from=1,to=6,length=100))
+ggplot(,aes(x=seq(from=1,to=6,length=100),y=yields))+geom_line()
 ```
 
 
@@ -105,9 +82,9 @@ Analizar la curva de rendimiento de los bonos del tesoro de Estados Unidos de No
 
 \item Explicar el modelo de Nelson y Siegel.
 
-\item Describir las características de la base de datos de los bonos del tesoro de Estados Unidos de Norte América.
+\item Describir las características de la base de datos de bonos Tesouro Prefixado.
 
-\item Implementar el modelo de Nelson y Siegel en lenguaje de programación R, para la base de datos de los bonos del tesoro de Estados Unidos de Norte América.
+\item Implementar el modelo de Nelson y Siegel en lenguaje de programación R, para la base de datos de los bonos del tesoro de bonos Tesouro Prefixado.
 
 \item Evaluar los resultados obtenidos apartir del modelo de Nelson y Siegel.
 
@@ -344,26 +321,9 @@ En vista de que no podiamos hacer boostraping hasta los 30 años, lo que hicimos
 
 
 
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
 
-### Profe en vista de que no podiamos hacer boostraping hasta los 30 años entonces lo que hicimos ###tratar de generar los parámetros trayendo a valor presenta los flujos y restar los flujos ###traídos a valor presente al precio presente. Eso es lo que se muestra acontinuación. Solo se está aplicando  para el caso de Japón a 30 años sin embargo se pensó en hacerse para todos los demás paises y así sacar un promedio de lo podrían ser las tasas de rendimiento en el área de Asia. Comprendiendido Japón, India, Corea, China, Hong Kong, Taiwan, Indonesia, Malasia y Tailandia. Estos datos corresponden al dia 21 de mayo del 2021
-### 
-optimizacion<-function(price,theta,maduracion,cupon){
-  fn<-function(theta){
-    price-sum(100*cupon/(1+NS(t,c(1:maduracion)))^(c(1:maduracion))+100/NS(theta,maduracion))
-  }
-  optim(theta,
-        fn,
-        method = "L-BFGS-B",
-        lower= rep(-1,4),
-        upper=rep(1,4)
-        )
-}
-t<-c(0.05,0.05,0.05,0.05)
-parametros<-unlist(optimizacion(100.117,t,30,0.0263)[1])
-ggplot()+geom_line(aes(x=c(1:30),y=NS(parametros,c(1:30))))
-```
-\clearpage
+
+
 \section{Opción 2}
 
 
