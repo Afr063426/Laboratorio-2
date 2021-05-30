@@ -52,18 +52,6 @@ fitNS<-function(theta,tiempo,price,R){
         upper=rep(6,4)
         )
 }
-
-###Prueba
-datosBrasil<-datosBrasil%>%group_by(Data.Vencimento)
-datosBrasil$agrupacion<-paste(datosBrasil$Tipo.Titulo,datosBrasil$Data.Vencimento)
-datosBrasil%>%ggplot(aes(x=Data.Base,y=PU.Base.Manha,group=agrupacion,color=agrupacion))+geom_line()
-datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021", format="%d/%m/%Y"))
-t<-c(0,0,0,0.05)
-valores<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000)
-parametros<-unlist(valores[1])
-yields<-NS(parametros,seq(from=1,to=6,length=100))
-ggplot(,aes(x=seq(from=1,to=6,length=100),y=yields))+geom_line()
-datosBrasil<-datosBrasil%>%filter(Data.Base>=as.Date("01/05/2021",format="%d/%m/%Y"))
 ```
 
 
@@ -76,16 +64,18 @@ Aquí debe dar resultados generales de lo que obtuvo del análisis.
 
 \section{Objetivo general}
 
-Analizar la curva de rendimiento de los bonos del tesoro de Estados Unidos de Norte América por medio del modelo de Nelson y Siegel en el periodo de años comprendido entre el 1° de enero del 2010 y el  20 de mayo del 2021.
+Analizar la curva de rendimiento de los bonos del Tesoro Nacional de la República Federativa De Brasil por medio del modelo de Nelson y Siegel en el periodo de tiempo comprendido entre el 1° de enero del 2020 y el  27 de mayo del 2021.
 
 \section{Objetivos específicos}
 \begin{enumerate} 
 
 \item Explicar el modelo de Nelson y Siegel.
 
-\item Describir las características de la base de datos de bonos Tesouro Prefixado.
+\item Describir las características de la base de datos de los bonos del Tesoro Nacional de la República Federativa de Brasil.
 
-\item Implementar el modelo de Nelson y Siegel en lenguaje de programación R, para la base de datos de los bonos del tesoro de bonos Tesouro Prefixado.
+\item Implementar el modelo de Nelson y Siegel en lenguaje de programación R, para la base de datos de los de bonos del Tesoro Nacional de la República Federativa de Brasil.
+
+\item Establecer las curvas de rendimiento de los bonos del Tesoro Nacional de la República Federativa de Brasil.
 
 \item Evaluar los resultados obtenidos apartir del modelo de Nelson y Siegel.
 
