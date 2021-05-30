@@ -25,7 +25,7 @@ library(latex2exp)
 
 
 ### Se cargan los datos
-datosBrasil<-read.csv('datosSinCuponBrasil.csv')
+datosBrasil<-read.csv('datosCombiandos.csv')
 datosBrasil$Data.Vencimento<-as.Date(datosBrasil$Data.Vencimento)
 datosBrasil$Data.Base<-as.Date(datosBrasil$Data.Base)
 ```
@@ -55,14 +55,15 @@ fitNS<-function(theta,tiempo,price,R){
 
 ###Prueba
 datosBrasil<-datosBrasil%>%group_by(Data.Vencimento)
-datosBrasil%>%ggplot(aes(x=Data.Base,y=PU.Base.Manha,group=Data.Vencimento,color=Data.Vencimento))+geom_line()
-
+datosBrasil$agrupacion<-paste(datosBrasil$Tipo.Titulo,datosBrasil$Data.Vencimento)
+datosBrasil%>%ggplot(aes(x=Data.Base,y=PU.Base.Manha,group=agrupacion,color=agrupacion))+geom_line()
 datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021", format="%d/%m/%Y"))
 t<-c(0,0,0,0.05)
 valores<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000)
 parametros<-unlist(valores[1])
 yields<-NS(parametros,seq(from=1,to=6,length=100))
 ggplot(,aes(x=seq(from=1,to=6,length=100),y=yields))+geom_line()
+datosBrasil<-datosBrasil%>%filter(Data.Base>=as.Date("01/05/2021",format="%d/%m/%Y"))
 ```
 
 
