@@ -25,7 +25,7 @@ library(latex2exp)
 
 
 ### Se cargan los datos
-datosBrasil<-read.csv('datosCombiandos.csv')
+datosBrasil<-read.csv('datosSinCuponBrasil.csv')
 datosBrasil$Data.Vencimento<-as.Date(datosBrasil$Data.Vencimento)
 datosBrasil$Data.Base<-as.Date(datosBrasil$Data.Base)
 ```
@@ -118,15 +118,22 @@ B_0=\sum_{i=1}^{T}\frac{CF}{(1+y_i)^{i}}+\frac{R}{(1+y_T)^T}
 \par Para lograr obtener una curva suave la cual se aproxime a las tasas de rendimiento de agentes como los gobiernos, se emplean distintos métodos entre ellos los métodos paramétricos que están basados en la construcción de curvas a partir de modelos paramétricos. (Choudhry, 2010)
 \par Entre los modelos paramétricos se encuentra el de Nelson-Siegel. El cual según Matteson (2015) describe las tasas forward con la siguiente curva
 \[
-f(t,\theta)=\theta_0+(\theta_1+\theta_2t)\exp(-\theta_3 t)
+r(t,\theta)=\theta_0+(\theta_1+\theta_2t)\exp(-\theta_3 t)
 \]
 A partir de esta se puede obtener que la curva de rendimiento continua se puede obtener haciendo
 \[
 \begin{split}
 y(t,\theta)&=t^{-1}\int_{0}^{t}r(x,\theta)dx\\
-&=\theta_0+\left(\theta_1+\frac{\theta_2}{\theta_3}\right)\frac{1-\exp(-\theta_3 t)}{\theta_3 t}-\frac{\theta_2}{\theta_3}\exp(-\theta t)
+&=\theta_0+\left(\theta_1+\frac{\theta_2}{\theta_3}\right)\frac{1-\exp(-\theta_3 t)}{\theta_3 t}-\frac{\theta_2}{\theta_3}\exp(-\theta_3 t)
 \end{split}
 \]
+Se puede calcular el valor de un flujo en el futuro en el periodo 
+$T_i$ traído a valor presente mediante 
+\[
+\exp\left(-\int_{0}^{T_i}r(t,\theta)dt\right)
+\]
+A la hora de emplearse esto es importante tener presente que se está incurriendo en un cierto grado de error con respecto al valor real que tendría el flujo en el presente.
+\par
 Tal y como lo citan Hladíková y Radová (2012) este modelo tiene una interpretación económica interesante para los parámetros. Tomando la curva que describe las tasas forward 
 Primero
 \[
@@ -137,8 +144,31 @@ Primero
 \item La suma de los parámetros $\theta_0+\theta_1$ representa el valor inicial de la curva de tasas forward por lo que $\theta_0+\theta_1>0$
 \item También $\theta_1$ puede es explicada como la curvatura de la función o la diferencia entre las tasas de forward de termino largo y termino corto.
 \end{itemize}
-\par Antes de poder continuar es necesario dejar en claro lo que es la desviación estandar, 
-\par Se procede a explicar los gráficos de caja y bigotes. Estos gráficos muestran 5 datos relevantes de los datos, así como la disperción. En estos se muestran el dato con el valor más bajo (mínimo), la mediana de la primera mitad de los datos (cuartil 1, $Q_1$), la mediana de todos los datos (cuartil 2, $Q_2$), la mediana de la segunda mitad de los datos (cuartil 3 $Q_3$) y la observación de mayor valor (máximo), así como los posibles outliers. De los gráficos de caja y bigotes existen variaciones. Al momento de hacerse un gráfico de este estilo hay que tener presente varias desventajas como lo, es el visualizar como están distribuidos los datos, con respecto a los distintos cuartiles. (Marmolejo, 2011) 
+\par Antes de poder continuar es necesario dejar en claro lo que son los cuantiles, media y la desviación estandar. Según Evans y Rosenthal (2009).
+\begin{tcolorbox}
+\par \textbf{Cuántil} Para $p\in [0,1]$ el $p$-ésimo cuantil $x_p$, para la función distribución $F_X$, se define como el menor número $x_p$ que satisface $p\leq F_X(x_p)$.
+\end{tcolorbox}
+\par A partir de esta definición se define la mediana como el cuántil tal que $p=0.5$. Continuando con las definiciones de la media y desviación.
+\begin{tcolorbox}
+\textbf{Media}
+\[
+\mu_X=\frac{1}{\Pi}\sum_{\pi\in \Pi}X(\pi)
+\]
+\textbf{Desviación estándar}
+\[
+\sigma_X=\frac{1}{\Pi}\sqrt{\sum_{\pi\in \Pi} (X(\pi)-\mu_x)^2}
+\]
+Donde $\Pi$ es el tamaño de la muestra de datos, y $X$ el valor que toma el dato. En particular la media práctica es 
+\[
+\var{x}=\frac{1}{n}\sum_{i=1}^{n}x_i
+\]
+Y la desviación estándar práctica es
+\[
+\sigma_x=\sqrt{\frac{1}{n-1}\sum_{i=1}}^{n}(x_i-\var{x})^2
+\]
+La media expresa alrededor de dónde se distribuyen los datos y la desviación estándar qué tanto se dispersan los datos con respecto a la media.
+\end{tcolorbox}
+\par Se procede a explicar los gráficos de caja y bigotes. Estos gráficos muestran 5 datos relevantes de los datos, así como la dispersión. En estos se muestran el dato con el valor más bajo (mínimo), la mediana de la primera mitad de los datos (cuartil 1, $Q_1$), la mediana de todos los datos (cuartil 2, $Q_2$), la mediana de la segunda mitad de los datos (cuartil 3 $Q_3$) y la observación de mayor valor (máximo), así como los posibles outliers. De los gráficos de caja y bigotes existen variaciones. Al momento de hacerse un gráfico de este estilo hay que tener presente varias desventajas como lo, es el visualizar como están distribuidos los datos, con respecto a los distintos cuartiles. (Marmolejo, 2011) 
 \par\centering
 ``` {r echo=FALSE, message=FALSE, warning=FALSE,fig.width=5, fig.height=2}
 caja<-data.frame(X=c(""),Y=c(1:5))
