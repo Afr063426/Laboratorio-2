@@ -28,7 +28,7 @@ library(latex2exp)
 datosBrasil<-read.csv('datosCombiandos.csv')
 datosBrasil$Data.Vencimento<-as.Date(datosBrasil$Data.Vencimento)
 datosBrasil$Data.Base<-as.Date(datosBrasil$Data.Base)
-colnames(datosBrasil)<-c("Tipo de bono", "Fecha de vencimiento", "Día de observación", "Precio", "Tiempo a maduración", "Cupones")
+colnames(datosBrasil)<-c("Tipo_de_bono", "Fecha_de_vencimiento", "Dia_de_observacion", "Precio", "Tiempo_a_maduracion", "Cupones")
 
 ```
 
@@ -71,13 +71,13 @@ optim(theta,
     upper=rep(20,4)
     )
 }
-datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021",format="%d/%m/%Y"))
+datosPrueba<-datosBrasil%>%filter(`Dia_de_observacion`==as.Date("27/05/2021",format="%d/%m/%Y"))
 t<-c(0,0,0,0.5)
-datosPrueba1<-datosPrueba%>%filter(!grepl("com",Tipo.Titulo))
-datosPrueba1$Spot<-(datosPrueba1$PU.Base.Manha/1000)^(-1/datosPrueba1$TempoDeMaduracao)-1
-parametros<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000,datosPrueba$Juros/2)
+datosPrueba1<-datosPrueba%>%filter(!grepl("com",`Tipo_de_bono`))
+datosPrueba1$Spot<-(datosPrueba1$Precio/1000)^(-1/datosPrueba1$`Tiempo_a_maduracion`)-1
+parametros<-fitNS(t,datosPrueba$`Tiempo_a_maduracion`,datosPrueba$Precio,1000,datosPrueba$Juros/2)
 tasasYield<-NS(unlist(parametros[1]),seq(0,10,length=100))
-ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$TempoDeMaduracao,y=datosPrueba1$Spot))
+ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$`Tiempo_a_maduracion`,y=datosPrueba1$Spot))
 ```
 
 
@@ -204,7 +204,8 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(ge
 \chapter{Descripción de los datos 5}
 
 
-
+Los datos son obtenidos a partir de la pa
+Se parte de la base de datos que contiene las tasas de rendimiento, seleccionan sus ultimos 10 años, que van desde `r datosBrasil$"Dia_de_observacion"[1]` hasta `r datosBrasil$"Dia_de_observacion"[length(datosBrasil$"Dia_de_observacion")]` y cuenta con las tasas de rendimientos diarias de bonos con fecha de maduración a: 1 mes, 6 meses, 1 año, 2 años, 3 años, 5 años, 7 años, 10 años, 20 años y 30 años. En el siguiente grafico se aprecia como varia la tasa de rendimiento atreves del tiempo.
 
 
 
@@ -236,10 +237,11 @@ Al analizar estos datos cabe tener presente la siguiente tabla:
 ```
 
 
-\section{Opción 2}
-Se parte de la base de datos que contiene las tasas de rendimiento, seleccionan sus ultimos 10 años, que van desde `#r datos10Y$Date[1]` hasta `#r datos10Y$Date[length(datos10Y$Date)]` y cuenta con las tasas de rendimientos diarias de bonos con fecha de maduración a: 1 mes, 6 meses, 1 año, 2 años, 3 años, 5 años, 7 años, 10 años, 20 años y 30 años. En el siguiente grafico se aprecia como varia la tasa de rendimiento atreves del tiempo.
+
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+
 # Datosgra10Y<-gather(datos10Y, "Fecha de maduración", Obtenido, names(datos10Y[2]):names(datos10Y[length(datos10Y)]))
 # 
 # ggplot( data =Datosgra10Y, mapping = aes(x = Date, y = Obtenido, group=`Fecha de maduración`, color=`Fecha de maduración`)) + 
@@ -254,9 +256,10 @@ Se parte de la base de datos que contiene las tasas de rendimiento, seleccionan 
 #     theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
 ```
 Se realiza una descripción de los datos observando los efectos de la pandemia.
-Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datos10Y$Date)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
+Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datosBrasil$"Dia_de_observacion")` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
+
 # Datosgra10Y$`Fecha de maduración`<-factor(Datosgra10Y$`Fecha de maduración`, levels = c("1_mes","3_meses", "6_meses", "1_año", "2_años", "3_años","5_años","7_años", "10_años","20_años","30_años"))
 # 
 # ggplot(data = Datosgra10Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + 
@@ -356,26 +359,26 @@ Cómo implementa la teoría expuesta en el marco teórico con sus datos, colocar
 ### Se procede a calcular a los parametros
 
 ## Se guaradan los datos importantes
-t<-c(0,0,0,0.03)
-fitting1Mo<-fitNS(t,promedios1Mo$Maduration,promedios1Mo$Rendimiento)
-paramters1Mo<-unlist(fitting1Mo[1])
-
-fitting1Y<-fitNS(c(0,0,0,0.01),promedios1Y$Maduration,promedios1Y$Rendimiento)
-paramters1Y<-unlist(fitting1Y[1])
-
-fitting10Y<-fitNS(t,promedios10Y$Maduration,promedios10Y$Rendimiento)
-paramters10Y<-unlist(fitting10Y[1])
-### Ploteamos
-time<-seq(from=0,to=360,by=1)
-
-ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+
-  geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio del ultimo mes")
-
-ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+
-  geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio del ultimo año")
-
-ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+
-  geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio de los ultimos 10 años")
+# t<-c(0,0,0,0.03)
+# fitting1Mo<-fitNS(t,promedios1Mo$Maduration,promedios1Mo$Rendimiento)
+# paramters1Mo<-unlist(fitting1Mo[1])
+# 
+# fitting1Y<-fitNS(c(0,0,0,0.01),promedios1Y$Maduration,promedios1Y$Rendimiento)
+# paramters1Y<-unlist(fitting1Y[1])
+# 
+# fitting10Y<-fitNS(t,promedios10Y$Maduration,promedios10Y$Rendimiento)
+# paramters10Y<-unlist(fitting10Y[1])
+# ### Ploteamos
+# time<-seq(from=0,to=360,by=1)
+# 
+# ggplot()+geom_line(aes(x=time,y=NS(paramters1Mo,time)))+
+#   geom_point(aes(x=promedios1Mo$Maduration,y=promedios1Mo$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio del ultimo mes")
+# 
+# ggplot()+geom_line(aes(x=time,y=NS(paramters1Y,time)))+
+#   geom_point(aes(x=promedios1Y$Maduration,y=promedios1Y$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio del ultimo año")
+# 
+# ggplot()+geom_line(aes(x=time,y=NS(paramters10Y,time)))+
+#   geom_point(aes(x=promedios10Y$Maduration,y=promedios10Y$Rendimiento))+ ggtitle("Modelo de Nelsol y Siegel, el promdio de los ultimos 10 años")
 ```
 
 \chapter{Conclusiones y recomendaciones 1}
