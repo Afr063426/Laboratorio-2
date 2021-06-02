@@ -11,7 +11,6 @@ documentclass: memoir
 classoption: oneside
 
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ###Se cargan los paquetes y se cargan y limpian los datos
@@ -28,7 +27,6 @@ library(latex2exp)
 datosBrasil<-read.csv('datosCombiandos.csv')
 datosBrasil$FechaDeMaduracion<-as.Date(datosBrasil$FechaDeMaduracion)
 datosBrasil$FechaDeValoracion<-as.Date(datosBrasil$FechaDeValoracion)
-
 ```
 
 
@@ -70,23 +68,13 @@ optim(theta,
     upper=rep(20,4)
     )
 }
-
-# datosPrueba<-datosBrasil%>%filter(`Dia_de_observacion`==as.Date("27/05/2021",format="%d/%m/%Y"))
-# t<-c(0,0,0,0.5)
-# datosPrueba1<-datosPrueba%>%filter(!grepl("com",`Tipo_de_bono`))
-# datosPrueba1$Spot<-(datosPrueba1$Precio/1000)^(-1/datosPrueba1$`Tiempo_a_maduracion`)-1
-# parametros<-fitNS(t,datosPrueba$`Tiempo_a_maduracion`,datosPrueba$Precio,1000,datosPrueba$Juros/2)
-
-
-
-datosPrueba<-datosBrasil%>%filter(FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y"))
-t<-c(0,0,0,0.03)
-datosPrueba1<-datosPrueba%>%filter(!grepl("com",TipoDeBono))
-datosPrueba1$Spot<-(datosPrueba1$Precio/1000)^(-1/datosPrueba1$TiempoRestanteParaMaduracion)-1
-parametros<-fitNS(t,datosPrueba$TiempoRestanteParaMaduracion,datosPrueba$Precio,1000,datosPrueba$CuponSemestral)
-tasasYield<-NS(unlist(parametros[1]),seq(0,10,length=100))
-ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$TiempoRestanteParaMaduracion,y=datosPrueba1$Spot))
-
+###datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021",format="%d/%m/%Y"))
+###t<-c(0,0,0,0.03)
+###datosPrueba1<-datosPrueba%>%filter(!grepl("com",Tipo.Titulo))
+###datosPrueba1$Spot<-(datosPrueba1$PU.Base.Manha/1000)^(-1/datosPrueba1$TempoDeMaduracao)-1
+###parametros<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000,datosPrueba$Juros)
+###tasasYield<-NS(unlist(parametros[1]),seq(0,10,length=100))
+###ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$TempoDeMaduracao,y=datosPrueba1$Spot))
 ```
 
 
@@ -125,37 +113,32 @@ Analizar la curva de rendimiento de los bonos del Tesoro Nacional de la Repúbli
 
 \begin{table}[H]
 \centering
-\begin{tabular}{cc}
+\begin{tabular}{cl}
 \hline
 Notación & Información\\
 \hline 
 $y_T$   & Tasa de rendimiento\\
-$y_k$ & Tasa Spot, es la tasa pagada. Ligada al tiempo de maduración.\\
-$f_k$ & La tasa forward es la tasa efectiva en un año o periodo dadas las spot $\frac{(1+y_k)^{k}}{(1+y_{k-1})^{k-1}}-1$\\
-$T$   & Tiempo para la maduración.               \\
+$y_k$ & Tasa Spot, es la tasa pagada, ligada al tiempo.\\
+$f_k$ & La tasa forward es la tasa efectiva en un año o periodo dadas las spot $\frac{(1+y_k)^{k}}{(1+y_{k-1})^{k-1}}-1$.\\
+$T$   & Tiempo para la maduración a partir del presente.               \\
 $B_0$ & Costo de la inversión o precio del bono. \\
 $F$   & Facial, también puede ser igual al valor de redención pero no siempre es así.\\  
-$R$ & Valor de redención, es el monto pagado a parte de los cupones\\
+$R$ & Valor de redención, es el monto pagado a parte de los cupones y\\& es pagado en la fecha de maduración.\\
 $C$ & Tasa de cupón que se paga de forma periodica que se hace sobre el valor del facial.\\
 \hline
 \end{tabular}
 \end{table}
-\par Se procede a explicar qué es la curva de rendimiento, según Boudreault y Reanud (2019) la curva de rendimiento también llamada curva de rendimientos spot, esta curva muestra la relación que hay entre las tasa de rendimiento spot y el tiempo de maduración. Así esta curva muestra los rendimientos que se obtienen de mantener una cierta cantidad de dinero durante un tiempo determinado. Para el caso de bonos cero cupón se puede calcular usando
+\par Se procede a explicar qué es la curva de rendimiento, según Boudreault y Reanud (2019) la curva de rendimiento también llamada curva de rendimientos spot, muestra la relación que hay entre las tasa de rendimiento spot y el tiempo de maduración. Así esta curva muestra los rendimientos que se obtienen de mantener una cierta cantidad de dinero durante un tiempo determinado. Para el caso de bonos cero cupón se puede calcular usando
 \[
 y=\left(\frac{F}{B_0}\right)^{\frac{1}{T}}-1
 \]
-\par Cabe destacar que si ya se tiene la tasa spot de los anterior se puede determinar el precio del bono. Para el caso de los bonos cuponados el precio se calcularía usando
-\[
-B_0=\sum_{i=1}^{T}\frac{CF}{(1+y_i)^{i}}+\frac{R}{(1+y_T)^T}
-\]
-\par Sin embargo a pesar de que esta herramienta es ampliamente utilizada, tiene una limitante intertemporal. Como lo expone Camilo (2008) esta se construye a través de una serie de tasas (precios) de instrumentos financieros discontinuos en el tiempo. Esto implica que entonces lo se ubica a partir de las tasas de rendimiemto es una serie de puntos que no reflejan de forma continua las tasas de rendimiento en el mercado financiero de acuerdo a su tiempo de maduración.
-\par Sin embargo hay agentes los cuales no están dispuestos a invertir o prestar los montos al tiempo establecido por agentes como los gobiernos nacionales u otras empresas. Es por esta razón que sería de utilidad encontrar una curva suave la cual sea capaz de proyectar las tasas de rendimiento en distintos momentos del tiempo, pero basado en lo que anteriormente han establecido agentes como los gobiernos nacionales.
+\par Sin embargo a pesar de que los rendimientos ofrecidos por entidades como lo son lo son los gobiernos con sus bonos son ampliamente utilizados. Como lo expone Camilo (2008) esto tiene una limitante temporal donde lo que se obtiene es una serie de puntos los cuales no representan las tasas y los rendimientos de forma continua. Esto es una limitante para los agentes los cuales no están dispuestos a ofrecer
 \par Para lograr obtener una curva suave la cual se aproxime a las tasas de rendimiento de agentes como los gobiernos, se emplean distintos métodos entre ellos los métodos paramétricos que están basados en la construcción de curvas a partir de modelos paramétricos. (Choudhry, 2010)
 \par Entre los modelos paramétricos se encuentra el de Nelson-Siegel. El cual según Matteson (2015) describe las tasas forward con la siguiente curva
 \[
 r(t,\theta)=\theta_0+(\theta_1+\theta_2t)\exp(-\theta_3 t)
 \]
-A partir de esta se puede obtener que la curva de rendimiento continua se puede obtener haciendo
+\par De tal forma que los parámetros son $\theta_0,\theta_1,\theta_2,\theta_3$ y $t$ es el periodo. A partir de esta se puede obtener la curva de rendimiento continua haciendo
 \[
 \begin{split}
 y(t,\theta)&=t^{-1}\int_{0}^{t}r(x,\theta)dx\\
@@ -165,9 +148,13 @@ y(t,\theta)&=t^{-1}\int_{0}^{t}r(x,\theta)dx\\
 Se puede calcular el valor de un flujo en el futuro en el periodo 
 $T_i$ traído a valor presente mediante 
 \[
-\exp\left(-\int_{0}^{T_i}r(t,\theta)dt\right)
+d(T_i,\theta)=\exp\left(-\int_{0}^{T_i}r(t,\theta)dt\right)
 \]
-A la hora de emplearse esto es importante tener presente que se está incurriendo en un cierto grado de error con respecto al valor real que tendría el flujo en el presente.
+Cuando se emplea esto es importante tener presente que se está incurriendo en un cierto grado de error con respecto al valor real que tendría el flujo en el presente. A $d$ se le llamará factor de descuento haciendo uso de esto es posible obtener un aproximación del precio de un bono con tiempo de maduración $T_n$ y que paga cupones en cada periodo $T_i$ quedando de la siguiente forma
+\[
+P_n(\theta)=Rd(T_n,\theta)+\sum_{i=1}^{n}FCd(T_i,\theta)
+\]
+Con esto también se puede calcular el precio de los bonos cero cupón basta tomar $C=0$.
 \par
 Tal y como lo citan Hladíková y Radová (2012) este modelo tiene una interpretación económica interesante para los parámetros. Tomando la curva que describe las tasas forward 
 Primero
@@ -181,7 +168,10 @@ Primero
 \end{itemize}
 \par Antes de poder continuar es necesario dejar en claro lo que son los cuantiles, media y la desviación estandar. Según Evans y Rosenthal (2009).
 \begin{tcolorbox}
-\par \textbf{Cuántil} Para $p\in [0,1]$ el $p$-ésimo cuantil $x_p$, para la función distribución $F_X$, se define como el menor número $x_p$ que satisface $p\leq F_X(x_p)$.
+\par \textbf{Cuántil}\par Para $p\in [0,1]$ el $p$-ésimo cuantil $x_p$, para la función distribución $F_X$, se define como el menor número $x_p$ que satisface 
+\[
+p\leq F_X(x_p)
+\]
 \end{tcolorbox}
 \par A partir de esta definición se define la mediana como el cuántil tal que $p=0.5$. Continuando con las definiciones de la media y desviación.
 \begin{tcolorbox}
@@ -195,13 +185,13 @@ Primero
 \]
 Donde $\Pi$ es el tamaño de la muestra de datos, y $X$ el valor que toma el dato. En particular la media práctica es 
 \[
-\var{x}=\frac{1}{n}\sum_{i=1}^{n}x_i
+\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_i
 \]
 Y la desviación estándar práctica es
 \[
-\sigma_x=\sqrt{\frac{1}{n-1}\sum_{i=1}}^{n}(x_i-\var{x})^2
+\sigma_x=\sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2}
 \]
-La media expresa alrededor de dónde se distribuyen los datos y la desviación estándar qué tanto se dispersan los datos con respecto a la media.
+\par $x_i$ representa el dato $i$-ésimo. La media expresa alrededor de dónde se distribuyen los datos y la desviación estándar qué tanto se dispersan los datos con respecto a la media.
 \end{tcolorbox}
 \par Se procede a explicar los gráficos de caja y bigotes. Estos gráficos muestran 5 datos relevantes de los datos, así como la dispersión. En estos se muestran el dato con el valor más bajo (mínimo), la mediana de la primera mitad de los datos (cuartil 1, $Q_1$), la mediana de todos los datos (cuartil 2, $Q_2$), la mediana de la segunda mitad de los datos (cuartil 3 $Q_3$) y la observación de mayor valor (máximo), así como los posibles outliers. De los gráficos de caja y bigotes existen variaciones. Al momento de hacerse un gráfico de este estilo hay que tener presente varias desventajas como lo, es el visualizar como están distribuidos los datos, con respecto a los distintos cuartiles. (Marmolejo, 2011) 
 \par\centering
@@ -209,6 +199,26 @@ La media expresa alrededor de dónde se distribuyen los datos y la desviación e
 caja<-data.frame(X=c(""),Y=c(1:5))
 caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(geom='errorbar')+geom_boxplot()+geom_text(vjust=6)+theme_minimal()+theme(axis.text.x=element_blank(),axis.text.y=element_blank())+coord_flip()
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \chapter{Descripción de los datos 5}
 
