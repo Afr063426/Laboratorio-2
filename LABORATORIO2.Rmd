@@ -26,10 +26,15 @@ library(latex2exp)
 
 ### Se cargan los datos
 datosBrasil<-read.csv('datosCombiandos.csv')
+<<<<<<< HEAD
 datosBrasil$Data.Vencimento<-as.Date(datosBrasil$Data.Vencimento)
 datosBrasil$Data.Base<-as.Date(datosBrasil$Data.Base)
 colnames(datosBrasil)<-c("Tipo_de_bono", "Fecha_de_vencimiento", "Dia_de_observacion", "Precio", "Tiempo_a_maduracion", "Cupones")
 
+=======
+datosBrasil$FechaDeMaduracion<-as.Date(datosBrasil$FechaDeMaduracion)
+datosBrasil$FechaDeValoracion<-as.Date(datosBrasil$FechaDeValoracion)
+>>>>>>> a7a15af585ae0d2649a49cc3820f21ff4c4687f8
 ```
 
 
@@ -60,7 +65,7 @@ fitNS<-function(theta,tiempo,price,R,C){
 fn<-function(theta){
 restaCuadrados<-c()
 for(i in 1:length(tiempo)){
-  restaCuadrados<-c(restaCuadrados,(price[i]-(R*exp(-tiempo[i]*NS(theta,tiempo[i]))+R*C*sum(exp(-periodos(tiempo[i])*NS(theta,periodos(tiempo[i]))))))^2)
+  restaCuadrados<-c(restaCuadrados,(price[i]-(R*exp(-tiempo[i]*NS(theta,tiempo[i])))-R*C[i]*sum(exp(-periodos(tiempo[i])*NS(theta,periodos(tiempo[i])))))^2)
 }
 sum(restaCuadrados)
 }
@@ -71,11 +76,19 @@ optim(theta,
     upper=rep(20,4)
     )
 }
+<<<<<<< HEAD
 datosPrueba<-datosBrasil%>%filter(`Dia_de_observacion`==as.Date("27/05/2021",format="%d/%m/%Y"))
 t<-c(0,0,0,0.5)
 datosPrueba1<-datosPrueba%>%filter(!grepl("com",`Tipo_de_bono`))
 datosPrueba1$Spot<-(datosPrueba1$Precio/1000)^(-1/datosPrueba1$`Tiempo_a_maduracion`)-1
 parametros<-fitNS(t,datosPrueba$`Tiempo_a_maduracion`,datosPrueba$Precio,1000,datosPrueba$Juros/2)
+=======
+datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021",format="%d/%m/%Y"))
+t<-c(0,0,0,0.03)
+datosPrueba1<-datosPrueba%>%filter(!grepl("com",Tipo.Titulo))
+datosPrueba1$Spot<-(datosPrueba1$PU.Base.Manha/1000)^(-1/datosPrueba1$TempoDeMaduracao)-1
+parametros<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000,datosPrueba$Juros)
+>>>>>>> a7a15af585ae0d2649a49cc3820f21ff4c4687f8
 tasasYield<-NS(unlist(parametros[1]),seq(0,10,length=100))
 ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$`Tiempo_a_maduracion`,y=datosPrueba1$Spot))
 ```
