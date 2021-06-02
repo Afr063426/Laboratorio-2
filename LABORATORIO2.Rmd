@@ -36,22 +36,46 @@ datosBrasil$Data.Base<-as.Date(datosBrasil$Data.Base)
 ### Se programa las funciones que se van emplear
 ##Modelo de Nelson-Siegel para curvas de rendimiento
 NS<-function(theta,tiempo){
-  yield<-(theta[1]+(theta[2]+theta[3]/theta[4])*(1-exp(-theta[4]*tiempo))/(theta[4]*tiempo)-theta[3]/theta[4]*exp(-theta[4]*tiempo))
-  yield
+yield<-(theta[1]+(theta[2]+theta[3]/theta[4])*(1-exp(-theta[4]*tiempo))/(theta[4]*tiempo)-theta[3]/theta[4]*exp(-theta[4]*tiempo))
+yield
+}
+## Periodos en años pago de cupones
+periodos<-function(tiempo){
+if(tiempo>=1){
+v<-(tiempo>=1& tiempo-floor(tiempo)>0.5)*c(tiempo-floor(tiempo)-0.5,tiempo-floor(tiempo)-0.5+seq(0.5,floor(tiempo)+0.5,by=0.5))+(tiempo>=1& tiempo-floor(tiempo)==0.5)*seq(0.5,floor(tiempo)+0.5,by=0.5)+(tiempo>=1& tiempo-floor(tiempo)==0)*c(seq(0.5,floor(tiempo),by=0.5))+(tiempo>=1&tiempo-floor(tiempo)<0.5)*c(tiempo-floor(tiempo),tiempo-floor(tiempo)+seq(0.5,floor(tiempo),by=0.5))
+}else{
+  v<-(tiempo<=0.5)*tiempo+(tiempo<1& tiempo-floor(tiempo)>0.5)*c(tiempo-floor(tiempo)-0.5,tiempo)
+}
+if(v[length(v)-1]>v[length(v)]){
+  v<-v[-length(v)]
+}
+return(v)
 }
 
+
 ## Se debe ajustar la curva con los precios entonces esto se busca reducir la suma de cuadrados, con la siguiente funci'on
-fitNS<-function(theta,tiempo,price,R){
-  fn<-function(theta){
-    sum((price-R*exp(-tiempo*NS(theta,tiempo)))^2)
-  }
-  optim(theta,
-        fn,
-        method = "L-BFGS-B",
-        lower= rep(-6,4),
-        upper=rep(6,4)
-        )
+fitNS<-function(theta,tiempo,price,R,C){
+fn<-function(theta){
+restaCuadrados<-c()
+for(i in 1:length(tiempo)){
+  restaCuadrados<-c(restaCuadrados,(price[i]-(R*exp(-tiempo[i]*NS(theta,tiempo[i]))+R*C*sum(exp(-periodos(tiempo[i])*NS(theta,periodos(tiempo[i]))))))^2)
 }
+sum(restaCuadrados)
+}
+optim(theta,
+    fn,
+    method = "L-BFGS-B",
+    lower= rep(-20,4),
+    upper=rep(20,4)
+    )
+}
+datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021",format="%d/%m/%Y"))
+t<-c(0,0,0,0.5)
+datosPrueba1<-datosPrueba%>%filter(!grepl("com",Tipo.Titulo))
+datosPrueba1$Spot<-(datosPrueba1$PU.Base.Manha/1000)^(-1/datosPrueba1$TempoDeMaduracao)-1
+parametros<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000,datosPrueba$Juros/2)
+tasasYield<-NS(unlist(parametros[1]),seq(0,10,length=100))
+ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$TempoDeMaduracao,y=datosPrueba1$Spot))
 ```
 
 
