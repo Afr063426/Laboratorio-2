@@ -77,17 +77,15 @@ optim(theta,
 # datosPrueba1$Spot<-(datosPrueba1$Precio/1000)^(-1/datosPrueba1$`Tiempo_a_maduracion`)-1
 # parametros<-fitNS(t,datosPrueba$`Tiempo_a_maduracion`,datosPrueba$Precio,1000,datosPrueba$Juros/2)
 
-datosPrueba<-datosBrasil%>%filter(Data.Base==as.Date("27/05/2021",format="%d/%m/%Y"))
+
+
+datosPrueba<-datosBrasil%>%filter(FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y"))
 t<-c(0,0,0,0.03)
-datosPrueba1<-datosPrueba%>%filter(!grepl("com",Tipo.Titulo))
-datosPrueba1$Spot<-(datosPrueba1$PU.Base.Manha/1000)^(-1/datosPrueba1$TempoDeMaduracao)-1
-parametros<-fitNS(t,datosPrueba$TempoDeMaduracao,datosPrueba$PU.Base.Manha,1000,datosPrueba$Juros)
-
-
-
-
+datosPrueba1<-datosPrueba%>%filter(!grepl("com",TipoDeBono))
+datosPrueba1$Spot<-(datosPrueba1$Precio/1000)^(-1/datosPrueba1$TiempoRestanteParaMaduracion)-1
+parametros<-fitNS(t,datosPrueba$TiempoRestanteParaMaduracion,datosPrueba$Precio,1000,datosPrueba$CuponSemestral)
 tasasYield<-NS(unlist(parametros[1]),seq(0,10,length=100))
-ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$`Tiempo_a_maduracion`,y=datosPrueba1$Spot))
+ggplot(,aes(x=seq(0,10,length=100),y=tasasYield))+geom_line()+geom_point(aes(x=datosPrueba1$TiempoRestanteParaMaduracion,y=datosPrueba1$Spot))
 
 ```
 
@@ -216,7 +214,7 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(ge
 
 
 Los datos son obtenidos a partir de la pa
-Se parte de la base de datos que contiene las tasas de rendimiento, seleccionan sus ultimos 10 años, que van desde `r datosBrasil$FechaDeValoracion[1]` hasta `r datosBrasil$FechaDeValoracionlength(datosBrasil$FechaDeValoracion)]` y cuenta con las tasas de rendimientos diarias de bonos con fecha de maduración a: 1 mes, 6 meses, 1 año, 2 años, 3 años, 5 años, 7 años, 10 años, 20 años y 30 años. En el siguiente grafico se aprecia como varia la tasa de rendimiento atreves del tiempo.
+Se parte de la base de datos que contiene las tasas de rendimiento, seleccionan sus ultimos 10 años, que van desde `r datosBrasil$FechaDeValoracion[1]` hasta `r datosBrasil$FechaDeValoracion[length(datosBrasil$FechaDeValoracion)]` y cuenta con las tasas de rendimientos diarias de bonos con fecha de maduración a: 1 mes, 6 meses, 1 año, 2 años, 3 años, 5 años, 7 años, 10 años, 20 años y 30 años. En el siguiente grafico se aprecia como varia la tasa de rendimiento atreves del tiempo.
 
 
 
