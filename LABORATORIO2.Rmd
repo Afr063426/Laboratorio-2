@@ -7,7 +7,7 @@ output:
       in_header: preambulo.tex
       before_body: titulo.tex
      
-documentclass: memoir0
+documentclass: memoir
 classoption: oneside
 
 ---
@@ -71,7 +71,13 @@ optim(theta,
 
 \chapter{Resumen Ejecutivo 1}
 Aquí debe dar resultados generales de lo que obtuvo del análisis.
-
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+###Generacion de tabla resumen ejecutivo
+resumen<-read.csv("datosResumenParametros.csv")[-1]
+kable(resumen, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Resumen De Paramétros Obtenidos",)%>%
+  add_header_above(c("Fecha De Valoracion", "Caso", "$\\\\Delta 0$","$\\\\Delta 1$","$\\\\theta 2$","$\\\\theta 3$","Error"))%>%
+   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
+```
 \chapter{Introducción 1}
 
 \chapter{Objetivos 1}
@@ -264,7 +270,7 @@ datosBrasil$FechaDeMaduracion <- as.Date(datosBrasil$FechaDeMaduracion )
 
 
 
-ggplot( data =datosBrasil, mapping = aes(x =FechaDeValoracion , y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
+#ggplot( data =datosBrasil, mapping = aes(x =FechaDeValoracion , y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
     geom_line()+
     scale_color_discrete()+
       labs(
@@ -423,7 +429,13 @@ for (i in 1:length(parametrosGeneral)){
 datosCurva%>%ggplot(aes(x=Maduracion,y=Tasa,color=Etiqueta))+geom_line()
 #### Se procede a generar un csv con los resultados para ser leido en la parte del resumen ejecutivo
 datosResumen<-data.frame(Caso=character(),"Fecha De Valoración"=as.Date(character()),theta_0=double(),theta_1=double(),theta_2=double(),theta_3=double(),Error=double())
-#for(i in 1:length(parametrosGeneral))
+for(i in 1:length(parametrosGeneral)){
+  resumenAuxiliar<-data.frame(Caso=names(parametrosGeneral)[i],theta_0=unlist(lapply(parametrosGeneral,"[[",1)[i])[1],theta_1=unlist(lapply(parametrosGeneral,"[[",1)[i])[2],theta_2=unlist(lapply(parametrosGeneral,"[[",1)[i])[3],theta_3=unlist(lapply(parametrosGeneral,"[[",1)[i])[4],Error=unlist(lapply(parametrosGeneral,"[[",2)[i]))
+  datosResumen<-rbind(datosResumen,resumenAuxiliar)
+}
+fechasValoracion<-rbind(toString(datosMaximo$FechaDeValoracion[1]),toString(datosMinimo$FechaDeValoracion[1]),"2021-05-27","2021-05-27")
+datosResumen<-cbind("Fechas de Valoracion"=fechasValoracion,datosResumen)
+write.csv(datosResumen,"datosResumenParametros.csv")
 ```
 
 
