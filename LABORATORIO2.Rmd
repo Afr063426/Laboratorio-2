@@ -400,12 +400,10 @@ for (i in 1:length(parametrosGeneral)){
   datosCurvaAuxiliar<-data.frame(Maduracion=seq(1,10,length=100),Tasa=NS(unlist(lapply(parametrosGeneral,"[[",1)[i]),seq(1,10,length=100)),Etiqueta=rep(names(parametrosGeneral)[i],100))
   datosCurva<-rbind(datosCurva,datosCurvaAuxiliar)
 }
-#Maximo<-datosCurva%>%filter(grepl("Max",Etiqueta))%>%ggplot(aes(x=Maduracion,y=Tasa))+geom_line(color="darkblue")
-#Minimo<-datosCurva%>%filter(grepl("Min",Etiqueta))%>%ggplot(aes(x=Maduracion,y=Tasa))+geom_line(color="Orange")
-#Media<-datosCurva%>%filter(grepl("Media",Etiqueta))%>%ggplot(aes(x=Maduracion,y=Tasa))+geom_line(color="Orange")
-#Mediana<-datosCurva%>%filter(grepl("Mediana",Etiqueta))%>%ggplot(aes(x=Maduracion,y=Tasa))+geom_line(color="darkblue")
-#ggarrange(Maximo,Minimo,Media,Mediana,labels = c("Max","Min","Media","Mediana"))
 datosCurva%>%ggplot(aes(x=Maduracion,y=Tasa,color=Etiqueta))+geom_line()
+#### Se procede a generar un csv con los resultados para ser leido en la parte del resumen ejecutivo
+datosResumen<-data.frame(Caso=character(),"Fecha De Valoración"=as.Date(character()),theta_0=double(),theta_1=double(),theta_2=double(),theta_3=double(),Error=double())
+#for(i in 1:length(parametrosGeneral))
 ```
 
 
