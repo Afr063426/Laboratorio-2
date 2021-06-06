@@ -260,8 +260,9 @@ datosBrasil$FechaDeMaduracion <- as.factor(datosBrasil$FechaDeMaduracion )
 levels(datosBrasil$FechaDeMaduracion)
 
 datosBrasil$FechaDeMaduracion <- as.Date(datosBrasil$FechaDeMaduracion )
-#dividirlos en conpu y sin el para graficar
-#Datosgra<-gather(datosBrasil, 
+#dividirlos en con cupon y sin el para graficar
+
+
 
 ggplot( data =datosBrasil, mapping = aes(x =FechaDeValoracion , y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
     geom_line()+
