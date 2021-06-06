@@ -21,8 +21,6 @@ library(knitr)
 library(xtable)
 library(gridExtra)
 library(latex2exp)
-library(ggpubr)
-
 ### Se cargan los datos
 datosBrasil<-read.csv('datosCombiandos.csv')
 datosBrasil$FechaDeMaduracion<-as.Date(datosBrasil$FechaDeMaduracion)
