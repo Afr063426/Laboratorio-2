@@ -74,8 +74,7 @@ Aquí debe dar resultados generales de lo que obtuvo del análisis.
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 ###Generacion de tabla resumen ejecutivo
 resumen<-read.csv("datosResumenParametros.csv")[-1]
-kable(resumen, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Resumen De Paramétros Obtenidos",)%>%
-  add_header_above(c("Fecha De Valoracion", "Caso", "$\\\\Delta 0$","$\\\\Delta 1$","$\\\\theta 2$","$\\\\theta 3$","Error"))%>%
+kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\theta_1$","$\\theta_2$","$\\theta_3$","Error"),escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Resumen De Paramétros Obtenidos",)%>%
    kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 \chapter{Introducción 1}
