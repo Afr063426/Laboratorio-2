@@ -7,7 +7,7 @@ output:
       in_header: preambulo.tex
       before_body: titulo.tex
      
-documentclass: memoir0
+documentclass: memoir
 classoption: oneside
 
 ---
@@ -71,7 +71,13 @@ optim(theta,
 
 \chapter{Resumen Ejecutivo 1}
 Aquí debe dar resultados generales de lo que obtuvo del análisis.
-
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+###Generacion de tabla resumen ejecutivo
+resumen<-read.csv("datosResumenParametros.csv")[-1]
+kable(resumen, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Resumen De Paramétros Obtenidos",)%>%
+  add_header_above(c("Fecha De Valoracion", "Caso", "$\\\\Delta 0$","$\\\\Delta 1$","$\\\\theta 2$","$\\\\theta 3$","Error"))%>%
+   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
+```
 \chapter{Introducción 1}
 
 \chapter{Objetivos 1}
@@ -263,7 +269,7 @@ datosBrasil$FechaDeMaduracion <- as.Date(datosBrasil$FechaDeMaduracion )
 #dividirlos en conpu y sin el para graficar
 #Datosgra<-gather(datosBrasil, 
 
-ggplot( data =datosBrasil, mapping = aes(x =FechaDeValoracion , y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
+#ggplot( data =datosBrasil, mapping = aes(x =FechaDeValoracion , y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
     geom_line()+
     scale_color_discrete()+
       labs(
