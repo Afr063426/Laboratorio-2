@@ -403,7 +403,13 @@ for (i in 1:length(parametrosGeneral)){
 datosCurva%>%ggplot(aes(x=Maduracion,y=Tasa,color=Etiqueta))+geom_line()
 #### Se procede a generar un csv con los resultados para ser leido en la parte del resumen ejecutivo
 datosResumen<-data.frame(Caso=character(),"Fecha De Valoración"=as.Date(character()),theta_0=double(),theta_1=double(),theta_2=double(),theta_3=double(),Error=double())
-#for(i in 1:length(parametrosGeneral))
+for(i in 1:length(parametrosGeneral)){
+  resumenAuxiliar<-data.frame(Caso=names(parametrosGeneral)[i],theta_0=unlist(lapply(parametrosGeneral,"[[",1)[i])[1],theta_1=unlist(lapply(parametrosGeneral,"[[",1)[i])[2],theta_2=unlist(lapply(parametrosGeneral,"[[",1)[i])[3],theta_3=unlist(lapply(parametrosGeneral,"[[",1)[i])[4],Error=unlist(lapply(parametrosGeneral,"[[",2)[i]))
+  datosResumen<-rbind(datosResumen,resumenAuxiliar)
+}
+fechasValoracion<-rbind(toString(datosMaximo$FechaDeValoracion[1]),toString(datosMinimo$FechaDeValoracion[1]),"2021-05-27","2021-05-27")
+datosResumen<-cbind("Fechas de Valoracion"=fechasValoracion,datosResumen)
+write.csv(datosResumen,"datosResumenParametros.csv")
 ```
 
 
