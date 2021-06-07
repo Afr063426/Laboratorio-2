@@ -20,6 +20,8 @@ library(knitr)
 library(xtable)
 library(gridExtra)
 library(latex2exp)
+
+
 ### Se cargan los datos
 datosBrasil<-read.csv('datosCombiandos.csv')
 datosBrasil$FechaDeMaduracion<-as.Date(datosBrasil$FechaDeMaduracion)
@@ -375,7 +377,7 @@ datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x = FechaDeMaduracion, 
   xlab('Fecha de maduración') +
   ylab('Tasas spot en %') +
   ggtitle('Distribución de los precios bonos cuponados') +
-  theme_minimal()+theme(axis.text.x=element_blank())
+  theme_minimal()
 
 ```
 
@@ -383,13 +385,31 @@ datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x = FechaDeMaduracion, 
 Al analizar estos datos cabe tener presente la siguiente tabla para una mayor compreción de sus valores:
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
-datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%summary()
-
-datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%group_by(FechaDeMaduracion)%>%summarise(Mediana=median(Precio))
 
 
-# kable(promedios10Y,col.names = c("Maduración en meses", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (10 años)",)%>%
-#   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
+datosMedia<-datosDes%>%group_by(FechaDeMaduracion,TipoDeBono)%>%summarise(Media=mean(Precio))
+datosDesviacion<-datosDes%>%group_by(FechaDeMaduracion,TipoDeBono)%>%summarise("Desviación estandar"=sd(Precio))
+
+datosEsta<- datosDes %>% 
+  group_by(FechaDeMaduracion,TipoDeBono) %>% 
+  nest() %>% 
+  mutate(
+    ret = map(data, ~quantile(.$Precio)),
+    ret = invoke_map(tibble, ret)
+  ) %>%
+  unnest(ret)
+
+datosEsta<-datosEsta[with(datosEsta, order(datosEsta$TipoDeBono)), ]
+datosEsta<-datosEsta[,-c(3)]
+
+
+datosEsta<-cbind(datosEsta, datosMedia[,3], datosDesviacion[,3])
+
+rm(datosMedia, datosDesviacion)
+
+names(datosEsta)=c("Tipo de bono","Fecha de maturación","Min","Q_2","Mediana","Q_4", "Max", "Media", "Desviación estandar")
+
+kable(datosEsta, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos",)%>% kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 
 \clearpage
@@ -421,22 +441,7 @@ Al analizar estos datos cabe tener presente la siguiente tabla:
 #   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 \clearpage
-Caso para un mes
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Datosgra1Mo<-gather(datos1Mo, "Fecha de maduración", Obtenido, names(datos1Mo[2]):names(datos1Mo[length(datos1Mo)]))
-# 
-# Datosgra1Mo$`Fecha de maduración`<-factor(Datosgra1Mo$`Fecha de maduración`, levels = c("1_mes","3_meses", "6_meses", "1_año", "2_años", "3_años","5_años","7_años", "10_años","20_años","30_años"))
-# 
-# 
-# ggplot(data = Datosgra1Mo, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) + geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
-#   geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.02)+
-#   scale_color_discrete()+
-#   xlab('Fecha de maduración') + 
-#   ylab('Tasas spot en %') +
-#   ggtitle('Distribución de las tasa spot (1 mes)') + 
-#   theme_minimal()+theme(axis.text.x=element_blank())
-```
 
 Al analizar estos datos cabe tener presente la siguiente tabla:
 
