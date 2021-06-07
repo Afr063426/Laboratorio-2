@@ -247,8 +247,13 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(ge
 
 \par Cabe destacar que tienen plazos fijos en sus bonos en este caso se tienen bonos que vencen en las fechas: 2022-01-01, 2023-01-01, 2024-07-01, 2025-01-01, 2026-01-01, 2027-01-01, 2029-01-01 y 2031-01-01. Como el facial está fijado, se tiene que, para el mismo plazo de vencimiento, el titulo con una mayor tasa de rentabilidad debe de tener un menor precio que uno con una rentabilidad más baja, pues en el mismo tiempo se va a pagar lo mismo.
 
+\par En la misma línea se tiene que son los precios de un bono representativo del mercado, es decir los precios observados son aquellos que tienen los bonos con las mismas características, teniendo así que si al día hoy se quiere emitir un bono para esa fecha de maduración con el mismo facial la tasa de rendimiento debe ajustarse al precio que existe en el mercado secundario, como mínimo para que los inversionista se vean indiferentes y un tanto mayor para que estos tengan más interés en adquirirlos.
 
-\par Se parte de la base de datos que contiene los precios de los bonos, seleccionando sus ultimos 9 años, que van desde `r min(datosBrasil$FechaDeValoracion)` hasta `r max(datosBrasil$FechaDeValoracion)`.
+\par Lo anterior se puede extrapolar al mercado segundario, teniendo así que si se ajusta la tasa al precio del mercado ambos bonos tendrían el mismo precio, pero si se da una tasa de rendimiento mayor el precio será bajo y con el mismo beneficio. 
+
+
+
+\par Ahora bien se parte de la base de datos que contiene los precios de los bonos, seleccionando sus ultimos 9 años, que van desde `r min(datosBrasil$FechaDeValoracion)` hasta `r max(datosBrasil$FechaDeValoracion)`.
 
 
 
@@ -261,20 +266,20 @@ summary(datosBrasil)
 
 str(datosBrasil)
 
-datosBrasil$FechaDeMaduracion <- as.factor(datosBrasil$FechaDeMaduracion )
-levels(datosBrasil$FechaDeMaduracion)
+
 
 datosBrasil$FechaDeMaduracion <- as.Date(datosBrasil$FechaDeMaduracion )
 #dividirlos en con cupon y sin el para graficar
 
-datossin<-as.factor(datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado",])
-datoscon<-as.factor(datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado com Juros Semestrais",])
 
 
-ggplot( data =  datosgra, 
-        mapping = aes(x =FechaDeMaduracion, y = FechaDeValoracion, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
-    geom_line()+
-    scale_color_discrete()+
+
+ggplot( data =  datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado",], 
+        mapping = aes(x =FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=as.factor(FechaDeMaduracion))) +
+  geom_boxplot(aes(color = as.factor(FechaDeMaduracion)), alpha = 0.7) +
+  geom_jitter(aes(color = as.factor(FechaDeMaduracion)), size = 1, alpha = 0.04)+
+  #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
+  scale_color_discrete()+
       labs(
       y = "Tasa de rendimiento en %",
       x = "Tiempo",
