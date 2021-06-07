@@ -473,20 +473,18 @@ datosRecientes<-(datosBrasil%>%filter(FechaDeValoracion==as.Date("27/05/2021",fo
 ## Se calculan las medianas y se hace como si la valoracion hubiera sido el 27 de mayo del 2021
 datosMedianas<-datosBrasil%>%group_by(FechaDeMaduracion,TipoDeBono,CuponSemestral)%>%summarise(Mediana=median(Precio))
 datosMedianas$TiempoRestanteParaMaduracion<-sort(datosBrasil$TiempoRestanteParaMaduracion[datosBrasil$FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y")])
-
-### Se calculan las medias
+### Se calculan las media y se hace como si la valoracion hubiera sido el 27 de mayo del 2021
 datosMedia<-datosBrasil%>%group_by(FechaDeMaduracion,TipoDeBono,CuponSemestral)%>%summarise(Media=mean(Precio))
 datosMedia$TiempoRestanteParaMaduracion<-sort(datosBrasil$TiempoRestanteParaMaduracion[datosBrasil$FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y")])
-
 #### Se calculan los parametros en cada caso
 t<-c(0,0,0,0.05)
 parametrosMax<-fitNS(t,datosMaximo$TiempoRestanteParaMaduracion,datosMaximo$Precio,1000,datosMaximo$CuponSemestral)
 parametrosMin<-fitNS(t,datosMinimo$TiempoRestanteParaMaduracion,datosMinimo$Precio,1000,datosMinimo$CuponSemestral)
 parametrosMedia<-fitNS(t,datosMedia$TiempoRestanteParaMaduracion,datosMedia$Media,1000,datosMedia$CuponSemestral)
-#Cambio de valor de parametro, para que sean un valor finito
-t<-c(0,0,0,0.005)
-parametrosMediana<-fitNS(t,datosMedianas$TiempoRestanteParaMaduracion,datosMedianas$Mediana,1000,datosMedianas$CuponSemestral)
 parametrosRecientes<-fitNS(t,datosRecientes$TiempoRestanteParaMaduracion,datosRecientes$Precio,1000,datosRecientes$CuponSemestral)
+#Cambio de valor de parametro, para que sean un valor finito
+t<-c(0,0,0,0.03)
+parametrosMediana<-fitNS(t,datosMedianas$TiempoRestanteParaMaduracion,datosMedianas$Mediana,1000,datosMedianas$CuponSemestral)
 ### Se colocan todos en una lista
 parametrosGeneral<-list(Máximo=parametrosMax,Mínimo=parametrosMin,Media=parametrosMedia,Mediana=parametrosMediana,Recientes=parametrosRecientes)
 ### Se genera una tabla
@@ -508,7 +506,7 @@ datosMedianas$Spot<-(1000/datosMedianas$Mediana)^(1/datosMedianas$TiempoRestante
 datosRecientes$Spot<-(1000/datosRecientes$Precio)^(1/datosRecientes$TiempoRestanteParaMaduracion)-1
 datosGeneral<-rbind(cbind(datosMaximo%>%select(TiempoRestanteParaMaduracion,Spot),Etiqueta=c("Máximo")),cbind(datosMinimo%>%select(TiempoRestanteParaMaduracion,Spot),Etiqueta=c("Mínimo")),cbind(as.data.frame(datosMedia)%>%select(TiempoRestanteParaMaduracion,Spot),Etiqueta=c("Media")),cbind(as.data.frame(datosMedianas)%>%select(TiempoRestanteParaMaduracion,Spot),Etiqueta=c("Mediana")),cbind(as.data.frame(datosRecientes)%>%select(TiempoRestanteParaMaduracion,Spot),Etiqueta=c("Recientes")))
 ### Se genera el gráfico
-curvaYield<-ggplot()+geom_line(datosCurva,mapping=aes(x=Maduracion,y=Tasa,color=Etiqueta))+geom_point(datosGeneral,mapping=aes(x=TiempoRestanteParaMaduracion,y=Spot,color=Etiqueta))+ggtitle("Curvas De Rendimiento (Tesoro Nacional Brasil)",subtitle = "Modelo Nelson-Siegel")+labs(caption="Fuente: Elaboración Propia, datos Tesouro Direto (2021)",x="Rendimiento")
+curvaYield<-ggplot()+geom_line(datosCurva,mapping=aes(x=Maduracion,y=Tasa,color=Etiqueta))+geom_point(datosGeneral,mapping=aes(x=TiempoRestanteParaMaduracion,y=Spot,color=Etiqueta))+ggtitle("Curvas De Rendimiento (Tesoro Nacional Brasil)",subtitle = "Modelo Nelson-Siegel")+labs(caption="Fuente: Elaboración Propia, datos Tesouro Direto (2021)",y="Rendimiento")
 curvaYield
 #### Se procede a generar un csv con los resultados para ser leido en la parte del resumen ejecutivo
 datosResumen<-data.frame(Caso=character(),"Fecha De Valoración"=as.Date(character()),theta_0=double(),theta_1=double(),theta_2=double(),theta_3=double(),Error=double())
