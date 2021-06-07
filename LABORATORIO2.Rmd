@@ -223,21 +223,30 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(ge
 
 
 
-Se seleccio el maximo de todos los precios y luego se toman los datos de esa fecha(ver si esto esta)
+
 
 \chapter{Descripción de los datos 5}
 
 ```{r}
-# datosBrasil$FechaDeMaduracion <- as.factor(datosBrasil$FechaDeMaduracion )
-# levels(datosBrasil$FechaDeMaduracion)
-# 
-# datosBrasil$TiempoRestanteParaMaduracion <- as.factor(datosBrasil$TiempoRestanteParaMaduracion )
-# levels(datosBrasil$TiempoRestanteParaMaduracion)
-# max(datosBrasil$FechaDeValoracion)
-# min(datosBrasil$FechaDeValoracion)
-# datosBrasil$CuponSemestral <- as.factor(datosBrasil$CuponSemestral )
-# levels(datosBrasil$CuponSemestral)
-# 
+
+# Se crea una un data frame idéntica, para tratar los datos como factor y no como fechas, pues es más sencillo trabajar los gráficos.
+datosDes<-datosBrasil
+
+# Se seleccio el maximo de todos los precios y luego se toman los datos de esa fecha(ver si esto esta)
+
+
+datosDes$TipoDeBono <- as.factor(datosDes$TipoDeBono)
+datosDes$FechaDeMaduracion <- as.factor(datosDes$FechaDeMaduracion)
+# datosDes$FechaDeValoracion <- as.factor(datosDes$FechaDeValoracion)
+# datosDes$Precio <- as.factor(datosDes$Precio)
+# datosDes$TiempoRestanteParaMaduracion <- as.factor(datosDes$TiempoRestanteParaMaduracion)
+# datosDes$CuponSemestral <- as.factor(datosDes$CuponSemestral )
+#levels(datosDes$FechaDeMaduracion)
+#levels(datosDes$TiempoRestanteParaMaduracion)
+#max(datosDes$FechaDeValoracion)
+#min(datosDes$FechaDeValoracion)
+#levels(datosDes$CuponSemestral)
+
 
 
 ```
@@ -257,13 +266,47 @@ Se seleccio el maximo de todos los precios y luego se toman los datos de esa fec
 
 
 
-\par Ahora bien se parte de la base de datos que contiene los precios de los bonos, seleccionando sus ultimos 9 años, que van desde `r min(datosBrasil$FechaDeValoracion)` hasta `r max(datosBrasil$FechaDeValoracion)`.
+\par Ahora bien se parte de la base de datos que contiene los precios de los bonos, seleccionando sus ultimos 9 años, que van desde `r min(datosBrasil$FechaDeValoracion)` hasta `r max(datosBrasil$FechaDeValoracion)`, pero con el inconveniente de que no son datos homogéneos para poder trabajar, como se muestran en los siguientes gráficos:
+
+
+```{r,  echo=FALSE}
+levels(datosDes$TipoDeBono) <- c("Cero Cupón", "Cuponados")
+
+datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
+  geom_line()+
+  scale_color_discrete()+
+  facet_wrap(~ TipoDeBono)
+  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
+  theme(legend.position="bottom")+theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
+```
 
 
 
 
 
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
+``` {r, echo=FALSE}
+
+#{r, fig.width=3, fig.height=2.5, echo=FALSE}
+# datosDes[datosDes$TipoDeBono=="Tesouro Prefixado",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
+#   geom_line()+
+#   scale_color_discrete()+
+#   labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
+#   theme(legend.position="bottom")+
+#   theme(plot.title = element_text(hjust = .5))
+# 
+# ggplot(data=datosDes[datosDes$TipoDeBono=="Tesouro Prefixado com Juros Semestrais",], 
+# mapping = aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
+#   geom_line()+
+#   scale_color_discrete()+
+#   labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
+#   theme(legend.position="bottom")+
+#   theme(plot.title = element_text(hjust = .5))
+
+
+```
+\par 
+
+```{r}
 #Preguntar si sabe a que se refiere ese cupon, si es el porcentaje por el precio a la fecha o el inicial
 
 summary(datosBrasil)
@@ -273,37 +316,23 @@ str(datosBrasil$FechaDeValoracion)
 
 
 
-#dividirlos en con cupon y sin el para graficar
 
 
 
-ggplot(data=datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado",], 
-mapping = aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=as.factor(FechaDeMaduracion)))+
-  geom_line()+
-  #geom_boxplot(aes(color = as.factor(FechaDeMaduracion)), alpha = 0.7)+
-  #geom_jitter(aes(color = as.factor(FechaDeMaduracion)), size = 1, alpha = 0.04)+
-  scale_color_discrete()+
-  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de los precios")+
-  theme(legend.position="bottom")+theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
-```
-```{r}
+
 #se crea una base de datos homogena
 datosBrasil<-datosBrasil%>%filter(FechaDeValoracion>=as.Date("10/02/2020",format="%d/%m/%Y"), FechaDeMaduracion!=as.Date("01/07/2024",format="%d/%m/%Y"))
 
-ggplot(data=datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado",], 
+ggplot(data=datosBrasil, 
 mapping = aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=as.factor(FechaDeMaduracion)))+
   geom_line()+
   #geom_boxplot(aes(color = as.factor(FechaDeMaduracion)), alpha = 0.7)+
   #geom_jitter(aes(color = as.factor(FechaDeMaduracion)), size = 1, alpha = 0.04)+
   scale_color_discrete()+
-  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de los precios")+
+  facet_wrap(~ TipoDeBono)
+  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
   theme(legend.position="bottom")+theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
 ```
-
-```
-
-
-
 
 
 
@@ -437,7 +466,7 @@ t<-c(0,0,0,0.05)
 parametrosMax<-fitNS(t,datosMaximo$TiempoRestanteParaMaduracion,datosMaximo$Precio,1000,datosMaximo$CuponSemestral)
 parametrosMin<-fitNS(t,datosMinimo$TiempoRestanteParaMaduracion,datosMinimo$Precio,1000,datosMinimo$CuponSemestral)
 parametrosMedia<-fitNS(t,datosMedia$TiempoRestanteParaMaduracion,datosMedia$Media,1000,datosMedia$CuponSemestral)
-
+#Cambio de valor de parametro, para que sean un valor finito
 t<-c(0,0,0,0.005)
 parametrosMediana<-fitNS(t,datosMedianas$TiempoRestanteParaMaduracion,datosMedianas$Mediana,1000,datosMedianas$CuponSemestral)
 ### Se colocan todos en una lista
