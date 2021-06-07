@@ -465,11 +465,11 @@ datosMaximo<-(datosBrasil%>%filter(FechaDeValoracion==datosBrasil$FechaDeValorac
 
 minimo<-min(datosBrasil$Precio)
 datosMinimo<-(datosBrasil%>%filter(FechaDeValoracion==datosBrasil$FechaDeValoracion[datosBrasil$Precio==minimo]))
-<<<<<<< HEAD
-datosRecientes<-(datosBrasil%>%filter(FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y")))
-=======
 
->>>>>>> 47aa8646a9d4faae529069cbbb45981231ab0345
+datosRecientes<-(datosBrasil%>%filter(FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y")))
+
+
+
 ## Se calculan las medianas y se hace como si la valoracion hubiera sido el 27 de mayo del 2021
 datosMedianas<-datosBrasil%>%group_by(FechaDeMaduracion,TipoDeBono,CuponSemestral)%>%summarise(Mediana=median(Precio))
 datosMedianas$TiempoRestanteParaMaduracion<-sort(datosBrasil$TiempoRestanteParaMaduracion[datosBrasil$FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y")])
