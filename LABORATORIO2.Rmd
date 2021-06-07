@@ -229,7 +229,7 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(ge
 
 
 
-
+Se seleccio el maximo de todos los precios y luego se toman los datos de esa fecha(ver si esto esta)
 
 \chapter{Descripción de los datos 5}
 
@@ -243,7 +243,7 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(ge
 # min(datosBrasil$FechaDeValoracion)
 # datosBrasil$CuponSemestral <- as.factor(datosBrasil$CuponSemestral )
 # levels(datosBrasil$CuponSemestral)
-
+# 
 
 
 ```
@@ -274,7 +274,7 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Min','Q_1','M','Q_3','Max')))+stat_boxplot(ge
 
 summary(datosBrasil)
 
-str(datosBrasil)
+str(datosBrasil$FechaDeValoracion)
 
 
 
@@ -283,7 +283,29 @@ str(datosBrasil)
 
 
 
-ggplot( data =  datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado",],mapping = aes(x =FechaDeMaduracion, y = Precio,group=FechaDeMaduracion, color=as.factor(FechaDeMaduracion))) +geom_boxplot(aes(color = as.factor(FechaDeMaduracion)), alpha = 0.7) +geom_jitter(aes(color = as.factor(FechaDeMaduracion)), size = 1, alpha = 0.04)+scale_color_discrete()+labs(y = "Tasa de rendimiento en %",x = "Tiempo",title = "Comportamiento de las tasas spot") +theme(legend.position="bottom")+theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
+ggplot(data=datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado",], 
+mapping = aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=as.factor(FechaDeMaduracion)))+
+  geom_line()+
+  #geom_boxplot(aes(color = as.factor(FechaDeMaduracion)), alpha = 0.7)+
+  #geom_jitter(aes(color = as.factor(FechaDeMaduracion)), size = 1, alpha = 0.04)+
+  scale_color_discrete()+
+  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de los precios")+
+  theme(legend.position="bottom")+theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
+```
+```{r}
+#se crea una base de datos homogena
+datosBrasil<-datosBrasil%>%filter(FechaDeValoracion>=as.Date("10/02/2020",format="%d/%m/%Y"), FechaDeMaduracion!=as.Date("01/07/2024",format="%d/%m/%Y"))
+
+ggplot(data=datosBrasil[datosBrasil$TipoDeBono=="Tesouro Prefixado",], 
+mapping = aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=as.factor(FechaDeMaduracion)))+
+  geom_line()+
+  #geom_boxplot(aes(color = as.factor(FechaDeMaduracion)), alpha = 0.7)+
+  #geom_jitter(aes(color = as.factor(FechaDeMaduracion)), size = 1, alpha = 0.04)+
+  scale_color_discrete()+
+  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de los precios")+
+  theme(legend.position="bottom")+theme(plot.title = element_text(hjust = .5))# colocamos el titulo en el centro
+```
+
 ```
 
 
@@ -422,6 +444,8 @@ t<-c(0,0,0,0.05)
 parametrosMax<-fitNS(t,datosMaximo$TiempoRestanteParaMaduracion,datosMaximo$Precio,1000,datosMaximo$CuponSemestral)
 parametrosMin<-fitNS(t,datosMinimo$TiempoRestanteParaMaduracion,datosMinimo$Precio,1000,datosMinimo$CuponSemestral)
 parametrosMedia<-fitNS(t,datosMedia$TiempoRestanteParaMaduracion,datosMedia$Media,1000,datosMedia$CuponSemestral)
+
+t<-c(0,0,0,0.005)
 parametrosMediana<-fitNS(t,datosMedianas$TiempoRestanteParaMaduracion,datosMedianas$Mediana,1000,datosMedianas$CuponSemestral)
 
 
