@@ -268,7 +268,7 @@ str(datosBrasil)
 
 
 
-datosBrasil$FechaDeMaduracion <- as.Date(datosBrasil$FechaDeMaduracion )
+
 #dividirlos en con cupon y sin el para graficar
 
 
