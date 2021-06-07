@@ -72,18 +72,11 @@ optim(theta,
 
 \chapter{Resumen Ejecutivo 1}
 \begin{itemize}
-<<<<<<< HEAD
-\item El hacer una promediación de los datos al momento de determinar una curva de rendimiento genera un gran error bajo el modelo de Nelson-Siegel, al menos para el caso de los bonos del Tesoro Nacional de Brasil.
-\item Ligado a lo anterior el sacar un promedio es una opción para determinar la curva de rendimientos, sin embargo, esto puede estar alejado de la realidad además de que se puede generar un gran error.
-\item El tomar la mediana similar a la media genera un gran un error además de que puede no representar la realidad de la mejor forma.
-\item En los casos reales que sean valorado como los son tomar el máximo de los precios y con ello todas las valoraciones que se hicieron la fecha ligada este precio, así como el mínimo y el caso de la última valoración con la que se cuenta datos muestran un buen ajuste bajo el modelo de Nelson-Siegel.
-A continuación, se muestra un resumen de los resultados obtenidos.
-=======
 \item El sacar un promedio de los precios de los datos con los que se cuenta es una opción para determinar la curva de rendimientos, sin embargo esto puede estar alejado de la realidad además de que se puede generar un gran error entre los datos reales de la media y lo obtenido mediante el modelo de Nelson-Siegel.
-\item El tomar la mediana similar a la media genera un gran un error a demás de que puede no representar la realidad de la mejor forma.
+\item El tomar la mediana similar a la media genera un gran un error además de que puede no representar la realidad de la mejor forma.
 \item En los casos reales elaborados como los son tomar el máximo de los precios y con ello todas las valoraciones que se hicieron la fecha ligada este precio, así como el mínimo y el caso de la valoración más reciente que se tenía de los bonos, se nota que el error obtenido bajo el modelo de Nelson-Siegel y la forma en que se encontraron los parámetros es relativamente bajo ante la rapidez con la que se puede implementar esto.
 A continuación se muestra un resumen de los resultados obtenidos.
->>>>>>> d0b5d665dab22fbf2c449cd5f64ed308ea64e1d5
+
 \end{itemize}
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE,fig.cap="Fuente: Elaboración propia, con datos del Tesouro Nacional (2021)"}
@@ -257,7 +250,7 @@ datosDes<-datosBrasil
 
 datosDes$TipoDeBono <- as.factor(datosDes$TipoDeBono)
 datosDes$FechaDeMaduracion <- as.factor(datosDes$FechaDeMaduracion)
-levels(datosDes$TipoDeBono) <- c("CeroCupón", "Cuponados")
+levels(datosDes$TipoDeBono) <- c("Cero Cupón", "Cuponados")
 # datosDes$FechaDeValoracion <- as.factor(datosDes$FechaDeValoracion)
 # datosDes$Precio <- as.factor(datosDes$Precio)
 # datosDes$TiempoRestanteParaMaduracion <- as.factor(datosDes$TiempoRestanteParaMaduracion)
@@ -305,7 +298,7 @@ datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, c
 ```{r, fig.align="center",fig.width=5, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE}
 
 # 
-# datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
+# datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
 #   geom_line()+
 #   scale_color_discrete(name = "Fecha de maduración")+
 #   labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
@@ -335,7 +328,7 @@ datosBrasil<-datosBrasil%>%filter(FechaDeValoracion>=as.Date("10/02/2020",format
 datosDes<-datosDes%>%filter(FechaDeValoracion>=as.Date("10/02/2020",format="%d/%m/%Y"), FechaDeMaduracion!="2024-07-01")
 
 
-datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
+datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
   geom_line()+
   scale_color_discrete(name = "Fecha de maduración")+
   labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
@@ -365,7 +358,7 @@ datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y 
 
 # Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datosBrasil$FechaDeValoracion)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
 
-datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
+datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
   geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
   stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
   geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
