@@ -2,7 +2,6 @@
 output:
   pdf_document:
     toc: true
-    fig_caption: yes
     toc_depth: 2
     includes:
       in_header: preambulo.tex
@@ -73,13 +72,8 @@ optim(theta,
 
 \chapter{Resumen Ejecutivo 1}
 \begin{itemize}
-<<<<<<< HEAD
-\item El calcular un promedio de los precios de los datos con los que se cuenta es una opción para determinar la curva de rendimientos, sin embargo esto puede estar alejado de la realidad además de que se puede generar un gran error entre los datos reales de la media y lo obtenido mediante el modelo de Nelson-Siegel.
-\item El tomar la mediana similar a la media genera un gran un error a demás de que puede no representar la realidad de la mejor forma.
-=======
 \item El sacar un promedio de los precios de los datos con los que se cuenta es una opción para determinar la curva de rendimientos, sin embargo esto puede estar alejado de la realidad además de que se puede generar un gran error entre los datos reales de la media y lo obtenido mediante el modelo de Nelson-Siegel.
 \item El tomar la mediana similar a la media genera un gran un error además de que puede no representar la realidad de la mejor forma.
->>>>>>> 00f7efb6eec9162e1a34ebf3d482d56381df29ed
 \item En los casos reales elaborados como los son tomar el máximo de los precios y con ello todas las valoraciones que se hicieron la fecha ligada este precio, así como el mínimo y el caso de la valoración más reciente que se tenía de los bonos, se nota que el error obtenido bajo el modelo de Nelson-Siegel y la forma en que se encontraron los parámetros es relativamente bajo ante la rapidez con la que se puede implementar esto.
 A continuación se muestra un resumen de los resultados obtenidos.
 
@@ -103,7 +97,7 @@ kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\the
 
 \section{Objetivo general}
 
-Analizar la curva de rendimiento de los bonos del Tesoro Nacional de la República Federativa De Brasil por medio del modelo de Nelson y Siegel en el periodo de tiempo comprendido entre el 2020-02-10 y el  2021-05-27.
+Analizar la curva de rendimiento de los bonos del Tesoro Nacional de la República Federativa De Brasil por medio del modelo de Nelson y Siegel en el periodo de tiempo comprendido entre el 1° de enero del 2020 y el  27 de mayo del 2021.
 
 \section{Objetivos específicos}
 \begin{enumerate} 
@@ -288,8 +282,9 @@ levels(datosDes$TipoDeBono) <- c("Cero Cupón", "Cuponados")
 \par Ahora bien se parte de la base de datos que contiene los precios de los bonos, seleccionando sus ultimos 9 años, que van desde `r min(datosBrasil$FechaDeValoracion)` hasta `r max(datosBrasil$FechaDeValoracion)`, pero con el inconveniente de que no son datos homogéneos para poder trabajar, como se muestran en los siguientes gráficos:
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
 #grafico con facet_wrap
+
 datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
   geom_line()+
   scale_color_discrete()+
@@ -300,17 +295,8 @@ datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, c
 
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r, fig.align="center",fig.width=5, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE}
 
-<<<<<<< HEAD
-#{r, fig.width=3, fig.height=2.5, echo=FALSE}
-datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
-  geom_line()+
-  scale_color_discrete(name = "Fecha de maduración")+
-  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
-  theme(legend.position="bottom")+
-  theme(plot.title = element_text(hjust = .5))
-=======
 # 
 # datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
 #   geom_line()+
@@ -319,21 +305,22 @@ datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x=FechaDeValoracion, y
 #   theme(legend.position="bottom")+
 #   theme(plot.title = element_text(hjust = .5))
 # 
->>>>>>> 00f7efb6eec9162e1a34ebf3d482d56381df29ed
-
-datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
-  geom_line()+
-  scale_color_discrete(name = "Fecha de maduración")+
-  labs(y = "Precios",x = "Tiempo", title = "Comportamiento de bonos cuponados")+
-  theme(legend.position="bottom")+
-  theme(plot.title = element_text(hjust = .5))
-
 
 ```
 
-\par Siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 01/07/2024 y además únicamente contar con las observaciones obtenidas a partir del 10/02/2020, que es donde se tiene registro del bono con fecha de maduración 01-01-2016.
+```{r, fig.align="center",fig.width=5, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE}
+# datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
+#   geom_line()+
+#   scale_color_discrete(name = "Fecha de maduración")+
+#   labs(y = "Precios",x = "Tiempo", title = "Comportamiento de bonos cuponados")+
+#   theme(legend.position="bottom")+
+#   theme(plot.title = element_text(hjust = .5))
+```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+\par Como se aprecia, en los datos todas las variables no cuentan con las mismas observaciones, siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 01/07/2024 y además únicamente contar con las observaciones obtenidas a partir del 10/02/2020, que es donde se tiene registro del bono con fecha de maduración 01-01-2016.
+
+```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
 
 #se crea una base de datos homogena
 datosBrasil<-datosBrasil%>%filter(FechaDeValoracion>=as.Date("10/02/2020",format="%d/%m/%Y"), FechaDeMaduracion!=as.Date("01/07/2024",format="%d/%m/%Y"))
@@ -362,8 +349,8 @@ datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y 
 \par Se puede apreciar la respuesta que se tuvo con los bonos cero cupón se intensifica a medida que su fecha de maduración aumenta; teniendo así que el bono con año de maturación 2022, se mantiene más estable que los demás, pues se acerca a su valor facial.
 
 \par En cuanto a los bonos cuponados, estos son más sensible las repercusiones económicas dadas por las medidas tomadas para mitigar del COVID-19, pues se puede apreciar como estos tienen un periodo de relativa estabilidad entre julio y diciembre del 2020, pero a partir de enero del 2021 se ven los efectos de la especulación ante la caida del sistema de salud del país para atender la enfermedad y el descubrimiento de una nueva variante.
-#pregunta porque eran más sencible los cuponados
 
+#pregunta porque eran más sencible los cuponados
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -371,25 +358,17 @@ datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y 
 
 # Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datosBrasil$FechaDeValoracion)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
 
-<<<<<<< HEAD
-
-datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
-
-=======
 datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
->>>>>>> 00f7efb6eec9162e1a34ebf3d482d56381df29ed
   geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
   stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
   geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
-  #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
   scale_color_discrete()+
   stat_summary(fun.y=mean, geom="point", shape=18,
 size=2)+
   xlab('Fecha de maduración') +
-  ylab('Tasas spot en %') +
+  ylab('Precios') +
   ggtitle('Distribución de los precios bonos cero cupón') +
   theme_minimal()+theme(axis.text.x=element_blank())
-
 
 
 
@@ -411,8 +390,6 @@ size=3)+
 Al analizar estos datos cabe tener presente la siguiente tabla para una mayor compreción de sus valores:
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
-
-
 datosMedia<-datosDes%>%group_by(FechaDeMaduracion,TipoDeBono)%>%summarise(Media=mean(Precio))
 datosDesviacion<-datosDes%>%group_by(FechaDeMaduracion,TipoDeBono)%>%summarise("Desviación estandar"=sd(Precio))
 
@@ -427,10 +404,7 @@ datosEsta<- datosDes %>%
 
 datosEsta<-datosEsta[with(datosEsta, order(datosEsta$TipoDeBono)), ]
 datosEsta<-datosEsta[,-c(3)]
-
-
 datosEsta<-cbind(datosEsta, datosMedia[,3], datosDesviacion[,3])
-
 rm(datosMedia, datosDesviacion)
 
 names(datosEsta)=c("Tipo de bono","Fecha de maturación","Min","Q_2","Mediana","Q_4", "Max", "Media", "Desviación estandar")
@@ -438,44 +412,10 @@ names(datosEsta)=c("Tipo de bono","Fecha de maturación","Min","Q_2","Mediana","
 kable(datosEsta, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos",)%>% kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
 
+
+
+
 \clearpage
-Caso para 1 año
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-# Datosgra1Y<-gather(datos1Y, "Fecha de maduración", Obtenido, names(datos1Y[2]):names(datos1Y[length(datos1Y)]))
-# Datosgra1Y$`Fecha de maduración`<-factor(Datosgra1Y$`Fecha de maduración`, levels = c("1_mes","3_meses", "6_meses", "1_año", "2_años", "3_años","5_años","7_años", "10_años","20_años","30_años"))
-# 
-# 
-# ggplot(data = Datosgra1Y, aes(x =`Fecha de maduración` , y = Obtenido, group=`Fecha de maduración`)) +
-#   geom_boxplot(aes(color = `Fecha de maduración`), alpha = 0.7) + 
-#   geom_jitter(aes(color = `Fecha de maduración`), size = 1, alpha = 0.04)+
-#   #geom_violin(aes(fill = `Fecha de maduración`), color = 'black', alpha = 0.8)+
-#   scale_color_discrete()+
-#   xlab('Fecha de maduración') + 
-#   ylab('Tasas spot en %') +
-#   ggtitle('Distribución de las tasa spot (1 año)') + 
-#   theme_minimal()+theme(axis.text.x=element_blank())
-```
-
-
-
-Al analizar estos datos cabe tener presente la siguiente tabla:
-
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
-# 
-# kable(promedios1Y, col.names = c("Maduración en meses", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (1 año)",)%>%
-#   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
-```
-\clearpage
-
-
-Al analizar estos datos cabe tener presente la siguiente tabla:
-
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
-
-# kable(promedios1Mo,col.names = c("Maduración en meses", "Promedio", "Varianza"), format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos (1 mes)",)%>%
-#   kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
-```
 
 
 
@@ -492,7 +432,7 @@ Al analizar estos datos cabe tener presente la siguiente tabla:
 \]
 \par Para posteriormente graficar \ref{rendimiento}. Para esto se toman las muestras del precio máximo de todos los precios ligado a esto los bonos que fueron valorados la fecha en que se obtuvo este precio, posteriormente se hace el caso del mínimo igual al anterior, mediana y media de los datos agrupados por tipo de bono y fecha de maduración haciendo la suposición de que esta valoración se hizo el 27 de mayo del 2021 y se toma la valoración de los bonos más reciente. Para motrar el ajuste se calculan las tasas spot mediante \ref{ceroCupon}
 
-``` {r figs, echo=FALSE, message=FALSE, warning=FALSE,fig.align="center",fig.cap="Fuente:Elaboración propia, datos del Tesouro Nacional"}
+``` {r echo=FALSE, message=FALSE, warning=FALSE,fig.align="center"}
 #### Se toman solos los datos de Brasil que están posterior al primero de enero del 2020
 datosBrasil<-datosBrasil%>%filter(FechaDeValoracion>=as.Date("01/01/2020",format="%d/%m/%Y"))
 maximo<-max(datosBrasil$Precio)
