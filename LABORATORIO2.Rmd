@@ -393,7 +393,7 @@ Al analizar estos datos cabe tener presente la siguiente tabla:
 
 \par Entonces haciendo uso de la suma de residuo de cuadrados y la programación en \textbf{\textsf{R}} se optimiza 
 \[
-\sum_{i} (\tilde{P}_i-P_i(\theta))^2
+\sum_{i} (\tilde{P}_i-P(T_i,\theta))^2
 \]
 \par Para posteriormente graficar \ref{rendimiento}. Para esto se toman las muestras del precio máximo de todos los precios ligado a esto los bonos que fueron valorados la fecha en que se obtuvo este precio, posteriormente se hace el caso del mínimo igual al anterior y finalmente mediana y media de los datos agrupados por tipo de bono y fecha de maduración haciendo la suposición de que esta valoración se hizo el 27 de mayo del 2021.
 
