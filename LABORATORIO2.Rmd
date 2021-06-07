@@ -74,10 +74,10 @@ optim(theta,
 \chapter{Resumen Ejecutivo 1}
 \begin{itemize}
 \item El hacer una promediación de los datos al momento de determinar una curva de rendimiento genera un gran error bajo el modelo de Nelson-Siegel, al menos para el caso de los bonos del Tesoro Nacional de Brasil.
-\item Ligado a lo anterior el sacar un promedio es una opción para determinar la curva de rendimientos, sin embargo esto puede estar alejado de la realidad además de que se puede generar un gran error.
-\item El tomar la mediana similar a la media genera un gran un error a demás de que puede no representar la realidad de la mejor forma.
+\item Ligado a lo anterior el sacar un promedio es una opción para determinar la curva de rendimientos, sin embargo, esto puede estar alejado de la realidad además de que se puede generar un gran error.
+\item El tomar la mediana similar a la media genera un gran un error además de que puede no representar la realidad de la mejor forma.
 \item En los casos reales que sean valorado como los son tomar el máximo de los precios y con ello todas las valoraciones que se hicieron la fecha ligada este precio, así como el mínimo y el caso de la última valoración con la que se cuenta datos muestran un buen ajuste bajo el modelo de Nelson-Siegel.
-A continuación se muestra un resumen de los resultados obtenidos.
+A continuación, se muestra un resumen de los resultados obtenidos.
 \end{itemize}
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 ###Generacion de tabla resumen ejecutivo
@@ -283,8 +283,8 @@ levels(datosDes$TipoDeBono) <- c("CeroCupón", "Cuponados")
 datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
   geom_line()+
   scale_color_discrete()+
-  facet_wrap(~ TipoDeBono)
-  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+theme_minimal()
+  facet_wrap(~ TipoDeBono)+
+  labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")
 ```
 
 
@@ -347,43 +347,37 @@ datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y 
 
 #pregunta porque eran más sencible los cuponados
 
-```{r}
-datosDes%>%ggplot(aes(x=FechaDeMaduracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
-  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
-  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
-  scale_color_discrete()+
-  xlab('Fecha de maduración') +
-  ylab('Precios') +
-  ggtitle('Distribución de los precios bonos cero cupón') +
-  facet_wrap(~ TipoDeBono)+
-  theme_minimal()
-```
-
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
 
 # Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datosBrasil$FechaDeValoracion)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
 
-# datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) + 
-#   geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
-#   geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
-#   scale_color_discrete()+
-#   xlab('Fecha de maduración') +
-#   ylab('Precios') +
-#   ggtitle('Distribución de los precios bonos cero cupón') +
-#   theme_minimal()+theme(axis.text.x=element_blank())
-# 
-# 
-# 
-# datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) + 
-#   geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
-#   geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
-#   scale_color_discrete()+
-#   xlab('Fecha de maduración') +
-#   ylab('Precios') +
-#   ggtitle('Distribución de los precios bonos cuponados') +
-#   theme_minimal()
+datosDes[datosDes$TipoDeBono=="CeroCupón",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
+  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
+  stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
+  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
+  scale_color_discrete()+
+  stat_summary(fun.y=mean, geom="point", shape=18,
+size=2)+
+  xlab('Fecha de maduración') +
+  ylab('Precios') +
+  ggtitle('Distribución de los precios bonos cero cupón') +
+  theme_minimal()+theme(axis.text.x=element_blank())
+
+
+
+datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
+  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
+  stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
+  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
+  scale_color_discrete()+
+  stat_summary(fun.y=mean, geom="point", shape=18,
+size=3)+
+  xlab('Fecha de maduración') +
+  ylab('Precios') +
+  ggtitle('Distribución de los precios bonos cuponados') +
+  theme_minimal()
 
 ```
 
