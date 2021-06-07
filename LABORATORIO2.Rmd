@@ -6,7 +6,6 @@ output:
     includes:
       in_header: preambulo.tex
       before_body: titulo.tex
-     
 documentclass: memoir
 classoption: oneside
 
@@ -73,18 +72,32 @@ optim(theta,
 
 \chapter{Resumen Ejecutivo 1}
 \begin{itemize}
+<<<<<<< HEAD
 \item El hacer una promediación de los datos al momento de determinar una curva de rendimiento genera un gran error bajo el modelo de Nelson-Siegel, al menos para el caso de los bonos del Tesoro Nacional de Brasil.
 \item Ligado a lo anterior el sacar un promedio es una opción para determinar la curva de rendimientos, sin embargo, esto puede estar alejado de la realidad además de que se puede generar un gran error.
 \item El tomar la mediana similar a la media genera un gran un error además de que puede no representar la realidad de la mejor forma.
 \item En los casos reales que sean valorado como los son tomar el máximo de los precios y con ello todas las valoraciones que se hicieron la fecha ligada este precio, así como el mínimo y el caso de la última valoración con la que se cuenta datos muestran un buen ajuste bajo el modelo de Nelson-Siegel.
 A continuación, se muestra un resumen de los resultados obtenidos.
+=======
+\item El sacar un promedio de los precios de los datos con los que se cuenta es una opción para determinar la curva de rendimientos, sin embargo esto puede estar alejado de la realidad además de que se puede generar un gran error entre los datos reales de la media y lo obtenido mediante el modelo de Nelson-Siegel.
+\item El tomar la mediana similar a la media genera un gran un error a demás de que puede no representar la realidad de la mejor forma.
+\item En los casos reales elaborados como los son tomar el máximo de los precios y con ello todas las valoraciones que se hicieron la fecha ligada este precio, así como el mínimo y el caso de la valoración más reciente que se tenía de los bonos, se nota que el error obtenido bajo el modelo de Nelson-Siegel y la forma en que se encontraron los parámetros es relativamente bajo ante la rapidez con la que se puede implementar esto.
+A continuación se muestra un resumen de los resultados obtenidos.
+>>>>>>> d0b5d665dab22fbf2c449cd5f64ed308ea64e1d5
 \end{itemize}
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
+
+``` {r echo=FALSE, message=FALSE, warning=FALSE,fig.cap="Fuente: Elaboración propia, con datos del Tesouro Nacional (2021)"}
 ###Generacion de tabla resumen ejecutivo
 resumen<-read.csv("datosResumenParametros.csv")[-1]
 kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\theta_1$","$\\theta_2$","$\\theta_3$","Error"),escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Resumen De Paramétros Obtenidos",)%>%
    kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
+
+\begin{itemize}
+\item Se concluye que la pandemia generada por la enfermedad COVID-19 generó un efecto de alza de las tasas de rendimiento de forma abrupta y consecuentemente un disminución en los precios de los bonos.
+\item Se concluye que a pesar de la rapidez con la que se puede implementar el modelo de Nelson-Siegel, se debería valorar la posibilidad de implementar otros modelos como el de Splines cubicos o Nelson-Siegel-Svensson, que podrían tener un menor error.
+\item Podría considerarse el asignar un cierto peso asociado a cada bono, mediante la duración o la cantidad de datos con los que cuenta y medir el error que esto genera.
+\end{itemize}
 \chapter{Introducción 1}
 
 \chapter{Objetivos 1}
@@ -146,39 +159,38 @@ r(T,\theta)=\theta_0+(\theta_1+\theta_2T)\exp(-\theta_3 T)
 \end{equation}
 \par De tal forma que los parámetros son $\theta_0,\theta_1,\theta_2,\theta_3$ y $t$ es el periodo. A partir de esta se puede obtener la curva de rendimiento continua haciendo
 \begin{equation}
-y(T,\theta)=T^{-1}\int_{0}^{T}r(x,\theta)dx=\theta_0+\left(\theta_1+\frac{\theta_2}{\theta_3}\right)\frac{1-\exp(-\theta_3 t)}{\theta_3 t}-\frac{\theta_2}{\theta_3}\exp(-\theta_3 t
+y(T,\theta)=T^{-1}\int_{0}^{T}r(t,\theta)dt=\theta_0+\left(\theta_1+\frac{\theta_2}{\theta_3}\right)\frac{1-\exp(-\theta_3 T)}{\theta_3 T}-\frac{\theta_2}{\theta_3}\exp(-\theta_3 T
 \label{rendimiento}
 \end{equation}
-Se puede calcular el valor de un flujo en el futuro en el periodo 
+Se puede calcular el valor de un flujo del periodo 
 $T_i$ traído a valor presente mediante 
 \begin{equation}
 d(T_i,\theta)=\exp\left(-\int_{0}^{T_i}r(t,\theta)dt\right)
 \label{descuento}
 \end{equation}
-Cuando se emplea esto es importante tener presente que se está incurriendo en un cierto grado de error con respecto al valor real que tendría el flujo en el presente. A $d$ se le llamará factor de descuento haciendo uso de esto es posible obtener un aproximación del precio de un bono con tiempo de maduración $T_n$ y que paga cupones en cada periodo $T_i$ quedando de la siguiente forma
+Haciendo uso de esto es posible obtener un aproximación del precio de un bono con tiempo de maduración $T_n$ y que paga cupones en cada periodo $T_i$ quedando de la siguiente forma
 \begin{equation}
 P_n(\theta)=Rd(T_n,\theta)+\sum_{i=1}^{n}FCd(T_i,\theta)
 \label{descuento}
 \end{equation}
 Con esto también se puede calcular el precio de los bonos cero cupón basta tomar $C=0$.
-\par Se pueden calcular los parámetros de un modelo paramétrico mediante la suma de residuo de cuadrados que es 
+\par Se pueden calcular los parámetros de un modelo parámetrico siempre que este lo permita, según Hladíková y Radová (2012) optimizando
 \begin{equation}
-\sum_{i} (\tilde{M}_i-M(l_i,\beta))
+\sum_{i} (\tilde{M}_i-M(l_i,\beta))w_i
 \label{sumaderesiduo}
 \end{equation}
-Donde $\tilde{M}_i$ es el dato real, $M(l_i,\beta)$ es la funci\'on del modelo param\'etrico, $l_i$ es la variable de la que depende puede ser tiempo y $\beta$ es el vector de parámetros, optimizando mediante herramientas de cálculo se puede encontrar los paráametros que reducen el error entre los datos reales y lo que se obtiene mediante el modelo.(Ruppert y Matteson, 2015)
+Donde $\tilde{M}_i$ es el dato real, $M(l_i,\beta)$ es la función del modelo paramétrico, $l_i$ es la variable de la que depende puede ser tiempo, $\beta$ es el vector de parámetros y $w_i$ es el peso asignado ligado al dato $\tilde{M}_i$. Si se asigna $w_i=1$ se obtiene la suma de residuo de cuadrados y esto puede ser optimizado mediante herramientas de cálculo, al momento de implementar esto hay que tener presente que el valor obtenido mediante \ref{sumaderesiduo}, es el error en el que se está incurriendo al momento de quererse modelar los datos mediante el modelo paramétrico.(Ruppert y Matteson, 2015)
 \par
-Tal y como lo citan Hladíková y Radová (2012) este modelo tiene una interpretación económica interesante para los parámetros. Tomando la curva que describe las tasas forward 
-Primero
+Tal y como lo citan Hladíková y Radová (2012) este modelo tiene una interpretación económica interesante para los parámetros. Tomando \ref{forwardNS}
 \[
-\lim_{T\to\infty}f(t,\theta)=\theta_{0}\qquad \lim_{T\to 0}f(t,\theta)=\theta_0+\theta_1
+\lim_{T\to\infty}r(T,\theta)=\theta_{0}\qquad \lim_{T\to 0}r(T,\theta)=\theta_0+\theta_1
 \]
 \begin{itemize}
 \item Entonces $\theta_0>0$ representa la asintota de la curva zero cupón
 \item La suma de los parámetros $\theta_0+\theta_1$ representa el valor inicial de la curva de tasas forward por lo que $\theta_0+\theta_1>0$
 \item También $\theta_1$ puede es explicada como la curvatura de la función o la diferencia entre las tasas de forward de termino largo y termino corto.
 \end{itemize}
-\par Antes de poder continuar es necesario dejar en claro lo que son los cuantiles, media y la desviación estandar. Según Evans y Rosenthal (2009).
+\par Antes de poder continuar es necesario dejar en claro lo que son los cuantiles, media y la desviación estandar. Según Evans y Rosenthal (2009)
 \begin{tcolorbox}
 \par \textbf{Cuántil}\par Para $p\in [0,1]$ el $p$-ésimo cuantil $x_p$, para la función distribución $F_X$ de la variable aleatoria $X$, se define como el menor número $x_p$ que satisface 
 \[
@@ -205,7 +217,7 @@ Y la desviación estándar práctica es
 \]
 \par $x_i$ representa el dato $i$-ésimo. La media expresa alrededor de dónde se distribuyen los datos y la desviación estándar qué tanto se dispersan los datos con respecto a la media.
 \end{tcolorbox}
-\par Se procede a explicar los gráficos de caja y bigotes. Estos gráficos muestran 5 datos relevantes de los datos, así como la dispersión. En estos se muestran el dato con el valor más bajo (mínimo), la mediana de la primera mitad de los datos (cuartil 1, $Q_1$), la mediana de todos los datos (cuartil 2, $Q_2$), la mediana de la segunda mitad de los datos (cuartil 3 $Q_3$) y la observación de mayor valor (máximo), así como los posibles outliers (datos con un peso muy alejado del que tienen los demás datos). De los gráficos de caja y bigotes existen variaciones. Al momento de hacerse un gráfico de este estilo hay que tener presente varias desventajas como lo, es el visualizar como están distribuidos los datos, con respecto a los distintos cuartiles. (Marmolejo, 2011) 
+\par Se procede a explicar los gráficos de caja y bigotes. Estos gráficos muestran 5 datos relevantes de los datos, así como la dispersión. En estos se muestran el dato con el valor más bajo (mínimo), la mediana de la primera mitad de los datos (cuartil 1, $Q_1$), la mediana de todos los datos (cuartil 2, $Q_2$), la mediana de la segunda mitad de los datos (cuartil 3 $Q_3$) y la observación de mayor valor (máximo), así como los posibles outliers (datos con un valor muy alejado del que tienen los demás datos). Al momento de hacerse un gráfico de este estilo hay que tener presente varias desventajas como lo, es el visualizar como están distribuidos los datos, con respecto a los distintos cuartiles. (Marmolejo, 2011) 
 
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE,fig.width=5, fig.height=2,fig.align="center"}
