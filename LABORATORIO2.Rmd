@@ -20,7 +20,7 @@ library(knitr)
 library(xtable)
 library(gridExtra)
 library(latex2exp)
-
+library(cowplot)
 
 ### Se cargan los datos
 datosBrasil<-read.csv('datosCombiandos.csv')
@@ -247,21 +247,9 @@ datosDes<-datosBrasil
 
 # Se seleccio el maximo de todos los precios y luego se toman los datos de esa fecha(ver si esto esta)
 
-
 datosDes$TipoDeBono <- as.factor(datosDes$TipoDeBono)
 datosDes$FechaDeMaduracion <- as.factor(datosDes$FechaDeMaduracion)
 levels(datosDes$TipoDeBono) <- c("Cero Cupón", "Cuponados")
-# datosDes$FechaDeValoracion <- as.factor(datosDes$FechaDeValoracion)
-# datosDes$Precio <- as.factor(datosDes$Precio)
-# datosDes$TiempoRestanteParaMaduracion <- as.factor(datosDes$TiempoRestanteParaMaduracion)
-# datosDes$CuponSemestral <- as.factor(datosDes$CuponSemestral )
-#levels(datosDes$FechaDeMaduracion)
-#levels(datosDes$TiempoRestanteParaMaduracion)
-#max(datosDes$FechaDeValoracion)
-#min(datosDes$FechaDeValoracion)
-#levels(datosDes$CuponSemestral)
-
-
 
 ```
 
@@ -295,30 +283,9 @@ datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, c
 
 
 
-```{r, fig.align="center",fig.width=5, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE}
-
-# 
-# datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
-#   geom_line()+
-#   scale_color_discrete(name = "Fecha de maduración")+
-#   labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
-#   theme(legend.position="bottom")+
-#   theme(plot.title = element_text(hjust = .5))
-# 
-
-```
-
-```{r, fig.align="center",fig.width=5, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE}
-# datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion))+
-#   geom_line()+
-#   scale_color_discrete(name = "Fecha de maduración")+
-#   labs(y = "Precios",x = "Tiempo", title = "Comportamiento de bonos cuponados")+
-#   theme(legend.position="bottom")+
-#   theme(plot.title = element_text(hjust = .5))
-```
 
 
-\par Como se aprecia, en los datos todas las variables no cuentan con las mismas observaciones, siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 01/07/2024 y además únicamente contar con las observaciones obtenidas a partir del 10/02/2020, que es donde se tiene registro del bono con fecha de maduración 01-01-2016.
+\par Como se aprecia, en los datos todas las variables no cuentan con las mismas observaciones, siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 01/07/2024, por sus pocas observaciones  y además únicamente contar con las observaciones obtenidas a partir del 10/02/2020, que es donde se tiene registro del bono con fecha de maduración 01-01-2016. Teniendo como resultado los siguientes datos:
 
 ```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -333,61 +300,32 @@ datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x=FechaDeValoracion, 
   scale_color_discrete(name = "Fecha de maduración")+
   labs(y = "Precios",x = "Tiempo",title = "Comportamiento de bonos cero cupón")+
   theme(legend.position="bottom")+
-  theme(plot.title = element_text(hjust = .5))
+  theme(plot.title = element_text(hjust = .5))+
+  theme_minimal()
 
 datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
   geom_line()+
   scale_color_discrete(name = "Fecha de maduración")+
   labs(y = "Precios",x = "Tiempo", title = "Comportamiento de bonos cuponados")+
   theme(legend.position="bottom")+
-  theme(plot.title = element_text(hjust = .5))
+  theme(plot.title = element_text(hjust = .5))+
+  theme_minimal()
+
 ```
+
 \par Tras la homogenización de datos se tienen un total de `r length(datosBrasil$Precio) ` observaciones teniendo que las mismas van desde el `r min(datosBrasil$FechaDeValoracion)` hasta `r max(datosBrasil$FechaDeValoracion)`.
 
-\par Realizando un análisis de los precios ve aprecia claramente la incidencia de los efectos causados por el COVID-19 en la economía en el mes de mayo y su pronta recuperación en el mes de abril, esto para ambos tipos de bonos.
+\par Realizando un análisis de los precios ve aprecia claramente la incidencia de los efectos causados por el COVID-19 en la economía en el mes de marzo y su pronta recuperación en el mes de abril, esto para ambos tipos de bonos.
 
 \par Se puede apreciar la respuesta que se tuvo con los bonos cero cupón se intensifica a medida que su fecha de maduración aumenta; teniendo así que el bono con año de maturación 2022, se mantiene más estable que los demás, pues se acerca a su valor facial.
 
 \par En cuanto a los bonos cuponados, estos son más sensible las repercusiones económicas dadas por las medidas tomadas para mitigar del COVID-19, pues se puede apreciar como estos tienen un periodo de relativa estabilidad entre julio y diciembre del 2020, pero a partir de enero del 2021 se ven los efectos de la especulación ante la caida del sistema de salud del país para atender la enfermedad y el descubrimiento de una nueva variante.
 
-#pregunta porque eran más sencible los cuponados
+\par Cabe destacar que las caídas abruptas en los precios ,para las fechas de julio y enero, se deben a los pagos de los cupones, además como se aprecia los precios de estos tienen a disminuir de forma permanente tras el pago del cupón, pues ahora el titulo tiene un pago menos. 
 
+##Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datosBrasil$FechaDeValoracion)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-
-
-# Como se puede observar de un periodo de tiempo tan amplio y contando con `r length(datosBrasil$FechaDeValoracion)` observaciones por cada fecha de maduración, la tasa de rendimiento ha variado considerablemente, así que para realizar un análisis de sus datos se cuenta con el siguiente grafico de cajas y dispersión de puntos.
-
-datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
-  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
-  stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
-  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
-  scale_color_discrete()+
-  stat_summary(fun.y=mean, geom="point", shape=18,
-size=2)+
-  xlab('Fecha de maduración') +
-  ylab('Precios') +
-  ggtitle('Distribución de los precios bonos cero cupón') +
-  theme_minimal()+theme(axis.text.x=element_blank())
-
-
-
-datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(x = FechaDeMaduracion, y = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
-  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.7) +
-  stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
-  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
-  scale_color_discrete()+
-  stat_summary(fun.y=mean, geom="point", shape=18,
-size=3)+
-  xlab('Fecha de maduración') +
-  ylab('Precios') +
-  ggtitle('Distribución de los precios bonos cuponados') +
-  theme_minimal()
-
-```
-
-
-Al analizar estos datos cabe tener presente la siguiente tabla para una mayor compreción de sus valores:
+\par Para apreciar la distribución de los datos se cuenta con la siguiente tabla, la cual resume el comportamiento de los datos agrupados por tipo de cupón y fecha de maduración.
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE}
 datosMedia<-datosDes%>%group_by(FechaDeMaduracion,TipoDeBono)%>%summarise(Media=mean(Precio))
@@ -407,10 +345,53 @@ datosEsta<-datosEsta[,-c(3)]
 datosEsta<-cbind(datosEsta, datosMedia[,3], datosDesviacion[,3])
 rm(datosMedia, datosDesviacion)
 
-names(datosEsta)=c("Tipo de bono","Fecha de maturación","Min","Q_2","Mediana","Q_4", "Max", "Media", "Desviación estandar")
+names(datosEsta)=c("Tipo de bono","Fecha de maturación","Min","Q_2","Mediana","Q_3", "Max", "Media", "Desviación estandar")
 
 kable(datosEsta, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos",)%>% kable_styling(full_width = F, position = "center", latex_options = "HOLD_position")
 ```
+
+\par Al analizar estos datos cabe tener presente los siguinetes graficos de cajas y disperción para una mayor compreción de sus valores, cabe destacar que el promedio se representa por medio de un rombo en los graficos:
+
+```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
+
+datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(y = FechaDeMaduracion, x = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
+  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.8) +
+  stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
+  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
+  scale_color_discrete(name = "Fecha de maduración")+
+  stat_summary(fun.y=mean, geom="point", shape=18,
+size=3)+
+  ylab('') +
+  xlab('Precios') +
+  scale_x_continuous(breaks=seq(600, 1200, 50))+
+  ggtitle('Distribución de los precios bonos cero cupón') +
+  theme_minimal()+theme(axis.text.y=element_blank(),
+      legend.position = "left")
+
+
+
+datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(y = FechaDeMaduracion, x = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
+  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.8) +
+  stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
+  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
+  scale_color_discrete(name = "Fecha de maduración")+
+  stat_summary(fun.y=mean, geom="point", shape=18,
+  size=3)+
+  ylab('')+
+  xlab('Precios')+
+  scale_x_continuous(breaks=seq(1060, 1280, 20))+
+  
+  ggtitle('Distribución de los precios bonos cuponados') +
+
+  theme_minimal()+theme(axis.text.y=element_blank(),
+      legend.position = "left")
+##cowplot::plot_grid(p1,p2,p3,p4,p5,p6, labels = "AUTO")
+
+```
+
+
+
+
 
 
 
