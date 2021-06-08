@@ -355,9 +355,9 @@ kable(datosEsta, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "
 ```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE}
 
 datosDes[datosDes$TipoDeBono=="Cero Cupón",]%>%ggplot(aes(y = FechaDeMaduracion, x = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
-  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.8) +
+  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 1) +
   stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
-  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
+  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.09)+
   scale_color_discrete(name = "Fecha de maduración")+
   stat_summary(fun.y=mean, geom="point", shape=18,
 size=3)+
@@ -371,9 +371,9 @@ size=3)+
 
 
 datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(y = FechaDeMaduracion, x = Precio, group=FechaDeMaduracion, color=FechaDeMaduracion)) +
-  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 0.8) +
+  geom_boxplot(aes(color = FechaDeMaduracion), alpha = 1) +
   stat_boxplot(geom='errorbar', linetype=1, width=0.5)+
-  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.04)+
+  geom_jitter(aes(color = FechaDeMaduracion), size = 1, alpha = 0.09)+
   scale_color_discrete(name = "Fecha de maduración")+
   stat_summary(fun.y=mean, geom="point", shape=18,
   size=3)+
