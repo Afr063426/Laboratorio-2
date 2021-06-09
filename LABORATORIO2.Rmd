@@ -281,7 +281,7 @@ datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, c
 
 
 
-\par Como se aprecia, en los datos todas las variables no cuentan con las mismas observaciones, siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 01/07/2024, por sus pocas observaciones  y además únicamente contar con las observaciones obtenidas a partir del 10/02/2020, que es donde se tiene registro del bono con fecha de maduración 01-01-2016. Teniendo como resultado los siguientes datos:
+\par Como se aprecia, en los datos todas las variables no cuentan con las mismas observaciones, siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 2024-07-01, por sus pocas observaciones  y además únicamente contar con las observaciones obtenidas a partir del 2020-02-10, que es donde se tiene registro del bono con fecha de maduración 2016-01-01. Teniendo como resultado los siguientes datos:
 
 ```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE,fig.cap="Comportamiento de bonos cero cupón"}
 
