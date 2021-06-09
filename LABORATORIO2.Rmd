@@ -354,7 +354,7 @@ datosEsta<- datosDes %>%
   ) %>%
   unnest(ret)
 
-datosEsta<-datosEsta[with(datosEsta, order(datosEsta$TipoDeBono)), ]
+datosEsta<-datosEsta[with(datosEsta, order(datosEsta$TipoDeBono )), ]
 datosEsta<-datosEsta[,-c(3)]
 datosEsta<-cbind(datosEsta, datosMedia[,3], datosDesviacion[,3])
 rm(datosMedia, datosDesviacion)
@@ -407,7 +407,7 @@ datosDes[datosDes$TipoDeBono=="Cuponados",]%>%ggplot(aes(y = FechaDeMaduracion, 
 
 \par Producto de la misma causa se puede apreciar como el promedio de los datos tiende a colocarse a la izquierda de la mediana, siendo así el promedio más pequeño que la misma, cabe destacar que este efecto es más visible en los bonos cuponados. Este efecto también se muestra a la hora de observar que el primer cuadril es más amplio y por lo tanto cuenta con más datos que el resto de cuartiles.
 
-
+\par Con respecto a la desviación estándar, preguntar porque no se acamdan por fechas la tabla si hasta le puse &datosEsta$FechaDeMaduracion
 
 
 
