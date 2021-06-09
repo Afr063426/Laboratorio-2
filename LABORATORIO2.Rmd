@@ -102,23 +102,23 @@ kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\the
 
 \chapter{Introducción 1}
 
-\par La presente investigación se enfocará la creación de curvas de rendimiento a partir de los precios de bonos emitidos por el Tesoro Nacional de la República Federativa de Brasil por medio del modelo de Nelson y Siegel. 
+\par La presente investigación se enfocará en la creación de curvas de rendimiento, a partir de los precios de bonos emitidos por el Tesoro Nacional de la República Federativa de Brasil por medio del modelo de Nelson y Siegel. 
 
-\par Los rendimientos que ofrece la República Federativa de Brasil a través del Tesoro Nacional por medio de sus bonos no son muy conocidos en el nuestro país, por lo que se busca presentar un mercado de inversión alejado de los mercados clásicos, como lo son Estados Unidos de América y la Unión Europea.
+\par Los rendimientos que ofrece la República Federativa de Brasil a través del Tesoro Nacional por medio de sus bonos no son muy conocidos en nuestro país, por lo que se busca presentar un mercado de inversión alejado de los mercados clásicos, como lo son Estados Unidos de América y la Unión Europea.
 
-\par Para la realización de las curvas de rendimiento se va a tener como punto de partida la base de datos ofrecida por Tesoro Nacional de Brasil, la cual cuenta con registro diario de los precios de los bonos, así como la clasificación de estos y demás datos que son relevantes a la hora de decir la inversión a realizar.
+\par Para la realización de las curvas de rendimiento se va a tener como punto de partida la base de datos ofrecida por Tesoro Nacional de Brasil, la cual cuenta con un registro diario de los precios de los bonos, así como la clasificación de estos y demás datos que son relevantes a la hora de decidir la inversión a realizar.
 
-\par La investigación de estas curvas es beneficiosa para comprender el dinamismo de otros países en la materia para así tener una perspectiva de como varia la curva según los datos aportados y su aproximación a la realidad.
+\par La investigación de estas curvas es beneficiosa para comprender el dinamismo de otros países en la materia, para así tener una perspectiva de como varia la curva según los datos aportados y su aproximación a la realidad.
 
-\par Se cuenta con un marco teórico muy completo, que explica de una manera eficiente cuál es el proceso llevado acabo para poder realizar la construcción de las curvas de rendimiento bajo el modelo de Nelson y Siegel, también se nos presenta en el mismo las definiciones formales de cuantil, media y desviación estándar, las cuales se utilizan en la descripción de los datos.
+\par Se cuenta con un marco teórico muy completo, que explica de una manera eficiente cuál es el proceso llevado acabo para poder realizar la construcción de las curvas de rendimiento bajo el modelo de Nelson y Siegel, también se presenta en el mismo las definiciones formales de cuantil, media y desviación estándar, las cuales se utilizan en la descripción de los datos.
 
-\par Además, contamos con el análisis de los precios de los bonos durante el periodo comprendido entre el 2020-02-17 y el 2021-05-27, mismos que nos ayudan a comprender las consecuencias de la epidemia causada por el COVID-19 en el mercado de estas seguridades financieras. Así mismo se podrán apreciar varios resultados teóricos del comportamiento de los mismos.
+\par Además, se tiene un análisis de los precios de los bonos durante el periodo comprendido entre el 2020-02-17 y el 2021-05-27, mismos que ayudan a comprender las consecuencias de la epidemia causada por el COVID-19 en el mercado de estas seguridades financieras. Así mismo se podrán apreciar varios resultados teóricos del comportamiento de los mismos.
 
-\par Este análisis viene acompañado de un seguimiento estadístico, el cual brinda al lector una mejor comprensión de la composición de los datos, ofreciendo al mismo, datos estadísticos de importancia como lo son: el promedio, la desviación estándar y los cuartiles.
+\par Este análisis viene acompañado de un seguimiento estadístico, el cual brinda al lector una mejor comprensión de la composición de los datos, ofreciendo al mismo datos estadísticos de importancia, como lo son: el promedio, la desviación estándar y los cuartiles.
 
 \par Seguidamente se abarcará una sección dedicada a la presentación de los resultados obtenidos tras la aplicación del modelo de Nelson y Siegel a ciertos conjuntos de datos que se consideran relevantes tras el análisis estadístico.
 
-\par Así mismo se tendrá una serie de conclusiones y recomendaciones, las cuales recabaran información importante para quienes deseen aplicar este modelo en otras bases de datos, en base a nuestros resultados y experiencia.
+\par Así mismo se tendrá una serie de conclusiones y recomendaciones, las cuales recabaran información importante para quienes deseen aplicar este modelo en otras bases de datos, en base a los resultados y experiencia obtenida en esta investigación.
 
 
 
