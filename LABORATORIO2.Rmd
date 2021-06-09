@@ -510,20 +510,10 @@ write.csv(datosResumen,"datosResumenParametros.csv")
 \par A pesar de que el modelo es práctico en el sentido de que permite hacer una rápida aproximación de la curva de rendimientos por su fácil implementación, queda abierta la posiblidad de que otro modelo paramétrico permita hacer una mejor aproximación para el caso de los bonos del Tesoro Nacional de la República Federativa de Brasil, como podrían ser el modelo de Splines cúbicos o cuadráticos, o incluso el modelo de Nelson, Siegel y Svensson el cuál le agrega un parámetro más al modelo presentado en este trabajo.
 \par En la misma linea de lo anterior simplemente se calcularon los parámetros del modelo mediante la optimización de la suma de residuo de cuadrados, sin embargo también queda la posibilidad de que al agregársele un peso a los datos ligado al bono como lo puede ser la duración o incluso la división entre la cantidad de datos podrían generar una mejor aproximación que simplemente asignarle el peso de 1 a todos los casos. 
 \par Observando la figura \ref{fig:curvagrafico} y los errores obtenidos `r datosResumen$Error[c(3,4)]`, no es recomendable realizar una curva de rendimientos con la media y la mediana. El error de ajuste se debe a los valores atípicos obtenidos estos se pueden visualizar el cuadro \ref{tab:tablaDatosEstadisticos}, destacando una bono cero cupón con precio de 1126,09 y uno cuponado con precio de 696,99.
-<<<<<<< HEAD
 \nocite{*}
 \printbibliography
 \chapter{Anexos}
 ``` {r echo=FALSE, message=FALSE, warning=FALSE,results="asis"}
-=======
-
-\chapter{Referencias bibliográficas}
-\nocite{*}
-\printbibliography
-\chapter{Anexos}
-
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
->>>>>>> 0caafade8960ec66abb402cd7a192fb3ae03c9f7
 maximo<-max(datosDes$Precio)
 datosMaximo<-(datosDes%>%filter(FechaDeValoracion==datosDes$FechaDeValoracion[datosDes$Precio==maximo]))
 minimo<-min(datosDes$Precio)
@@ -546,34 +536,20 @@ for(i in 1:length(listaDeDatos)){
 resumenDeErrores<-rbind(summary(listaDeErrores[[1]]),summary(listaDeErrores[[2]]),summary(listaDeErrores[[3]]))
 desviacion<-c(sd(listaDeErrores[[1]]),sd(listaDeErrores[[2]]),sd(listaDeErrores[[3]]))
 resumenDeErrores<-cbind("Caso"=c("Reciente","Máximo","Mínimo"),resumenDeErrores,"Desviación estandar"=desviacion)
-<<<<<<< HEAD
 kable(resumenDeErrores,col.names = c("Caso","Min","$Q_1$","Mediana","$Q_3$","Media","Max","Desviación estandar") ,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos estádisticos(Error entre cada precio y curva)")%>%
-=======
-kable(resumenDeErrores,col.names = c("Caso","Min","$Q_1$","Mediana","$Q_3$","Media","Max","Desviación estandar") ,escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos caso reciente")%>%
->>>>>>> 0caafade8960ec66abb402cd7a192fb3ae03c9f7
    kable_styling(full_width = F, position = "center", latex_options = c(c("HOLD_position","scale_down"),"scale_down"))%>%footnote(number="Fuente: Elaboración propia, con datos del Tesoro Nacional de la República Federativa de Brasil")
 ``` 
 
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE,results="asis"}
 columnas<-c("Tipo de bono", "Maduración", "Valoración","Precio","Tiempo restante para maduración","Cupón semestral")
-<<<<<<< HEAD
 titulos<-paste(c("Datos caso"),c("reciente","máximo","mínimo"))
 for(i in 1:length(listaDeDatos)){
 print(kable(arrange(listaDeDatos[[i]], TipoDeBono, FechaDeMaduracion) ,col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = titulos[i])%>%
    kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil"))
   cat("\n")
 }
-=======
-kable(datosMaximo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso máximo")%>%
-   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
 
-kable(datosMinimo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso mínimo")%>%
-   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
-
-kable(datosRecientes%>%group_by(TipoDeBono),col.names = columnas ,escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos caso reciente")%>%
-   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
->>>>>>> 0caafade8960ec66abb402cd7a192fb3ae03c9f7
 ##
 
 ```
