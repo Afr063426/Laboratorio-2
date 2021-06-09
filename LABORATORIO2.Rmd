@@ -271,9 +271,9 @@ levels(datosDes$TipoDeBono) <- c("Cero Cupón", "Cuponados")
 
 datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, color=FechaDeMaduracion))+
   geom_line()+
-  scale_color_discrete()+
+  scale_color_discrete(name = "Fecha de maduración")+
   facet_wrap(~ TipoDeBono)+
-  labs(y = "Precios",x = "Tiempo" )+theme_minimal()+theme(plot.title=element_text(hjust=0.5))
+  labs(y = "Precios",x = "Tiempo" )+theme_minimal()+theme(legend.position="bottom",plot.title=element_text(hjust=0.5))
 ```
 
 
