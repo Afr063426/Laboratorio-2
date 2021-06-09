@@ -251,7 +251,7 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Outlier','','Q_1','M','Q_3','Max')))+stat_box
 ```
 
 En este caso el outlier es a su vez el mínimo, se puede obtener un outlier que es el máximo o simplemente no encontrarse algún outlier.
-\par Antes de avanzar al siguiente capítulo es importante contextualizar que en el año 2020 la pandemia ocasionada por la enfermedad COVID-19 afectó de forma negativamente la economía de Brasil. Como lo expone la CEPAL (2021) al comienzo del año 2020 hubo una disminución en las inversiones, sin embargo este efecto se vio rápidamente contrarrestrado con el ingreso de nuevos inversionistas impulsando la subida de los precios y baja en las tasas de interés, por lo que las entidades gubernamentales respondieron a esta baja con un aumento en las tasas de interés futuras.
+\par Antes de avanzar al siguiente capítulo, es importante contextualizar que en el año 2020 la pandemia ocasionada por la enfermedad COVID-19 afectó de forma negativa la economía de Brasil. Como lo expone la CEPAL (2021) al comienzo del año 2020 hubo una disminución en las inversiones, sin embargo este efecto se vio rápidamente contrarrestrado con el ingreso de nuevos inversionistas impulsando la subida de los precios y baja en las tasas de interés, por lo que las entidades gubernamentales respondieron a esta baja con un aumento en las tasas de interés futuras.
 
 
 \chapter{Descripción de los datos 5}
@@ -407,15 +407,15 @@ datosDes[datosDes$TipoDeBono=="Cuponado",]%>%ggplot(aes(y = FechaDeMaduracion, x
 ```
 
 
-\par Se comienza a analizar la distribución de los datos por lo más llamativo en los gráficos, lo cual es el aumento de dispersión de los precios conforme se pasa de un bono con una fecha de maduración cercana a otro más lejana, fenómeno que ocurre en ambos tipos de bonos. Esto se debe a la tendencia de los precios de los bonos a su valor de redención después con forme llega su fecha de maduración.
+\par Se comienza a analizar la distribución de los datos por lo más llamativo en los gráficos, lo cual es el aumento de dispersión de los precios conforme se pasa de un bono con una fecha de maduración cercana a otra más lejana, fenómeno que ocurre en ambos tipos de bonos. Esto se debe a la tendencia de los precios de los bonos a su valor de redención conforme llega su fecha de maduración.
 
-\par También se aprecia la notable cantidad de outliers que se hacen presentes en la figura 5.4, los cuales cabe destacar únicamente se presenta hacia la baja en el precio, este comportamiento es atribuible al descenso de los precios visible en el mes de marzo en la figura 5.2, la cual explicamos es producto de los efectos del COVID-19 en la economía.
+\par También se aprecia la notable cantidad de outliers que se hacen presentes en la figura 5.4, los cuales cabe destacar únicamente se presentan hacia la baja en el precio, este comportamiento es atribuible al descenso de los precios visible en el mes de marzo en la figura 5.2, la se explica producto de los efectos del COVID-19 en la economía.
 
-\par Producto de la misma causa se puede apreciar como el promedio de los datos tiende a colocarse a la izquierda de la mediana, siendo así el promedio más pequeño que la misma, cabe destacar que este efecto es más visible en los bonos cuponados. Este efecto también se muestra a la hora de observar que el primer cuadril es más amplio y por lo tanto cuenta con más datos que el resto de cuartiles.
+\par Por la misma causa se puede apreciar como el promedio de los datos tiende a colocarse a la izquierda de la mediana, siendo así el promedio más pequeño que la misma, cabe destacar que este efecto es más visible en los bonos cuponados. Este efecto también se muestra a la hora de observar que el primer cuartil es más amplio y por lo que cuentan con un peso que hace mover al promedio.
 
 \par Con respecto a la desviación estándar, se tiene que la misma cuenta con los resultados esperados, ir subiendo conforme su fecha de maduración lo hace. Hay un caso que llama la atención, el bono cero cupón con fecha de maduración 2022-01-01, el cual tiene una desviación estándar de 30.687, muy alejada de sus pares. La explicación de este valor radica en la caída abrupta de marzo, pues fuera de este periodo el comportamiento del bono es cecuciente y el mismo tiende a su valor de redención.
 
-
+\par Otro valor a resaltar es la desviación estándar de 61.0703, ofrecida por el bono con fecha de maduración 2031-01-01, la cual es la máxima deviación que se presenta en los datos, misma que se puede explicar teniendo en cuenta que está conformada por los precios más altos del mercado normalmente, pero excepcionalmente llegan a ser los más bajos del mismo, situación que se aprecia en la figura 5.3, esto producto de que las personas querrian mayor liquidez en tiempos de inestabilidad económica.
 
 
 \clearpage
@@ -543,8 +543,10 @@ kable(resumenDeErrores,col.names = c("Caso","Min","$Q_1$","Mediana","$Q_3$","Med
 columnas<-c("Tipo de bono", "Maduración", "Valoración","Precio","Tiempo restante para maduración","Cupón semestral")
 kable(datosMaximo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso máximo")%>%
    kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
+
 kable(datosMinimo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso mínimo")%>%
    kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
+
 kable(datosRecientes%>%group_by(TipoDeBono),col.names = columnas ,escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos caso reciente")%>%
    kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
 ##
