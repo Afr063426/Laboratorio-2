@@ -102,6 +102,24 @@ kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\the
 
 \chapter{Introducción 1}
 
+\par La presente investigación se enfocará la creación de curvas de rendimiento a partir de los precios de bonos emitidos por el Tesoro Nacional de la República Federativa de Brasil por medio del modelo de Nelson y Siegel. 
+
+\par Los rendimientos que ofrece la República Federativa de Brasil a través del Tesoro Nacional por medio de sus bonos no son muy conocidos en el nuestro país, por lo que se busca presentar un mercado de inversión alejado de los mercados clásicos, como lo son Estados Unidos de América y la Unión Europea.
+
+\par Para la realización de las curvas de rendimiento se va a tener como punto de partida la base de datos ofrecida por Tesoro Nacional de Brasil, la cual cuenta con registro diario de los precios de los bonos, así como la clasificación de estos y demás datos que son relevantes a la hora de decir la inversión a realizar.
+
+\par La investigación de estas curvas es beneficiosa para comprender el dinamismo de otros países en la materia para así tener una perspectiva de como varia la curva según los datos aportados y su aproximación a la realidad.
+
+\par Se cuenta con un marco teórico muy completo, que explica de una manera eficiente cuál es el proceso llevado acabo para poder realizar la construcción de las curvas de rendimiento bajo el modelo de Nelson y Siegel, también se nos presenta en el mismo las definiciones formales de cuantil, media y desviación estándar, las cuales se utilizan en la descripción de los datos.
+
+\par Además, contamos con el análisis de los precios de los bonos durante el periodo comprendido entre el 2020-02-17 y el 2021-05-27, mismos que nos ayudan a comprender las consecuencias de la epidemia causada por el COVID-19 en el mercado de estas seguridades financieras. Así mismo se podrán apreciar varios resultados teóricos del comportamiento de los mismos.
+
+\par Este análisis viene acompañado de un seguimiento estadístico, el cual brinda al lector una mejor comprensión de la composición de los datos, ofreciendo al mismo, datos estadísticos de importancia como lo son: el promedio, la desviación estándar y los cuartiles.
+
+\par Seguidamente se abarcará una sección dedicada a la presentación de los resultados obtenidos tras la aplicación del modelo de Nelson y Siegel a ciertos conjuntos de datos que se consideran relevantes tras el análisis estadístico.
+
+\par Así mismo se tendrá una serie de conclusiones y recomendaciones, las cuales recabaran información importante para quienes deseen aplicar este modelo en otras bases de datos, en base a nuestros resultados y experiencia.
+
 
 
 
@@ -111,7 +129,7 @@ kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\the
 
 \section{Objetivo general}
 
-Analizar la curva de rendimiento de los bonos del Tesoro Nacional de la República Federativa De Brasil por medio del modelo de Nelson y Siegel en el periodo de tiempo comprendido entre el 2020-02-10 y el  2021-05-27.
+Analizar la curva de rendimiento de los bonos del Tesoro Nacional de la República Federativa de Brasil por medio del modelo de Nelson y Siegel en el periodo de tiempo comprendido entre el 2020-02-10 y el  2021-05-27.
 
 \section{Objetivos específicos}
 \begin{enumerate} 
@@ -283,7 +301,7 @@ datosDes%>%ggplot(aes(x=FechaDeValoracion, y = Precio,group=FechaDeMaduracion, c
 
 
 
-\par Como se aprecia, en los datos todas las variables no cuentan con las mismas observaciones, siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 01/07/2024, por sus pocas observaciones  y además únicamente contar con las observaciones obtenidas a partir del 10/02/2020, que es donde se tiene registro del bono con fecha de maduración 01-01-2016. Teniendo como resultado los siguientes datos:
+\par Como se aprecia, en los datos todas las variables no cuentan con las mismas observaciones, siendo así que se necesitan eliminar los datos del bono cuya fecha de maduración es el 2024-07-01, por sus pocas observaciones  y además únicamente contar con las observaciones obtenidas a partir del 2020-02-10, que es donde se tiene registro del bono con fecha de maduración 2016-01-01. Teniendo como resultado los siguientes datos:
 
 ```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE,fig.cap="Comportamiento de bonos cero cupón"}
 
@@ -348,7 +366,7 @@ names(datosEsta)=c("Tipo de bono","Fecha de maturación","Min","Q_2","Mediana","
 kable(datosEsta, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos estadisticos",)%>% kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Elaboración propia, con datos del Tesoro Nacional de la República Federativa de Brasil")
 ```
 
-\par Al analizar estos datos cabe tener presente los siguinetes graficos de cajas y dispersión para una mayor comprensión de sus valores, se destaca que el promedio se representa por medio de un rombo en los graficos.
+\par Al analizar estos datos cabe tener presente los siguientes graficos de cajas y dispersión para una mayor comprensión de sus valores, se destaca que el promedio se representa por medio de un rombo en los graficos.
 
 ```{r, fig.align="center",fig.width=10, fig.height=5, echo=FALSE, message=FALSE, warning=FALSE,fig.cap='Distribución de los precios bonos cero cupón'}
 
@@ -385,6 +403,11 @@ datosDes[datosDes$TipoDeBono=="Cuponado",]%>%ggplot(aes(y = FechaDeMaduracion, x
 ```
 
 
+\par Se comienza a analizar la distribución de los datos por lo más llamativo en los gráficos, lo cual es el aumento de dispersión de los precios conforme se pasa de un bono con una fecha de maduración cercana a otro más lejana, fenómeno que ocurre en ambos tipos de bonos. Esto se debe a la tendencia de los precios de los bonos a su valor de redención después con forme llega su fecha de maduración.
+
+\par También se aprecia la notable cantidad de outliers que se hacen presentes en la figura 5.4, los cuales cabe destacar únicamente se presenta hacia la baja en el precio, este comportamiento es atribuible al descenso de los precios visible en el mes de marzo en la figura 5.2, la cual explicamos es producto de los efectos del COVID-19 en la economía.
+
+\par Producto de la misma causa se puede apreciar como el promedio de los datos tiende a colocarse a la izquierda de la mediana, siendo así el promedio más pequeño que la misma, cabe destacar que este efecto es más visible en los bonos cuponados. Este efecto también se muestra a la hora de observar que el primer cuadril es más amplio y por lo tanto cuenta con más datos que el resto de cuartiles.
 
 
 
