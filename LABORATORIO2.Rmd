@@ -72,7 +72,7 @@ optim(theta,
 ```
 
 
-\chapter{Resumen Ejecutivo 1}
+\chapter{Resumen Ejecutivo}
 \begin{itemize}
 
 \item En los casos reales elaborados, como lo son tomar el máximo de los precios y con ello todas las valoraciones que se hicieron la fecha ligada este precio, así como el mínimo y el caso de la valoración más reciente que se tenía de los bonos, se nota que el error obtenido bajo el modelo de Nelson y Siegel y la forma en que se encontraron los parámetros es relativamente bajo ante la rapidez con la que se puede implementar este.
@@ -100,7 +100,7 @@ kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\the
 
 
 
-\chapter{Introducción 1}
+\chapter{Introducción}
 
 \par La presente investigación se enfocará en la creación de curvas de rendimiento, a partir de los precios de bonos emitidos por el Tesoro Nacional de la República Federativa de Brasil por medio del modelo de Nelson y Siegel. 
 
@@ -125,7 +125,7 @@ kable(resumen,col.names = c("Fecha De Valoracion", "Caso", "$\\theta_0$","$\\the
 
 
 
-\chapter{Objetivos 1}
+\chapter{Objetivos}
 
 \section{Objetivo general}
 
@@ -151,7 +151,7 @@ Analizar la curva de rendimiento de los bonos del Tesoro Nacional de la Repúbli
 
 
 
-\chapter{Marco teórico 3}
+\chapter{Marco teórico}
 \par La curva de rendimiento es una herramienta útil al momento de invertir o negociar un instrumento financiero y al momento de aplicar políticas monetarias. Primero se presenta una tabla con notación que se emplea a lo largo del documento.
 
 \begin{table}[H]
@@ -251,10 +251,10 @@ caja%>%ggplot(aes(x=X,y=Y,label=c('Outlier','','Q_1','M','Q_3','Max')))+stat_box
 ```
 
 En este caso el outlier es a su vez el mínimo, se puede obtener un outlier que es el máximo o simplemente no encontrarse algún outlier.
-\par Antes de avanzar al siguiente capítulo es importante contextualizar que en el año 2020 la pandemia ocasionada por la enfermedad COVID-19 afectó de forma negativamente la economía de Brasil. Como lo expone la CEPAL (2021) al comienzo del año 2020 hubo una disminución en las inversiones, sin embargo este efecto se vio rápidamente contrarrestrado con el ingreso de nuevos inversionistas impulsando la subida de los precios y baja en las tasas de interés, por lo que las entidades gubernamentales respondieron a esta baja con un aumento en las tasas de interés futuras.
+\par Antes de avanzar al siguiente capítulo, es importante contextualizar que en el año 2020 la pandemia ocasionada por la enfermedad COVID-19 afectó de forma negativa la economía de Brasil. Como lo expone la CEPAL (2021) al comienzo del año 2020 hubo una disminución en las inversiones, sin embargo este efecto se vio rápidamente contrarrestrado con el ingreso de nuevos inversionistas impulsando la subida de los precios y baja en las tasas de interés, por lo que las entidades gubernamentales respondieron a esta baja con un aumento en las tasas de interés futuras.
 
 
-\chapter{Descripción de los datos 5}
+\chapter{Descripción de los datos}
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
@@ -407,15 +407,15 @@ datosDes[datosDes$TipoDeBono=="Cuponado",]%>%ggplot(aes(y = FechaDeMaduracion, x
 ```
 
 
-\par Se comienza a analizar la distribución de los datos por lo más llamativo en los gráficos, lo cual es el aumento de dispersión de los precios conforme se pasa de un bono con una fecha de maduración cercana a otro más lejana, fenómeno que ocurre en ambos tipos de bonos. Esto se debe a la tendencia de los precios de los bonos a su valor de redención después con forme llega su fecha de maduración.
+\par Se comienza a analizar la distribución de los datos por lo más llamativo en los gráficos, lo cual es el aumento de dispersión de los precios conforme se pasa de un bono con una fecha de maduración cercana a otra más lejana, fenómeno que ocurre en ambos tipos de bonos. Esto se debe a la tendencia de los precios de los bonos a su valor de redención conforme llega su fecha de maduración.
 
-\par También se aprecia la notable cantidad de outliers que se hacen presentes en la figura 5.4, los cuales cabe destacar únicamente se presenta hacia la baja en el precio, este comportamiento es atribuible al descenso de los precios visible en el mes de marzo en la figura 5.2, la cual explicamos es producto de los efectos del COVID-19 en la economía.
+\par También se aprecia la notable cantidad de outliers que se hacen presentes en la figura 5.4, los cuales cabe destacar únicamente se presentan hacia la baja en el precio, este comportamiento es atribuible al descenso de los precios visible en el mes de marzo en la figura 5.2, la se explica producto de los efectos del COVID-19 en la economía.
 
-\par Producto de la misma causa se puede apreciar como el promedio de los datos tiende a colocarse a la izquierda de la mediana, siendo así el promedio más pequeño que la misma, cabe destacar que este efecto es más visible en los bonos cuponados. Este efecto también se muestra a la hora de observar que el primer cuadril es más amplio y por lo tanto cuenta con más datos que el resto de cuartiles.
+\par Por la misma causa se puede apreciar como el promedio de los datos tiende a colocarse a la izquierda de la mediana, siendo así el promedio más pequeño que la misma, cabe destacar que este efecto es más visible en los bonos cuponados. Este efecto también se muestra a la hora de observar que el primer cuartil es más amplio y por lo que cuentan con un peso que hace mover al promedio.
 
 \par Con respecto a la desviación estándar, se tiene que la misma cuenta con los resultados esperados, ir subiendo conforme su fecha de maduración lo hace. Hay un caso que llama la atención, el bono cero cupón con fecha de maduración 2022-01-01, el cual tiene una desviación estándar de 30.687, muy alejada de sus pares. La explicación de este valor radica en la caída abrupta de marzo, pues fuera de este periodo el comportamiento del bono es cecuciente y el mismo tiende a su valor de redención.
 
-
+\par Otro valor a resaltar es la desviación estándar de 61.0703, ofrecida por el bono con fecha de maduración 2031-01-01, la cual es la máxima deviación que se presenta en los datos, misma que se puede explicar teniendo en cuenta que está conformada por los precios más altos del mercado normalmente, pero excepcionalmente llegan a ser los más bajos del mismo, situación que se aprecia en la figura 5.3, esto producto de que las personas querrian mayor liquidez en tiempos de inestabilidad económica.
 
 
 \clearpage
@@ -426,7 +426,7 @@ datosDes[datosDes$TipoDeBono=="Cuponado",]%>%ggplot(aes(y = FechaDeMaduracion, x
 
 
 
-\chapter{Metodología 1}
+\chapter{Metodología}
 \par Como ya se mostró en el marco teórico se puede construir la curva de rendimienos de forma continua a partir de \ref{rendimiento}. Sin embargo no se cuenta con los parámetros necesarios para la replicación de los rendimientos de los bonos, pero si se cuenta con los precios de los bonos en fechas determinadas y demás información como las fechas de maduración, pago de cupones y los montos pagados.
 
 \par Entonces haciendo uso de la suma de residuo de cuadrados y la programación en \textbf{\textsf{R}} se optimiza \ref{sumaderesiduo}, ajustado de la siguiente forma
@@ -501,7 +501,7 @@ write.csv(datosResumen,"datosResumenParametros.csv")
 
 
 
-\chapter{Conclusiones y recomendaciones 1}
+\chapter{Conclusiones y recomendaciones}
 \par De lo expuesto se destaca que la enfermedad COVID-19 tuvo un efecto negativo en los precios de los bonos, tanto para los bonos cero cupón como los bonos cuponados. Ligado a esto se puede notar como el cambio tan abrupto en los precios producto de la pandemia tienen un efecto contrario sobre las tasas de rendimiento, generando una fuerte alza de las tasas con tan solo un mes de diferencia esto se puede observar en la figura \ref{fig:curvagrafico} con la diferencia que existe entre la curva roja que corresponde al caso del máximo y la curva celeste que corresponde al caso del mínimo.
 
 \par Es posible notar como el modelo de Nelson y Siegel es una aproximación relativamente aceptable teniendo en cuenta la rápida implementación que se puede hacer del modelo. Teniendo errores para los casos reales de `r datosResumen$Error[c(1,2,5)]` donde el primer valor corresponde al del máximo, el segundo al mínimo y el último a la observación más reciente.
@@ -510,16 +510,26 @@ write.csv(datosResumen,"datosResumenParametros.csv")
 \par A pesar de que el modelo es práctico en el sentido de que permite hacer una rápida aproximación de la curva de rendimientos por su fácil implementación, queda abierta la posiblidad de que otro modelo paramétrico permita hacer una mejor aproximación para el caso de los bonos del Tesoro Nacional de la República Federativa de Brasil, como podrían ser el modelo de Splines cúbicos o cuadráticos, o incluso el modelo de Nelson, Siegel y Svensson el cuál le agrega un parámetro más al modelo presentado en este trabajo.
 \par En la misma linea de lo anterior simplemente se calcularon los parámetros del modelo mediante la optimización de la suma de residuo de cuadrados, sin embargo también queda la posibilidad de que al agregársele un peso a los datos ligado al bono como lo puede ser la duración o incluso la división entre la cantidad de datos podrían generar una mejor aproximación que simplemente asignarle el peso de 1 a todos los casos. 
 \par Observando la figura \ref{fig:curvagrafico} y los errores obtenidos `r datosResumen$Error[c(3,4)]`, no es recomendable realizar una curva de rendimientos con la media y la mediana. El error de ajuste se debe a los valores atípicos obtenidos estos se pueden visualizar el cuadro \ref{tab:tablaDatosEstadisticos}, destacando una bono cero cupón con precio de 1126,09 y uno cuponado con precio de 696,99.
+<<<<<<< HEAD
 \nocite{*}
 \printbibliography
 \chapter{Anexos}
 ``` {r echo=FALSE, message=FALSE, warning=FALSE,results="asis"}
+=======
+
+\chapter{Referencias bibliográficas}
+\nocite{*}
+\printbibliography
+\chapter{Anexos}
+
+``` {r echo=FALSE, message=FALSE, warning=FALSE}
+>>>>>>> 0caafade8960ec66abb402cd7a192fb3ae03c9f7
 maximo<-max(datosDes$Precio)
 datosMaximo<-(datosDes%>%filter(FechaDeValoracion==datosDes$FechaDeValoracion[datosDes$Precio==maximo]))
 minimo<-min(datosDes$Precio)
 datosMinimo<-(datosDes%>%filter(FechaDeValoracion==datosDes$FechaDeValoracion[datosDes$Precio==minimo]))
 datosRecientes<-(datosDes%>%filter(FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y")))
-### Se muestran la media, deviación estandar,,... del error con respecto a los puntos
+### Se muestran la media, deviación estandar,...
 listaDeDatos<-list("datosRecientes"=datosRecientes,"datosMaximo"=datosMaximo,"datosMinimo"=datosMinimo)
 listaDeParametros<-list(parametrosRecientes,parametrosMax,parametrosMin)
 listaDeErrores<-list()
@@ -536,19 +546,34 @@ for(i in 1:length(listaDeDatos)){
 resumenDeErrores<-rbind(summary(listaDeErrores[[1]]),summary(listaDeErrores[[2]]),summary(listaDeErrores[[3]]))
 desviacion<-c(sd(listaDeErrores[[1]]),sd(listaDeErrores[[2]]),sd(listaDeErrores[[3]]))
 resumenDeErrores<-cbind("Caso"=c("Reciente","Máximo","Mínimo"),resumenDeErrores,"Desviación estandar"=desviacion)
+<<<<<<< HEAD
 kable(resumenDeErrores,col.names = c("Caso","Min","$Q_1$","Mediana","$Q_3$","Media","Max","Desviación estandar") ,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos estádisticos(Error entre cada precio y curva)")%>%
+=======
+kable(resumenDeErrores,col.names = c("Caso","Min","$Q_1$","Mediana","$Q_3$","Media","Max","Desviación estandar") ,escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos caso reciente")%>%
+>>>>>>> 0caafade8960ec66abb402cd7a192fb3ae03c9f7
    kable_styling(full_width = F, position = "center", latex_options = c(c("HOLD_position","scale_down"),"scale_down"))%>%footnote(number="Fuente: Elaboración propia, con datos del Tesoro Nacional de la República Federativa de Brasil")
 ``` 
 
 
 ``` {r echo=FALSE, message=FALSE, warning=FALSE,results="asis"}
 columnas<-c("Tipo de bono", "Maduración", "Valoración","Precio","Tiempo restante para maduración","Cupón semestral")
+<<<<<<< HEAD
 titulos<-paste(c("Datos caso"),c("reciente","máximo","mínimo"))
 for(i in 1:length(listaDeDatos)){
 print(kable(arrange(listaDeDatos[[i]], TipoDeBono, FechaDeMaduracion) ,col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = titulos[i])%>%
    kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil"))
   cat("\n")
 }
+=======
+kable(datosMaximo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso máximo")%>%
+   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
+
+kable(datosMinimo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso mínimo")%>%
+   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
+
+kable(datosRecientes%>%group_by(TipoDeBono),col.names = columnas ,escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos caso reciente")%>%
+   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
+>>>>>>> 0caafade8960ec66abb402cd7a192fb3ae03c9f7
 ##
 
 ```
