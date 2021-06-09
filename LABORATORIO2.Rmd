@@ -510,13 +510,13 @@ write.csv(datosResumen,"datosResumenParametros.csv")
 \nocite{*}
 \printbibliography
 \chapter{Anexos}
-``` {r echo=FALSE, message=FALSE, warning=FALSE}
+``` {r echo=FALSE, message=FALSE, warning=FALSE,results=""}
 maximo<-max(datosDes$Precio)
 datosMaximo<-(datosDes%>%filter(FechaDeValoracion==datosDes$FechaDeValoracion[datosDes$Precio==maximo]))
 minimo<-min(datosDes$Precio)
 datosMinimo<-(datosDes%>%filter(FechaDeValoracion==datosDes$FechaDeValoracion[datosDes$Precio==minimo]))
 datosRecientes<-(datosDes%>%filter(FechaDeValoracion==as.Date("27/05/2021",format="%d/%m/%Y")))
-### Se muestran la media, deviación estandar,...
+### Se muestran la media, deviación estandar,,... del error con respecto a los puntos
 listaDeDatos<-list("datosRecientes"=datosRecientes,"datosMaximo"=datosMaximo,"datosMinimo"=datosMinimo)
 listaDeParametros<-list(parametrosRecientes,parametrosMax,parametrosMin)
 listaDeErrores<-list()
@@ -533,16 +533,15 @@ for(i in 1:length(listaDeDatos)){
 resumenDeErrores<-rbind(summary(listaDeErrores[[1]]),summary(listaDeErrores[[2]]),summary(listaDeErrores[[3]]))
 desviacion<-c(sd(listaDeErrores[[1]]),sd(listaDeErrores[[2]]),sd(listaDeErrores[[3]]))
 resumenDeErrores<-cbind("Caso"=c("Reciente","Máximo","Mínimo"),resumenDeErrores,"Desviación estandar"=desviacion)
-kable(resumenDeErrores,col.names = c("Caso","Min","$Q_1$","Mediana","$Q_3$","Media","Max","Desviación estandar") ,escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos caso reciente")%>%
+kable(resumenDeErrores,col.names = c("Caso","Min","$Q_1$","Mediana","$Q_3$","Media","Max","Desviación estandar") ,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos estádisticos, error por punto con respecto a curva")%>%
    kable_styling(full_width = F, position = "center", latex_options = c(c("HOLD_position","scale_down"),"scale_down"))%>%footnote(number="Fuente: Elaboración propia, con datos del Tesoro Nacional de la República Federativa de Brasil")
 
 columnas<-c("Tipo de bono", "Maduración", "Valoración","Precio","Tiempo restante para maduración","Cupón semestral")
-kable(datosMaximo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso máximo")%>%
-   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
-kable(datosMinimo%>%group_by(TipoDeBono),col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = "Datos caso mínimo")%>%
-   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
-kable(datosRecientes%>%group_by(TipoDeBono),col.names = columnas ,escape=F, format = "latex" , booktabs=TRUE , align = 'clcc' , caption = "Datos caso reciente")%>%
-   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil")
+titulos<-paste(c("Datos caso"),c("reciente","máximo","mínimo"))
+for(i in 1:length(listaDeDatos)){
+print(kable(arrange(listaDeDatos[[i]], TipoDeBono, FechaDeMaduracion) ,col.names = columnas,escape=F, format = "latex" , booktabs=TRUE , align = 'cccc' , caption = titulos[i])%>%
+   kable_styling(full_width = F, position = "center", latex_options = c("HOLD_position","scale_down"))%>%footnote(number="Fuente: Tesoro Nacional de la República Federativa de Brasil"))
+}
 ##
 
 ```
